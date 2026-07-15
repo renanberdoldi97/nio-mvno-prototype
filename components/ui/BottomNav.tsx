@@ -2,13 +2,22 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { NioIcon } from '@/components/icons';
+import type { IconName } from '@/components/icons';
 
-const items = [
-  { key: 'home', label: 'Início', route: '/' },
-  { key: 'accounts', label: 'Contas', route: '/contas' },
-  { key: 'products', label: 'Produtos', route: '/produtos' },
-  { key: 'support', label: 'Suporte', route: '/suporte' },
-  { key: 'more', label: 'Mais', route: '/mais' },
+type NavItem = {
+  key: string;
+  label: string;
+  route: string;
+  icon: IconName;
+};
+
+const items: NavItem[] = [
+  { key: 'home', label: 'Início', route: '/', icon: 'home' },
+  { key: 'accounts', label: 'Contas', route: '/contas', icon: 'card' },
+  { key: 'products', label: 'Produtos', route: '/produtos', icon: 'squares' },
+  { key: 'support', label: 'Suporte', route: '/suporte', icon: 'tool' },
+  { key: 'more', label: 'Mais', route: '/mais', icon: 'more' },
 ];
 
 export function BottomNav() {
@@ -16,25 +25,27 @@ export function BottomNav() {
   const router = useRouter();
 
   return (
-    <nav className="absolute bottom-0 left-0 right-0 bg-white border-t border-border h-16 flex items-center justify-around pb-safe">
+    <nav className="absolute bottom-0 left-0 right-0 bg-white border-t border-border flex items-center justify-around h-16 pb-safe z-30">
       {items.map(item => {
         const active = pathname === item.route;
         return (
           <button
             key={item.key}
             onClick={() => router.push(item.route)}
-            className={cn(
-              'flex flex-col items-center gap-1 flex-1 h-full justify-center transition-colors',
-              active ? 'text-primary' : 'text-text-secondary'
-            )}
+            className="flex flex-col items-center gap-1 flex-1 h-full justify-center"
           >
             <div className={cn(
-              'w-6 h-6 rounded flex items-center justify-center text-xs font-bold',
-              active ? 'bg-primary/10' : 'bg-transparent'
+              'w-6 h-6 flex items-center justify-center',
+              active ? 'opacity-100' : 'opacity-40'
             )}>
-              {item.label[0]}
+              <NioIcon name={item.icon} size={24} />
             </div>
-            <span className="text-[10px] font-medium">{item.label}</span>
+            <span className={cn(
+              'text-[10px] font-medium',
+              active ? 'text-primary-darker' : 'text-text-secondary'
+            )}>
+              {item.label}
+            </span>
           </button>
         );
       })}
