@@ -16,6 +16,10 @@ type AppState = {
   originalNumber: string | null;
   originalCarrier: string | null;
 
+  // Jornada de solicitação
+  selectedChipType: ChipType | null;
+  selectedDDD: string;
+
   // Ações
   setChipType: (type: ChipType) => void;
   setOrderStatus: (status: OrderStatus) => void;
@@ -23,6 +27,8 @@ type AppState = {
   setChipNumber: (number: string) => void;
   setPortabilityStatus: (status: PortabilityStatus) => void;
   setOriginalLine: (number: string, carrier: string) => void;
+  setSelectedChipType: (type: ChipType) => void;
+  setSelectedDDD: (ddd: string) => void;
   reset: () => void;
 };
 
@@ -34,6 +40,8 @@ const initialState = {
   portabilityStatus: 'idle' as PortabilityStatus,
   originalNumber: null,
   originalCarrier: null,
+  selectedChipType: null,
+  selectedDDD: '11', // padrão = DDD da instalação
 };
 
 export const useAppState = create<AppState>()(
@@ -47,6 +55,8 @@ export const useAppState = create<AppState>()(
       setPortabilityStatus: (portabilityStatus) => set({ portabilityStatus }),
       setOriginalLine: (originalNumber, originalCarrier) =>
         set({ originalNumber, originalCarrier }),
+      setSelectedChipType: (selectedChipType) => set({ selectedChipType }),
+      setSelectedDDD: (selectedDDD) => set({ selectedDDD }),
       reset: () => set(initialState),
     }),
     { name: 'nio-mvno-state' }

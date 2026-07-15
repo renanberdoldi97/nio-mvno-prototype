@@ -20,14 +20,15 @@ export function Header({
   title,
 }: HeaderProps) {
   const isPrimary = variant === 'primary';
+  const centered = !showBack && !showUser && !title;
 
   return (
     <header className={cn(
       'w-full px-5 h-14 flex items-center justify-between flex-shrink-0',
       isPrimary ? 'bg-primary-darker' : 'bg-white border-b border-border'
     )}>
-      {/* Esquerda: back ou logo */}
-      <div className="flex items-center gap-3 flex-1">
+      {/* Esquerda: back ou logo (ou logo centralizada quando não há back/user/title) */}
+      <div className={cn('flex items-center gap-3 flex-1', centered && 'justify-center')}>
         {showBack ? (
           <button
             onClick={onBack}
