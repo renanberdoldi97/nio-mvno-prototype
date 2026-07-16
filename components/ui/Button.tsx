@@ -4,10 +4,13 @@ import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 type ButtonVariant = 'primary' | 'outline' | 'ghost' | 'destructive';
+type ButtonKind = 'conversion';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
 type ButtonProps = {
   variant?: ButtonVariant;
+  // kind sobrepõe variant pra estilos semânticos específicos (ex: CTA de oferta)
+  kind?: ButtonKind;
   size?: ButtonSize;
   fullWidth?: boolean;
   loading?: boolean;
@@ -24,6 +27,10 @@ const variantStyles: Record<ButtonVariant, string> = {
   destructive: 'bg-error text-white font-semibold border-0',
 };
 
+const kindStyles: Record<ButtonKind, string> = {
+  conversion: 'bg-[#E5507A] text-white font-bold border-0',
+};
+
 const sizeStyles: Record<ButtonSize, string> = {
   sm: 'h-10 px-4 text-sm rounded-full',
   md: 'h-14 px-6 text-base rounded-full',
@@ -32,6 +39,7 @@ const sizeStyles: Record<ButtonSize, string> = {
 
 export function Button({
   variant = 'primary',
+  kind,
   size = 'md',
   fullWidth = true,
   loading = false,
@@ -49,7 +57,7 @@ export function Button({
       onClick={isDisabled ? undefined : onClick}
       className={cn(
         'flex items-center justify-center gap-2 transition-opacity',
-        variantStyles[variant],
+        kind ? kindStyles[kind] : variantStyles[variant],
         sizeStyles[size],
         fullWidth ? 'w-full' : 'w-auto',
         isDisabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer',

@@ -1,95 +1,166 @@
 'use client';
 
 import { AppShell } from '@/components/shell/AppShell';
-import { ChipTag } from '@/components/ui/ChipTag';
-import { NioIcon } from '@/components/icons';
+import { NioIcon, IconName } from '@/components/icons';
+import { Button } from '@/components/ui/Button';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
-const quickActions = [
-  { label: 'Pedir meu chip', icon: 'chip' as const, route: '/pedir-chip', isNew: true },
-  { label: '2ª via de conta', icon: 'card' as const, route: '/contas' },
-  { label: 'Consultar contas pagas', icon: 'clipboard' as const, route: '/contas/pagas' },
-  { label: 'Mudar de endereço', icon: 'home' as const, route: '/endereco' },
+// ============================================================
+// QUICK ACTIONS — 8 atalhos horizontal scroll
+// ============================================================
+type QuickAction = {
+  label: string;
+  icon: IconName;
+  route: string;
+  isNew?: boolean;
+};
+
+const quickActions: QuickAction[] = [
+  { label: 'Pedir\nmeu chip', icon: 'shortcut-pedir-chip', route: '/pedir-chip', isNew: true },
+  { label: '2ª via\nde conta', icon: 'shortcut-segunda-via', route: '/contas' },
+  { label: 'Consultar\ncontas pagas', icon: 'shortcut-contas-pagas', route: '/contas/pagas' },
+  { label: 'Mudar de\nendereço', icon: 'shortcut-mudar-endereco', route: '/endereco' },
+  { label: 'Alterar meio\nde pagamento', icon: 'shortcut-meio-pagamento', route: '/pagamento' },
+  { label: 'Gerenciar\nprodutos', icon: 'shortcut-gerenciar-produtos', route: '/produtos' },
+  { label: 'Diagnosticar\nrede', icon: 'shortcut-diagnosticar-rede', route: '/suporte' },
+  { label: 'Trocar senha\ndo Wi-Fi', icon: 'shortcut-trocar-senha-wifi', route: '/suporte' },
 ];
 
 export default function HomePage() {
   const router = useRouter();
 
   return (
-    <AppShell headerVariant="primary">
-      {/* Hero: Descoberta do chip móvel */}
-      <div className="bg-primary-darker px-5 pt-5 pb-10 rounded-b-[32px] relative overflow-hidden">
-        {/* Background decorativo */}
-        <div className="absolute right-4 top-1/2 -translate-y-1/2 w-32 h-32 rounded-full bg-white/5" />
-        <div className="absolute right-8 top-0 w-20 h-20 rounded-full bg-white/5" />
+    <AppShell headerVariant="home">
+      {/* ============================================================
+          HERO — banner de descoberta do chip móvel
+          Fundo verde escuro, alinhado à esquerda, chip flutuante à direita
+      ============================================================ */}
+      <section className="bg-[var(--color-primary-background)] px-5 pt-4 pb-8 rounded-b-3xl relative overflow-hidden">
+        {/* Chip flutuante — canto superior direito, ligeiramente rotacionado */}
+        <motion.div
+          initial={{ opacity: 0, y: -10, rotate: -15 }}
+          animate={{ opacity: 1, y: 0, rotate: -12 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          className="absolute right-2 top-2 z-0 pointer-events-none"
+          style={{ width: 180, height: 200 }}
+        >
+          <Image
+            src="/images/chip-flutuante.png"
+            alt=""
+            fill
+            className="object-contain"
+            unoptimized
+            priority
+          />
+        </motion.div>
 
-        <div className="relative z-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+        {/* Conteúdo do hero — alinhado à esquerda */}
+        <div className="relative z-10 max-w-[220px]">
+          {/* Badge "Benefício disponível" */}
+          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--color-primary-background-high)]/20 mb-4">
+            <NioIcon
+              name="check-circle"
+              size={14}
+              className="brightness-0 invert opacity-90"
+            />
             <span className="text-[11px] font-semibold text-white">Benefício disponível</span>
           </div>
-          <h1 className="text-[26px] font-bold text-white leading-tight mb-2">
+
+          {/* Título */}
+          <h1 className="text-[26px] font-bold text-white leading-[1.15] mb-2">
             Peça agora<br />seu chip móvel
           </h1>
-          <p className="text-[13px] text-white/75 mb-6 max-w-[220px] leading-relaxed">
+
+          {/* Descrição */}
+          <p className="text-[13px] text-white/80 mb-5 leading-relaxed">
             Internet que te acompanha, já inclusa no seu plano Nio Fibra.
           </p>
+
+          {/* CTA branco arredondado, alinhado à esquerda */}
           <motion.button
             whileTap={{ scale: 0.96 }}
             onClick={() => router.push('/pedir-chip')}
-            className="bg-white text-primary-darker font-bold px-7 py-3 rounded-full text-sm"
+            className="bg-white text-[var(--color-primary-text)] font-bold px-6 py-3 rounded-full text-sm"
           >
             Pedir meu chip
           </motion.button>
         </div>
-      </div>
+      </section>
 
-      {/* Quick Actions */}
-      <div className="px-5 pt-6">
-        <div className="grid grid-cols-4 gap-2">
+      {/* ============================================================
+          QUICK ACTIONS — 8 atalhos em scroll horizontal
+          Sem borda, sem card ao redor. Ícone é o botão.
+          Tag "Novo" ABAIXO do label, não acima do ícone.
+      ============================================================ */}
+      <section className="pt-6 pb-2">
+        <div className="flex gap-3 overflow-x-auto no-scrollbar px-5 pb-2">
           {quickActions.map((action, i) => (
             <motion.button
               key={i}
-              whileTap={{ scale: 0.94 }}
+              whileTap={{ scale: 0.92 }}
               onClick={() => router.push(action.route)}
-              className="flex flex-col items-center gap-2"
+              className="flex flex-col items-center flex-shrink-0 gap-1.5 w-[68px]"
             >
-              <div className="w-14 h-14 rounded-2xl bg-white shadow-[0_1px_3px_rgba(0,0,0,0.08)] flex items-center justify-center relative">
-                <NioIcon name={action.icon} size={24} />
-                {action.isNew && (
-                  <div className="absolute -top-1.5 -right-1.5">
-                    <ChipTag variant="new">Novo</ChipTag>
-                  </div>
-                )}
+              {/* Ícone SEM card/borda — o próprio SVG é o botão */}
+              <div className="w-12 h-12 flex items-center justify-center">
+                <NioIcon name={action.icon} size={44} />
               </div>
-              <span className="text-[10px] font-medium text-text-primary leading-tight text-center px-1">
+
+              {/* Label — 2 linhas fixas via whitespace-pre-line */}
+              <span className="text-[11px] font-medium text-[var(--color-neutral-text)] leading-tight text-center whitespace-pre-line">
                 {action.label}
               </span>
+
+              {/* Tag Novo ABAIXO do label */}
+              {action.isNew && (
+                <span className="mt-0.5 inline-flex items-center px-2 py-0.5 rounded-full bg-[var(--color-primary-background)] text-white text-[9px] font-bold uppercase tracking-wide">
+                  Novo
+                </span>
+              )}
             </motion.button>
           ))}
         </div>
-      </div>
+      </section>
 
-      {/* Ofertas e benefícios */}
-      <div className="px-5 pt-8 pb-4">
-        <h2 className="text-base font-bold text-text-primary mb-3">
+      {/* ============================================================
+          OFERTAS E BENEFÍCIOS — card com boneco flutuante
+      ============================================================ */}
+      <section className="px-5 pt-6 pb-4">
+        <h2 className="text-base font-bold text-[var(--color-neutral-text)] mb-3">
           Ofertas e benefícios para você
         </h2>
-        <div className="bg-[#E5EFDD] rounded-2xl px-5 py-5 flex items-center justify-between min-h-[128px] overflow-hidden relative">
-          <div className="z-10">
-            <p className="font-bold text-[17px] text-text-primary leading-tight mb-3">
+
+        <div className="bg-[var(--color-primary-background-low)] rounded-2xl px-5 py-5 flex items-center justify-between min-h-[140px] overflow-hidden relative">
+          {/* Conteúdo à esquerda */}
+          <div className="relative z-10 max-w-[180px]">
+            <p className="font-bold text-[17px] text-[var(--color-neutral-text)] leading-tight mb-3">
               Tem uma oferta<br />esperando você
             </p>
-            <motion.button
-              whileTap={{ scale: 0.96 }}
-              className="bg-[#E5507A] text-white text-xs font-bold px-5 py-2.5 rounded-full"
+            <Button
+              kind="conversion"
+              size="sm"
+              fullWidth={false}
+              onClick={() => router.push('/ofertas')}
+              className="px-4"
             >
               Quero Conhecer
-            </motion.button>
+            </Button>
+          </div>
+
+          {/* Boneco flutuante à direita */}
+          <div className="absolute right-0 bottom-0 pointer-events-none" style={{ width: 140, height: 140 }}>
+            <Image
+              src="/images/boneco-oferta.png"
+              alt=""
+              fill
+              className="object-contain object-bottom"
+              unoptimized
+            />
           </div>
         </div>
-      </div>
+      </section>
     </AppShell>
   );
 }

@@ -58,9 +58,15 @@ const ICON_MAP: Record<string, string> = {
   'checkbox-on': '/icons/Checkbox%20On.svg',
   'waze': '/icons/Waze.svg',
   'question': '/icons/Questao.svg',
-  // Não existia na spec original: "Consultar contas pagas" na home usa
-  // este ícone. Mapeado pro check circular por ser o mais próximo semanticamente.
-  'clipboard': '/icons/CheckCircular.svg',
+  // Ícones de atalho da home — coloridos com detalhes verdes, não themeable
+  'shortcut-pedir-chip': '/icons/icon1.svg',
+  'shortcut-segunda-via': '/icons/icon2.svg',
+  'shortcut-contas-pagas': '/icons/icon3.svg',
+  'shortcut-mudar-endereco': '/icons/icon4.svg',
+  'shortcut-meio-pagamento': '/icons/icon5.svg',
+  'shortcut-gerenciar-produtos': '/icons/icon6.svg',
+  'shortcut-diagnosticar-rede': '/icons/icon7.svg',
+  'shortcut-trocar-senha-wifi': '/icons/icon8.svg',
 };
 
 type NioIconProps = {

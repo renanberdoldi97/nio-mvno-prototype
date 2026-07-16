@@ -20,6 +20,14 @@
   --color-overlay: rgba(0,0,0,0.5);
   --color-highlight-soft: #E8FFE0;
 
+  /* Aliases semânticos usados pela Home (Refactor B) */
+  --color-primary-background: #0F3D24;
+  --color-primary-background-high: #32E000;
+  --color-primary-background-low: #E5EFDD;
+  --color-primary-text: #0F3D24;
+  --color-neutral-text: #1A1A1A;
+  --color-neutral-background: #F5F5F5;
+
   /* Tipografia */
   --font-sans: var(--font-plus-jakarta), system-ui, sans-serif;
 
