@@ -1,7 +1,9 @@
-export function SuccessIcon({ size = 56 }: { size?: number }) {
+import { cn } from '@/lib/utils';
+
+export function SuccessIcon({ size = 56, className }: { size?: number; className?: string }) {
   return (
     <div
-      className="bg-primary mx-auto"
+      className={cn('bg-primary mx-auto', className)}
       style={{
         width: size,
         height: size,

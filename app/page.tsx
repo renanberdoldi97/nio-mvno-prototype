@@ -3,9 +3,11 @@
 import { AppShell } from '@/components/shell/AppShell';
 import { NioIcon, IconName } from '@/components/icons';
 import { Button } from '@/components/ui/Button';
+import { TrackingCard } from '@/components/home/TrackingCard';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { useAppState } from '@/lib/state';
 
 // ============================================================
 // QUICK ACTIONS — 8 atalhos horizontal scroll
@@ -30,6 +32,7 @@ const quickActions: QuickAction[] = [
 
 export default function HomePage() {
   const router = useRouter();
+  const orderStatus = useAppState(s => s.orderStatus);
 
   return (
     <AppShell headerVariant="home">
@@ -103,6 +106,16 @@ export default function HomePage() {
           </motion.button>
         </div>
       </section>
+
+      {/* ============================================================
+          TRACKING — card de acompanhamento do chip físico em entrega
+          Aparece só quando há um pedido físico pendente de entrega.
+      ============================================================ */}
+      {orderStatus === 'pending_delivery' && (
+        <div className="px-6 mt-4">
+          <TrackingCard />
+        </div>
+      )}
 
       {/* ============================================================
           QUICK ACTIONS — 8 atalhos em scroll horizontal

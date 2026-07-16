@@ -2,13 +2,13 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Header } from '@/components/ui/Header';
 import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { StateCard } from '@/components/ui/StateCard';
 import { BottomSheet } from '@/components/ui/BottomSheet';
-import { PageTransition } from '@/components/ui/PageTransition';
-import { NioIcon } from '@/components/icons';
+import { JourneyLayout } from '@/components/ui/JourneyLayout';
+import { SuccessIcon } from '@/components/ui/SuccessIcon';
 import { useAppState } from '@/lib/state';
 
 export default function AtivarEsimPage() {
@@ -18,58 +18,22 @@ export default function AtivarEsimPage() {
   const [sheetOpen, setSheetOpen] = useState(false);
 
   return (
-    <PageTransition>
-      <div className="w-full h-full flex flex-col relative bg-background">
-        <Header
-          variant="white"
-          showBack
-          onBack={() => router.push('/')}
-          title="Ativar chip móvel"
-        />
-
-        <main className="flex-1 overflow-y-auto no-scrollbar pb-32 px-5 pt-5">
-          <div className="bg-[#E8FFE0] rounded-2xl p-4 mb-5 flex items-center gap-2">
-            <NioIcon name="check-circle" size={16} />
-            <span className="text-sm font-semibold text-primary-darker">Pedido confirmado</span>
-          </div>
-
-          <h1 className="font-bold text-2xl mt-2 mb-3 text-text-primary">
-            Vamos ativar seu eSIM
-          </h1>
-
-          <div className="flex flex-col gap-4 mb-5">
-            <div className="flex items-center gap-3">
-              <NioIcon name="wifi-on" size={22} />
-              <span className="text-sm text-text-primary">Garanta que seu Wi-Fi está conectado</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <NioIcon name="smartphone" size={22} />
-              <span className="text-sm text-text-primary">Verifique se o app Nio está atualizado</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <NioIcon name="chip-sim" size={22} />
-              <span className="text-sm text-text-primary">Tenha o aparelho em mãos</span>
-            </div>
-          </div>
-
-          <StateCard
-            variant="warning"
-            title="Você vai sair do app por um momento"
-            description="Durante a configuração, o app pode fechar. Quando terminar, volte aqui pra continuar."
-          />
-        </main>
-
-        <div className="absolute bottom-0 left-0 right-0 bg-background px-5 pt-3 pb-6">
-          <Button onClick={() => setSheetOpen(true)}>Ativar eSIM</Button>
-        </div>
-
+    <JourneyLayout
+      title="Ativar chip móvel"
+      onBack={() => router.push('/')}
+      cta={
+        <Button onClick={() => router.push('/ativar-chip/esim/ativando')}>
+          Ativar eSIM
+        </Button>
+      }
+      overlay={
         <BottomSheet
           isOpen={sheetOpen}
           onClose={() => setSheetOpen(false)}
           blocking
           title="Antes de ativar, confirme o DDD"
         >
-          <p className="text-sm text-text-secondary mb-4">
+          <p className="text-sm text-[var(--color-neutral-text-medium)] mb-4">
             O chip vem com DDD ({selectedDDD}), da sua Nio Fibra. Se quiser outro, é só alterar abaixo.
           </p>
 
@@ -88,16 +52,44 @@ export default function AtivarEsimPage() {
             className="mb-4"
           />
 
-          <Button
-            onClick={() => {
-              setSheetOpen(false);
-              router.push('/ativar-chip/esim/ativando');
-            }}
-          >
-            Confirmar
-          </Button>
+          <Button onClick={() => setSheetOpen(false)}>Confirmar</Button>
         </BottomSheet>
+      }
+    >
+      <div className="px-6 pt-4">
+        <div className="flex items-center gap-2">
+          <SuccessIcon size={24} className="mx-0 flex-shrink-0" />
+          <h1 className="text-2xl font-bold text-[var(--color-neutral-text)]">
+            Pedido confirmado!
+          </h1>
+        </div>
+
+        <p className="text-sm text-[var(--color-neutral-text-medium)] mt-2">
+          Seu eSIM está pronto pra ser ativado. Garanta que seu aparelho está conectado a
+          internet antes de começar a ativação.
+        </p>
+
+        <div className="mt-6">
+          <Card variant="neutral">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm text-[var(--color-neutral-text-medium)]">Número novo</span>
+              <button
+                onClick={() => setSheetOpen(true)}
+                className="text-sm font-semibold text-[var(--color-primary-background)]"
+              >
+                Alterar
+              </button>
+            </div>
+            <p className="font-bold text-[var(--color-neutral-text)]">
+              Ativando com DDD ({selectedDDD})
+            </p>
+            <p className="text-xs text-[var(--color-neutral-text-medium)] mt-2">
+              O DDD não pode ser alterado depois. Pra fazer a portabilidade depois, o número
+              precisa ter o DDD escolhido aqui.
+            </p>
+          </Card>
+        </div>
       </div>
-    </PageTransition>
+    </JourneyLayout>
   );
 }

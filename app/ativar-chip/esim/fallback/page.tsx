@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Header } from '@/components/ui/Header';
 import { Button } from '@/components/ui/Button';
-import { PageTransition } from '@/components/ui/PageTransition';
+import { Card } from '@/components/ui/Card';
+import { JourneyLayout } from '@/components/ui/JourneyLayout';
 import { NioIcon } from '@/components/icons';
 import { cn, sleep } from '@/lib/utils';
 import { useAppState } from '@/lib/state';
@@ -14,17 +14,17 @@ type Os = 'ios' | 'android';
 
 const STEPS: Record<Os, string[]> = {
   ios: [
-    'Abra o Ajustes do seu iPhone',
+    'Abra Ajustes',
     'Toque em Celular',
-    'Toque em Adicionar eSIM',
-    'Escolha "Inserir detalhes manualmente"',
+    'Adicionar eSIM',
+    'Inserir detalhes manualmente',
     'Cole o código acima',
   ],
   android: [
-    'Abra as Configurações do seu celular',
-    'Toque em Rede e Internet',
-    'Toque em SIM e depois em Adicionar eSIM',
-    'Escolha "Inserir código manualmente"',
+    'Abra Configurações',
+    'Rede e Internet',
+    'SIM > Adicionar eSIM',
+    'Inserir código manualmente',
     'Cole o código acima',
   ],
 };
@@ -38,11 +38,6 @@ export default function FallbackPage() {
   const [os, setOs] = useState<Os>('ios');
   const [copied, setCopied] = useState(false);
 
-  useEffect(() => {
-    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-    setOs(isIOS ? 'ios' : 'android');
-  }, []);
-
   async function handleCopy() {
     await navigator.clipboard.writeText(MOCK_ESIM.lpaCode);
     setCopied(true);
@@ -50,84 +45,72 @@ export default function FallbackPage() {
   }
 
   async function handleGoToSettings() {
-    try {
-      const deepLink = os === 'ios' ? MOCK_ESIM.deepLinkIOS : MOCK_ESIM.deepLinkAndroid;
-      window.location.href = deepLink;
-    } catch {
-      // Deep link intencionalmente não resolve em browser — segue o fluxo mock
-    }
-
     await sleep(300);
     setEsimNumberAvailable(false);
     router.push('/ativar-chip/esim/concluido');
   }
 
   return (
-    <PageTransition>
-      <div className="w-full h-full flex flex-col relative bg-background">
-        <Header
-          variant="white"
-          showBack
-          onBack={() => router.push('/ativar-chip/esim/configurando')}
-          title="Ativar chip móvel"
-        />
+    <JourneyLayout
+      title="Ativar chip móvel"
+      onBack={() => router.push('/ativar-chip/esim/configurando')}
+      cta={<Button onClick={handleGoToSettings}>Ir pra configurações</Button>}
+    >
+      <div className="px-6 pt-4">
+        <h1 className="text-2xl font-bold text-[var(--color-neutral-text)] mb-1">
+          Configure o eSIM manualmente
+        </h1>
+        <p className="text-sm text-[var(--color-neutral-text-medium)] mb-5">
+          Seu aparelho precisa de alguns passos extras. Copie o código abaixo e siga as
+          instruções nas configurações do celular.
+        </p>
 
-        <main className="flex-1 overflow-y-auto no-scrollbar pb-32 px-5 pt-5">
-          <h1 className="font-bold text-xl mt-4 mb-1 text-text-primary">
-            Configure o eSIM manualmente
-          </h1>
-          <p className="text-sm text-text-secondary mb-4">
-            Seu aparelho precisa de alguns passos extras. Copie o código abaixo e siga as
-            instruções nas configurações do celular.
-          </p>
+        <Card variant="neutral" className="mb-5">
+          <p className="text-xs text-[var(--color-neutral-text-medium)] mb-1">Código de ativação</p>
+          <div className="flex items-center justify-between gap-3">
+            <span className="font-mono text-sm text-[var(--color-neutral-text)] break-all">{LPA_DISPLAY}</span>
+            <button onClick={handleCopy} className="flex-shrink-0">
+              <NioIcon name={copied ? 'check' : 'copy'} size={20} />
+            </button>
+          </div>
+        </Card>
 
-          <div className="bg-background border border-border rounded-xl p-4 mb-5">
-            <p className="text-xs text-text-secondary mb-1">Código de ativação</p>
-            <div className="flex items-center justify-between gap-3">
-              <span className="font-mono text-sm text-text-primary break-all">{LPA_DISPLAY}</span>
-              <button onClick={handleCopy} className="flex-shrink-0">
-                <NioIcon name={copied ? 'check' : 'copy'} size={20} />
-              </button>
+        <div className="flex gap-2 mb-5">
+          <button
+            onClick={() => setOs('ios')}
+            className={cn(
+              'px-4 py-2 rounded-full text-sm font-semibold',
+              os === 'ios'
+                ? 'bg-[var(--color-primary-background)] text-white'
+                : 'border border-[var(--color-neutral-border)] text-[var(--color-neutral-text-medium)]'
+            )}
+          >
+            iOS
+          </button>
+          <button
+            onClick={() => setOs('android')}
+            className={cn(
+              'px-4 py-2 rounded-full text-sm font-semibold',
+              os === 'android'
+                ? 'bg-[var(--color-primary-background)] text-white'
+                : 'border border-[var(--color-neutral-border)] text-[var(--color-neutral-text-medium)]'
+            )}
+          >
+            Android
+          </button>
+        </div>
+
+        <div className="flex flex-col gap-3">
+          {STEPS[os].map((step, i) => (
+            <div key={i} className="flex items-center gap-3">
+              <span className="w-6 h-6 rounded-full bg-[var(--color-neutral-background-low)] text-[var(--color-neutral-text)] text-xs font-bold flex items-center justify-center flex-shrink-0">
+                {i + 1}
+              </span>
+              <span className="text-sm text-[var(--color-neutral-text)]">{step}</span>
             </div>
-          </div>
-
-          <div className="flex gap-2 mb-5">
-            <button
-              onClick={() => setOs('ios')}
-              className={cn(
-                'px-4 py-2 rounded-full text-sm font-semibold',
-                os === 'ios' ? 'bg-text-primary text-white' : 'border border-border text-text-secondary'
-              )}
-            >
-              iOS
-            </button>
-            <button
-              onClick={() => setOs('android')}
-              className={cn(
-                'px-4 py-2 rounded-full text-sm font-semibold',
-                os === 'android' ? 'bg-text-primary text-white' : 'border border-border text-text-secondary'
-              )}
-            >
-              Android
-            </button>
-          </div>
-
-          <div className="flex flex-col gap-3">
-            {STEPS[os].map((step, i) => (
-              <div key={i} className="flex items-center gap-3">
-                <span className="w-6 h-6 rounded-full bg-border text-text-primary text-xs font-bold flex items-center justify-center flex-shrink-0">
-                  {i + 1}
-                </span>
-                <span className="text-sm text-text-primary">{step}</span>
-              </div>
-            ))}
-          </div>
-        </main>
-
-        <div className="absolute bottom-0 left-0 right-0 bg-background px-5 pt-3 pb-6">
-          <Button onClick={handleGoToSettings}>Ir pra configurações</Button>
+          ))}
         </div>
       </div>
-    </PageTransition>
+    </JourneyLayout>
   );
 }

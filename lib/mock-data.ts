@@ -31,3 +31,15 @@ export const MOCK_ESIM = {
   deepLinkIOS: 'App-prefs:MOBILE_DATA_SETTINGS_ID',
   deepLinkAndroid: 'intent:#Intent;action=android.settings.NETWORK_OPERATOR_SETTINGS;end',
 };
+
+export const MOCK_CARRIERS = ['Vivo', 'Claro', 'TIM', 'NuCel', 'Não encontrei minha operadora'];
+
+export const MOCK_TRACKING = {
+  confirmedAt: '18/07/2026 - 14:30',
+};
+
+export const MOCK_PORTABILITY = {
+  protocol: '0000000',
+  requestedAt: '18/07/2026',
+  ticket: '000000',
+};

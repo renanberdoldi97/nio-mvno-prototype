@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 import { Button } from './Button';
 
-type StateCardVariant = 'success' | 'warning' | 'error' | 'info' | 'neutral';
+type StateCardVariant = 'success' | 'warning' | 'error' | 'info' | 'neutral' | 'highlight';
 
 type StateCardProps = {
   variant?: StateCardVariant;
@@ -19,6 +19,7 @@ const borderColors: Record<StateCardVariant, string> = {
   error: 'border-l-error',
   info: 'border-l-info',
   neutral: 'border-l-border',
+  highlight: 'border-l-[var(--color-primary-background)]',
 };
 
 const bgColors: Record<StateCardVariant, string> = {
@@ -27,6 +28,7 @@ const bgColors: Record<StateCardVariant, string> = {
   error: 'bg-[#FFF0F0]',
   info: 'bg-[#F0F8FF]',
   neutral: 'bg-white',
+  highlight: 'bg-[var(--color-primary-background-low)]',
 };
 
 export function StateCard({

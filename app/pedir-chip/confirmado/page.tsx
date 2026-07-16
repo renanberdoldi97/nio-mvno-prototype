@@ -1,77 +1,90 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Header } from '@/components/ui/Header';
 import { Button } from '@/components/ui/Button';
-import { PageTransition } from '@/components/ui/PageTransition';
-import { SuccessIcon } from '@/components/ui/SuccessIcon';
+import { Card } from '@/components/ui/Card';
+import { JourneyLayout } from '@/components/ui/JourneyLayout';
 import { useAppState } from '@/lib/state';
 import { MOCK_USER } from '@/lib/mock-data';
+import { sleep } from '@/lib/utils';
 
 export default function ConfirmadoPage() {
   const router = useRouter();
   const selectedChipType = useAppState(s => s.selectedChipType);
+  const setOrderStatus = useAppState(s => s.setOrderStatus);
+  const setTrackingStatus = useAppState(s => s.setTrackingStatus);
   // Acesso direto à URL sem seleção prévia cai na variante eSIM
   const isPhysical = selectedChipType === 'physical';
 
+  // Chip físico confirmado passa a aparecer como entrega pendente na home
+  useEffect(() => {
+    if (!isPhysical) return;
+    let active = true;
+    (async () => {
+      await sleep(800);
+      if (!active) return;
+      setOrderStatus('pending_delivery');
+      setTrackingStatus('confirmed');
+    })();
+    return () => {
+      active = false;
+    };
+  }, [isPhysical, setOrderStatus, setTrackingStatus]);
+
   return (
-    <PageTransition variant="fade">
-      <div className="w-full h-full flex flex-col relative bg-background">
-        <Header showBack={false} showUser={false} />
+    <JourneyLayout
+      title="Pedir chip móvel"
+      onBack={() => router.push('/')}
+      transition="fade"
+      cta={
+        isPhysical ? (
+          <>
+            <Button onClick={() => router.push('/tracking')}>Acompanhar entrega</Button>
+            <Button variant="outline" onClick={() => router.push('/')}>
+              Voltar para o início
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button onClick={() => router.push('/ativar-chip/esim')}>Ativar eSIM</Button>
+            <Button variant="outline" onClick={() => router.push('/')}>
+              Voltar para o início
+            </Button>
+          </>
+        )
+      }
+    >
+      <h1 className="text-2xl font-bold text-[var(--color-neutral-text)] px-6 pt-6">
+        Pedido confirmado!
+      </h1>
 
-        <main className="flex-1 overflow-y-auto no-scrollbar pb-40 flex flex-col items-center">
-          <div className="mt-8">
-            <SuccessIcon />
+      <p className="text-sm text-[var(--color-neutral-text-medium)] px-6 mt-2">
+        {isPhysical
+          ? 'Seu chip já está sendo separado. A gente te avisa por aqui até ele chegar na sua casa.'
+          : 'Seu eSIM está pronto pra ser ativado. Garanta que seu aparelho está conectado a internet antes de começar a ativação.'}
+      </p>
+
+      <div className="px-6 mt-6">
+        <Card variant="neutral">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-[var(--color-neutral-text-medium)]">Tipo de chip</span>
+            {isPhysical && (
+              <span className="text-sm text-[var(--color-neutral-text-medium)]">Alterar</span>
+            )}
           </div>
-
-          <h1 className="font-bold text-2xl text-center mt-4 text-text-primary">
-            Pedido confirmado!
-          </h1>
-
-          <p className="text-center text-text-secondary text-sm mt-2 px-8">
-            {isPhysical
-              ? 'Seu chip já está sendo separado. A gente te avisa por aqui até ele chegar na sua casa.'
-              : 'Seu eSIM está pronto pra ser ativado. Garanta que seu aparelho está conectado à internet antes de começar a ativação.'}
-          </p>
-
-          <div className="w-full px-5 mt-6">
-            <div className="bg-background border border-border rounded-2xl p-3 flex flex-col gap-2">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-text-secondary">Tipo de chip</span>
-                <span className="text-sm font-semibold text-text-primary">
-                  {isPhysical ? 'Chip físico' : 'eSIM'}
-                </span>
-              </div>
-              {isPhysical && (
-                <div className="flex items-center justify-between gap-4">
-                  <span className="text-sm text-text-secondary flex-shrink-0">Endereço</span>
-                  <span className="text-sm font-semibold text-text-primary text-right">
-                    {MOCK_USER.address.short}
-                  </span>
-                </div>
-              )}
-            </div>
-          </div>
-        </main>
-
-        <div className="absolute bottom-0 left-0 right-0 bg-background px-5 pt-3 pb-6 flex flex-col gap-3">
           {isPhysical ? (
             <>
-              <Button onClick={() => router.push('/')}>Acompanhar entrega</Button>
-              <Button variant="outline" onClick={() => router.push('/')}>
-                Voltar para o início
-              </Button>
+              <p className="font-bold text-[var(--color-neutral-text)]">Chip físico</p>
+              <p className="text-sm text-[var(--color-neutral-text-medium)] mt-1">
+                {MOCK_USER.address.short}
+              </p>
             </>
           ) : (
-            <>
-              <Button onClick={() => router.push('/ativar-chip/esim')}>Ativar eSIM</Button>
-              <Button variant="outline" onClick={() => router.push('/')}>
-                Voltar para o início
-              </Button>
-            </>
+            <p className="font-bold text-[var(--color-neutral-text)]">eSIM</p>
           )}
-        </div>
+        </Card>
       </div>
-    </PageTransition>
+    </JourneyLayout>
   );
 }

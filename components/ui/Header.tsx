@@ -20,19 +20,20 @@ export function Header({
   title,
 }: HeaderProps) {
   const isPrimary = variant === 'primary';
-  const centered = !showBack && !showUser && !title;
+  const isTransparent = variant === 'transparent';
+  const showLogo = !showBack && !title;
 
   return (
     <header className={cn(
-      'w-full px-5 h-14 flex items-center justify-between flex-shrink-0',
-      isPrimary ? 'bg-primary-darker' : 'bg-white border-b border-border'
+      'w-full px-6 h-14 flex items-center relative flex-shrink-0',
+      isPrimary ? 'bg-primary-darker' : isTransparent ? 'bg-transparent' : 'bg-white border-b border-border'
     )}>
-      {/* Esquerda: back ou logo (ou logo centralizada quando não há back/user/title) */}
-      <div className={cn('flex items-center gap-3 flex-1', centered && 'justify-center')}>
+      {/* Esquerda: back ou logo */}
+      <div className="flex items-center flex-1 min-w-0">
         {showBack ? (
           <button
             onClick={onBack}
-            className="w-8 h-8 flex items-center justify-center -ml-1"
+            className="w-8 h-8 flex items-center justify-center -ml-1 z-10"
           >
             <NioIcon
               name="arrow-left"
@@ -40,7 +41,7 @@ export function Header({
               className={isPrimary ? 'invert brightness-0 invert' : ''}
             />
           </button>
-        ) : (
+        ) : showLogo ? (
           <Image
             src={isPrimary ? '/logo/Color=White.svg' : '/logo/Color=Default.svg'}
             alt="Nio"
@@ -49,33 +50,39 @@ export function Header({
             unoptimized
             priority
           />
-        )}
-        {title && (
+        ) : null}
+      </div>
+
+      {/* Centro: título — sempre centralizado no header, independente da largura do back/user */}
+      {title && (
+        <div className="absolute inset-0 flex items-center justify-center px-14 pointer-events-none">
           <span className={cn(
-            'text-base font-semibold',
+            'text-base font-semibold truncate',
             isPrimary ? 'text-white' : 'text-text-primary'
           )}>
             {title}
           </span>
-        )}
-      </div>
-
-      {/* Direita: usuário */}
-      {showUser && !showBack && (
-        <div className="flex items-center gap-2">
-          <NioIcon
-            name="user-circle"
-            size={20}
-            className={isPrimary ? 'opacity-90 invert brightness-0 invert' : ''}
-          />
-          <span className={cn(
-            'text-sm font-medium',
-            isPrimary ? 'text-white' : 'text-text-primary'
-          )}>
-            Ana
-          </span>
         </div>
       )}
+
+      {/* Direita: usuário */}
+      <div className="flex items-center justify-end flex-1 min-w-0">
+        {showUser && !showBack && (
+          <div className="flex items-center gap-2">
+            <NioIcon
+              name="user-circle"
+              size={20}
+              className={isPrimary ? 'opacity-90 invert brightness-0 invert' : ''}
+            />
+            <span className={cn(
+              'text-sm font-medium',
+              isPrimary ? 'text-white' : 'text-text-primary'
+            )}>
+              Ana
+            </span>
+          </div>
+        )}
+      </div>
     </header>
   );
 }

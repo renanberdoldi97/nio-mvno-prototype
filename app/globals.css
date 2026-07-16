@@ -26,7 +26,11 @@
   --color-primary-background-low: #E5EFDD;
   --color-primary-text: #0F3D24;
   --color-neutral-text: #1A1A1A;
+  --color-neutral-text-medium: #6B6B6B;
   --color-neutral-background: #FFFFFF;
+  --color-neutral-background-low: #F8F7F1;
+  --color-neutral-background-inverse: #171816;
+  --color-neutral-border: #E0E0E0;
 
   /* Tipografia */
   --font-sans: var(--font-plus-jakarta), system-ui, sans-serif;

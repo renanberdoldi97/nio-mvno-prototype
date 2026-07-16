@@ -23,6 +23,9 @@ type AppState = {
   esimActivationStep: 'idle' | 'confirming' | 'configuring' | 'done';
   esimNumberAvailable: boolean; // true = número já disponível na conclusão
 
+  // Tracking do chip físico
+  trackingStatus: 'confirmed' | 'in_transit' | 'delivered' | 'failed';
+
   // Ações
   setOrderStatus: (status: OrderStatus) => void;
   setChipDDD: (ddd: string) => void;
@@ -33,6 +36,7 @@ type AppState = {
   setSelectedDDD: (ddd: string) => void;
   setEsimActivationStep: (step: AppState['esimActivationStep']) => void;
   setEsimNumberAvailable: (available: boolean) => void;
+  setTrackingStatus: (status: AppState['trackingStatus']) => void;
   reset: () => void;
 };
 
@@ -47,6 +51,7 @@ const initialState = {
   selectedDDD: '11', // padrão = DDD da instalação
   esimActivationStep: 'idle' as const,
   esimNumberAvailable: false,
+  trackingStatus: 'confirmed' as const,
 };
 
 export const useAppState = create<AppState>()(
@@ -63,6 +68,7 @@ export const useAppState = create<AppState>()(
       setSelectedDDD: (selectedDDD) => set({ selectedDDD }),
       setEsimActivationStep: (esimActivationStep) => set({ esimActivationStep }),
       setEsimNumberAvailable: (esimNumberAvailable) => set({ esimNumberAvailable }),
+      setTrackingStatus: (trackingStatus) => set({ trackingStatus }),
       reset: () => set(initialState),
     }),
     { name: 'nio-mvno-state' }

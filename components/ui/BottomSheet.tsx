@@ -63,11 +63,11 @@ export function BottomSheet({
               <div className="w-10 h-1 rounded-full bg-border" />
             </div>
             {title && (
-              <div className="px-5 pt-2 pb-1">
+              <div className="px-6 pt-2 pb-1">
                 <h3 className="text-lg font-bold text-text-primary">{title}</h3>
               </div>
             )}
-            <div className="px-5 pb-8">
+            <div className="px-6 pb-8">
               {children}
             </div>
           </motion.div>
