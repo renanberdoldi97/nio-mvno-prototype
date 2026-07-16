@@ -4,30 +4,9 @@ import { useRouter } from 'next/navigation';
 import { Header } from '@/components/ui/Header';
 import { Button } from '@/components/ui/Button';
 import { PageTransition } from '@/components/ui/PageTransition';
+import { SuccessIcon } from '@/components/ui/SuccessIcon';
 import { useAppState } from '@/lib/state';
 import { MOCK_USER } from '@/lib/mock-data';
-
-function SuccessIcon() {
-  // Ícone estático (<img>) não aceita currentColor — recolore via CSS mask
-  // pra ficar verde sem tocar no SVG original nem duplicar o asset.
-  return (
-    <div
-      className="bg-primary"
-      style={{
-        width: 56,
-        height: 56,
-        WebkitMaskImage: 'url(/icons/CheckCircular.svg)',
-        maskImage: 'url(/icons/CheckCircular.svg)',
-        WebkitMaskSize: 'contain',
-        maskSize: 'contain',
-        WebkitMaskRepeat: 'no-repeat',
-        maskRepeat: 'no-repeat',
-        WebkitMaskPosition: 'center',
-        maskPosition: 'center',
-      }}
-    />
-  );
-}
 
 export default function ConfirmadoPage() {
   const router = useRouter();

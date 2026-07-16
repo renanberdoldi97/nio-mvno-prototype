@@ -24,3 +24,10 @@ export const MOCK_CHIP = {
   number: '9 8765-4321', // número gerado após ativação
   fullNumber: '(11) 9 8765-4321',
 };
+
+export const MOCK_ESIM = {
+  lpaCode: 'LPA:1$rsp.provider.com$ABCD-1234-EFGH-5678-IJKL-9012',
+  // deep link pra iOS Settings (não vai funcionar no browser — proposital)
+  deepLinkIOS: 'App-prefs:MOBILE_DATA_SETTINGS_ID',
+  deepLinkAndroid: 'intent:#Intent;action=android.settings.NETWORK_OPERATOR_SETTINGS;end',
+};

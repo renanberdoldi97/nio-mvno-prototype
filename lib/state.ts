@@ -6,7 +6,6 @@ import type { OrderStatus, PortabilityStatus, ChipType } from './types';
 
 type AppState = {
   // Chip principal
-  chipType: ChipType | null;
   orderStatus: OrderStatus;
   chipDDD: string;
   chipNumber: string | null;
@@ -20,8 +19,11 @@ type AppState = {
   selectedChipType: ChipType | null;
   selectedDDD: string;
 
+  // Ativação eSIM
+  esimActivationStep: 'idle' | 'confirming' | 'configuring' | 'done';
+  esimNumberAvailable: boolean; // true = número já disponível na conclusão
+
   // Ações
-  setChipType: (type: ChipType) => void;
   setOrderStatus: (status: OrderStatus) => void;
   setChipDDD: (ddd: string) => void;
   setChipNumber: (number: string) => void;
@@ -29,11 +31,12 @@ type AppState = {
   setOriginalLine: (number: string, carrier: string) => void;
   setSelectedChipType: (type: ChipType) => void;
   setSelectedDDD: (ddd: string) => void;
+  setEsimActivationStep: (step: AppState['esimActivationStep']) => void;
+  setEsimNumberAvailable: (available: boolean) => void;
   reset: () => void;
 };
 
 const initialState = {
-  chipType: null,
   orderStatus: 'not_started' as OrderStatus,
   chipDDD: '11',
   chipNumber: null,
@@ -42,13 +45,14 @@ const initialState = {
   originalCarrier: null,
   selectedChipType: null,
   selectedDDD: '11', // padrão = DDD da instalação
+  esimActivationStep: 'idle' as const,
+  esimNumberAvailable: false,
 };
 
 export const useAppState = create<AppState>()(
   persist(
     (set) => ({
       ...initialState,
-      setChipType: (chipType) => set({ chipType }),
       setOrderStatus: (orderStatus) => set({ orderStatus }),
       setChipDDD: (chipDDD) => set({ chipDDD }),
       setChipNumber: (chipNumber) => set({ chipNumber }),
@@ -57,6 +61,8 @@ export const useAppState = create<AppState>()(
         set({ originalNumber, originalCarrier }),
       setSelectedChipType: (selectedChipType) => set({ selectedChipType }),
       setSelectedDDD: (selectedDDD) => set({ selectedDDD }),
+      setEsimActivationStep: (esimActivationStep) => set({ esimActivationStep }),
+      setEsimNumberAvailable: (esimNumberAvailable) => set({ esimNumberAvailable }),
       reset: () => set(initialState),
     }),
     { name: 'nio-mvno-state' }
