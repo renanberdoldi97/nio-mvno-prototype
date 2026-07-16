@@ -34,7 +34,7 @@ export default function ScannerPage() {
           </button>
         </div>
 
-        <main className="flex-1 flex flex-col items-center px-8 pt-4">
+        <main className="flex-1 flex flex-col items-center px-8 pt-6">
           <p className="text-white text-sm text-center mb-8">
             Aponte a câmera para o QR Code ou código de barras
           </p>

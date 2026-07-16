@@ -21,7 +21,7 @@ type ButtonProps = {
 };
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: 'bg-primary text-black font-semibold border-0',
+  primary: 'bg-[var(--color-primary-background)] text-white font-semibold border-0',
   outline: 'bg-transparent text-text-primary font-semibold border-[1.5px] border-text-primary',
   ghost: 'bg-transparent text-primary font-semibold border-0',
   destructive: 'bg-error text-white font-semibold border-0',

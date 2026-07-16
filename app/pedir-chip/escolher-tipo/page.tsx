@@ -40,13 +40,13 @@ export default function EscolherTipoPage() {
         </>
       }
     >
-      <div className="px-6 pt-4 pb-5">
+      <div className="px-6 pt-6 pb-5">
         <h1 className="text-2xl font-bold text-[var(--color-neutral-text)] leading-tight">
           Escolha a melhor opção<br />pra você
         </h1>
       </div>
 
-      <div className="px-6 flex flex-col gap-3">
+      <div className="px-6 flex flex-col gap-4">
         {/* Card eSIM */}
         <Card
           variant={selectedChipType === 'esim' ? 'selected' : 'neutral'}
@@ -88,7 +88,7 @@ export default function EscolherTipoPage() {
               <p className="text-sm text-[var(--color-neutral-text-medium)] mt-1">
                 Receba o chip em casa e ative pelo app.
               </p>
-              <p className="text-sm font-semibold text-[var(--color-neutral-text)] mt-3">
+              <p className="text-base font-semibold text-[var(--color-neutral-text)] mt-3">
                 {MOCK_USER.address.short}
               </p>
             </div>

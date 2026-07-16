@@ -1,29 +1,33 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { StateCard } from '@/components/ui/StateCard';
+import { Button } from '@/components/ui/Button';
+import { Message } from '@/components/ui/Message';
 import { Stepper } from '@/components/ui/Stepper';
 import { JourneyLayout } from '@/components/ui/JourneyLayout';
-import { cn } from '@/lib/utils';
 import { useAppState } from '@/lib/state';
 import { MOCK_TRACKING } from '@/lib/mock-data';
-import { TRACKING_TITLES, TRACKING_STEPPER, TRACKING_CTA_LABEL, type TrackingStatus } from '@/lib/tracking';
+import { TRACKING_TITLES, TRACKING_STEPPER, TRACKING_CTA_LABEL } from '@/lib/tracking';
 
 const STEP_LABELS = ['Pedido', 'Transporte', 'Entrega'];
-
-const DEMO_OPTIONS: { label: string; value: TrackingStatus }[] = [
-  { label: 'Confirmado', value: 'confirmed' },
-  { label: 'Transporte', value: 'in_transit' },
-  { label: 'Entregue', value: 'delivered' },
-  { label: 'Falha', value: 'failed' },
-];
 
 export default function TrackingPage() {
   const router = useRouter();
   const trackingStatus = useAppState(s => s.trackingStatus);
   const setTrackingStatus = useAppState(s => s.setTrackingStatus);
+
+  // Progressão automática — assume o caminho feliz da entrega
+  useEffect(() => {
+    const timers: NodeJS.Timeout[] = [];
+    if (trackingStatus === 'confirmed') {
+      timers.push(setTimeout(() => setTrackingStatus('in_transit'), 8000));
+    } else if (trackingStatus === 'in_transit') {
+      timers.push(setTimeout(() => setTrackingStatus('delivered'), 8000));
+    }
+    return () => timers.forEach(clearTimeout);
+  }, [trackingStatus, setTrackingStatus]);
 
   const steps = TRACKING_STEPPER[trackingStatus].map((status, i) => ({
     key: STEP_LABELS[i],
@@ -57,25 +61,7 @@ export default function TrackingPage() {
         )
       }
     >
-      <div className="px-6 pt-4">
-        {/* Toggle de demo — só pra avaliação do protótipo */}
-        <div className="flex gap-2 flex-wrap mb-5">
-          {DEMO_OPTIONS.map(opt => (
-            <button
-              key={opt.value}
-              onClick={() => setTrackingStatus(opt.value)}
-              className={cn(
-                'px-3 py-1.5 rounded-full text-xs font-semibold',
-                trackingStatus === opt.value
-                  ? 'bg-[var(--color-primary-background)] text-white'
-                  : 'border border-[var(--color-neutral-border)] text-[var(--color-neutral-text-medium)]'
-              )}
-            >
-              Simular: {opt.label}
-            </button>
-          ))}
-        </div>
-
+      <div className="px-6 pt-6">
         <Card variant="white" elevated>
           <p className="font-bold text-lg text-[var(--color-neutral-text)] mb-5">
             {TRACKING_TITLES[trackingStatus]}
@@ -105,8 +91,8 @@ export default function TrackingPage() {
 
         {trackingStatus === 'delivered' && (
           <div className="mt-4">
-            <StateCard
-              variant="highlight"
+            <Message
+              kind="success"
               title="Guarde o cartão do chip, nele está o código que você vai usar pra ativar. Sem ele, a ativação não acontece."
             />
           </div>

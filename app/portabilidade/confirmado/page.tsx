@@ -1,10 +1,10 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
-import { StateCard } from '@/components/ui/StateCard';
+import { Message } from '@/components/ui/Message';
 import { JourneyLayout } from '@/components/ui/JourneyLayout';
-import { SuccessIcon } from '@/components/ui/SuccessIcon';
 
 export default function PortabilidadeConfirmadoPage() {
   const router = useRouter();
@@ -25,10 +25,10 @@ export default function PortabilidadeConfirmadoPage() {
         </>
       }
     >
-      <div className="px-6 pt-6 flex flex-col items-center text-center">
-        <SuccessIcon />
+      <div className="px-6 pt-6">
+        <Image src="/images/sucesso.png" alt="" width={28} height={28} unoptimized />
 
-        <h1 className="text-2xl font-bold text-[var(--color-neutral-text)] mt-4">
+        <h1 className="text-2xl font-bold text-[var(--color-neutral-text)] mt-3">
           Pedido confirmado!
         </h1>
 
@@ -37,9 +37,9 @@ export default function PortabilidadeConfirmadoPage() {
           números ficam ativos.
         </p>
 
-        <div className="w-full mt-6 text-left">
-          <StateCard
-            variant="info"
+        <div className="mt-6">
+          <Message
+            kind="info"
             title="Um SMS de confirmação será enviado no número da operadora atual"
             description="É só responder SIM pra concluir o processo."
           />

@@ -22,7 +22,7 @@ const paddingStyles = {
 };
 
 const variantStyles: Record<CardVariant, string> = {
-  neutral: 'bg-[var(--color-neutral-background-low)] border border-transparent',
+  neutral: 'bg-white border border-[var(--color-neutral-border)]',
   white: 'bg-white border border-[var(--color-neutral-border)]',
   selected: 'bg-[var(--color-primary-background-low)] border border-[var(--color-primary-background)]',
 };

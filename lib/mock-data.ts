@@ -9,7 +9,7 @@ export const MOCK_USER = {
     state: 'SP',
     zip: '05422-001',
     formatted: 'R. dos Pinheiros, 1200, São Paulo — SP (05422-001)',
-    short: 'R. dos Pinheiros, 1200 — São Paulo, SP',
+    short: 'R. dos Pinheiros, 1200, São Paulo, SP',
   },
   plan: {
     name: 'Nio Fibra Super',

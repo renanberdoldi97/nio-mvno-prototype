@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { StateCard } from '@/components/ui/StateCard';
+import { Message } from '@/components/ui/Message';
 import { JourneyLayout } from '@/components/ui/JourneyLayout';
 import { NioIcon } from '@/components/icons';
 import { MOCK_CHIP } from '@/lib/mock-data';
@@ -34,9 +35,12 @@ export default function ConcluidoFisicoPage() {
         </>
       }
     >
-      <h1 className="text-2xl font-bold text-[var(--color-neutral-text)] px-6 pt-6">
-        Ativação concluída!
-      </h1>
+      <div className="flex items-center gap-2 px-6 pt-6">
+        <Image src="/images/sucesso.png" alt="" width={28} height={28} unoptimized />
+        <h1 className="text-2xl font-bold text-[var(--color-neutral-text)]">
+          Ativação concluída!
+        </h1>
+      </div>
 
       <p className="text-sm text-[var(--color-neutral-text-medium)] px-6 mt-2">
         Você já pode utilizar o seu novo chip móvel e fazer a portabilidade do seu número.
@@ -55,8 +59,8 @@ export default function ConcluidoFisicoPage() {
       </div>
 
       <div className="px-6 mt-3">
-        <StateCard
-          variant="info"
+        <Message
+          kind="info"
           title="Quer continuar usando seu número antigo?"
           description="Peça a portabilidade e volte a usar o seu número em até 3 dias úteis."
         />

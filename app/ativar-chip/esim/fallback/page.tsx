@@ -53,10 +53,10 @@ export default function FallbackPage() {
   return (
     <JourneyLayout
       title="Ativar chip móvel"
-      onBack={() => router.push('/ativar-chip/esim/configurando')}
+      onBack={() => router.push('/ativar-chip/esim')}
       cta={<Button onClick={handleGoToSettings}>Ir pra configurações</Button>}
     >
-      <div className="px-6 pt-4">
+      <div className="px-6 pt-6">
         <h1 className="text-2xl font-bold text-[var(--color-neutral-text)] mb-1">
           Configure o eSIM manualmente
         </h1>

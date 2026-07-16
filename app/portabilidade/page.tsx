@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { StateCard } from '@/components/ui/StateCard';
+import { Message } from '@/components/ui/Message';
 import { BottomSheet } from '@/components/ui/BottomSheet';
 import { JourneyLayout } from '@/components/ui/JourneyLayout';
 import { NioIcon } from '@/components/icons';
@@ -66,7 +66,7 @@ export default function PortabilidadePage() {
         </BottomSheet>
       }
     >
-      <div className="px-6 pt-4">
+      <div className="px-6 pt-6">
         <h1 className="text-2xl font-bold text-[var(--color-neutral-text)] mb-2">
           Vamos trazer seu número
         </h1>
@@ -95,8 +95,8 @@ export default function PortabilidadePage() {
         </button>
 
         {carrier && (
-          <StateCard
-            variant="highlight"
+          <Message
+            kind="success"
             title={`Só é possível portar números com DDD (${selectedDDD})`}
             className="mb-5"
           />

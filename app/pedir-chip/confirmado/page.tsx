@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { JourneyLayout } from '@/components/ui/JourneyLayout';
@@ -22,7 +23,7 @@ export default function ConfirmadoPage() {
     if (!isPhysical) return;
     let active = true;
     (async () => {
-      await sleep(800);
+      await sleep(200);
       if (!active) return;
       setOrderStatus('pending_delivery');
       setTrackingStatus('confirmed');
@@ -55,9 +56,12 @@ export default function ConfirmadoPage() {
         )
       }
     >
-      <h1 className="text-2xl font-bold text-[var(--color-neutral-text)] px-6 pt-6">
-        Pedido confirmado!
-      </h1>
+      <div className="flex items-center gap-2 px-6 pt-6">
+        <Image src="/images/sucesso.png" alt="" width={28} height={28} unoptimized />
+        <h1 className="text-2xl font-bold text-[var(--color-neutral-text)]">
+          Pedido confirmado!
+        </h1>
+      </div>
 
       <p className="text-sm text-[var(--color-neutral-text-medium)] px-6 mt-2">
         {isPhysical

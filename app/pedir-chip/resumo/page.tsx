@@ -31,31 +31,39 @@ export default function ResumoPage() {
         <BottomSheet
           isOpen={planSheetOpen}
           onClose={() => setPlanSheetOpen(false)}
-          title="Plano 50 GB"
         >
-          <NioIcon name="info" size={24} className="mb-3" />
+          <div className="flex items-center gap-2 mb-4">
+            <NioIcon name="info" size={20} />
+            <h3 className="text-lg font-bold text-[var(--color-neutral-text)]">Plano 50 GB</h3>
+          </div>
 
-          <div className="bg-[var(--color-neutral-background-low)] rounded-2xl p-4">
-            <p className="text-sm font-semibold text-[var(--color-neutral-text-medium)] mb-1">Seu plano</p>
-            <p className="text-sm text-[var(--color-neutral-text)] mb-4">
-              Seu chip móvel inclui 50 GB por mês. A franquia é separada da sua internet Nio Fibra.
+          <Card variant="neutral" padding="md">
+            <span className="text-sm text-[var(--color-neutral-text-medium)]">Seu plano</span>
+            <p className="text-sm mt-2 text-[var(--color-neutral-text)]">
+              Seu chip móvel inclui <strong>50 GB por mês</strong>. A franquia é separada da sua internet Nio Fibra.
             </p>
 
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-4 mt-5">
               <div className="flex items-start gap-3">
-                <NioIcon name="smartphone" size={18} className="mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-[var(--color-neutral-text)]">
-                  Ligações e SMS ilimitados — Pra qualquer operadora, em todo o Brasil
-                </p>
+                <NioIcon name="smartphone" size={22} className="flex-shrink-0" />
+                <div>
+                  <p className="text-xs text-[var(--color-neutral-text-medium)]">Ligações e SMS ilimitados</p>
+                  <p className="text-sm font-bold text-[var(--color-neutral-text)] mt-0.5">
+                    Pra qualquer operadora, em todo o Brasil
+                  </p>
+                </div>
               </div>
               <div className="flex items-start gap-3">
-                <NioIcon name="whatsapp" size={18} className="mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-[var(--color-neutral-text)]">
-                  WhatsApp ilimitado — Pra mensagens de texto e voz
-                </p>
+                <NioIcon name="whatsapp" size={22} className="flex-shrink-0" />
+                <div>
+                  <p className="text-xs text-[var(--color-neutral-text-medium)]">WhatsApp ilimitado</p>
+                  <p className="text-sm font-bold text-[var(--color-neutral-text)] mt-0.5">
+                    Pra mensagens de texto e voz
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          </Card>
 
           <p className="text-xs text-[var(--color-neutral-text-medium)] my-5">
             Quando os dados da franquia acabarem, a velocidade reduz.
@@ -65,13 +73,13 @@ export default function ResumoPage() {
         </BottomSheet>
       }
     >
-      <div className="px-6 pt-4 pb-5">
+      <div className="px-6 pt-6 pb-5">
         <h1 className="text-2xl font-bold text-[var(--color-neutral-text)] leading-tight">
           Confira os detalhes<br />do seu pedido
         </h1>
       </div>
 
-      <div className="px-6 flex flex-col gap-3">
+      <div className="px-6 flex flex-col gap-4">
         {/* Card 1 — Tipo de chip */}
         <Card variant="neutral">
           <div className="flex items-center justify-between mb-2">
@@ -106,15 +114,15 @@ export default function ResumoPage() {
 
         {/* Card 3 — Plano */}
         <Card variant="neutral">
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-1.5">
+          <div className="flex items-start justify-between">
+            <div className="flex-1">
               <span className="text-sm text-[var(--color-neutral-text-medium)]">Plano</span>
-              <button onClick={() => setPlanSheetOpen(true)}>
-                <NioIcon name="info" size={16} />
-              </button>
+              <p className="font-bold text-[var(--color-neutral-text)] mt-2">50 GB + Ligações ilimitadas</p>
             </div>
+            <button onClick={() => setPlanSheetOpen(true)} className="flex-shrink-0 ml-3">
+              <NioIcon name="info" size={20} />
+            </button>
           </div>
-          <p className="font-bold text-[var(--color-neutral-text)]">50 GB + Ligações ilimitadas</p>
         </Card>
       </div>
     </JourneyLayout>

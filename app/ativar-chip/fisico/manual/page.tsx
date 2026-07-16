@@ -23,7 +23,7 @@ export default function ManualActivationPage() {
         </Button>
       }
     >
-      <div className="px-6 pt-4">
+      <div className="px-6 pt-6">
         <h1 className="text-2xl font-bold text-[var(--color-neutral-text)] mb-2">
           Seu código de ativação
         </h1>
