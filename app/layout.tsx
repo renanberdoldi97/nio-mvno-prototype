@@ -37,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={plusJakarta.variable}>
       <body className="antialiased">
-        <div className="mx-auto w-full max-w-[430px] h-[100dvh] bg-background relative overflow-hidden">
+        <div className="mx-auto w-full max-w-[430px] h-[100dvh] bg-white relative overflow-hidden">
           {children}
         </div>
       </body>

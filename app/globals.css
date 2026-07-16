@@ -6,7 +6,7 @@
   --color-primary-dark: #1A7A00;
   --color-primary-darker: #0F3D24;
   --color-surface: #FFFFFF;
-  --color-background: #F5F5F5;
+  --color-background: #FFFFFF;
   --color-text-primary: #1A1A1A;
   --color-text-secondary: #6B6B6B;
   --color-text-disabled: #ABABAB;
@@ -26,7 +26,7 @@
   --color-primary-background-low: #E5EFDD;
   --color-primary-text: #0F3D24;
   --color-neutral-text: #1A1A1A;
-  --color-neutral-background: #F5F5F5;
+  --color-neutral-background: #FFFFFF;
 
   /* Tipografia */
   --font-sans: var(--font-plus-jakarta), system-ui, sans-serif;

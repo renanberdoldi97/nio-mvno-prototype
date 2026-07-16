@@ -37,30 +37,15 @@ export default function HomePage() {
           HERO — banner de descoberta do chip móvel
           Fundo verde escuro, alinhado à esquerda, chip flutuante à direita
       ============================================================ */}
-      <section className="bg-[var(--color-primary-background)] px-5 pt-4 pb-10 rounded-b-3xl relative overflow-hidden">
-        {/* Rastro grande — mancha decorativa atrás do chip */}
+      <section className="bg-[var(--color-primary-background)] px-6 pt-4 pb-10 rounded-b-3xl relative overflow-hidden">
+        {/* Rastro decorativo — único SVG grande, muito sutil, atrás do chip */}
         <div
-          className="absolute -right-8 -top-4 pointer-events-none z-0 opacity-40"
-          style={{ width: 280, height: 280 }}
+          className="absolute -right-12 -top-8 pointer-events-none z-0 opacity-20"
+          style={{ width: 320, height: 320 }}
           aria-hidden
         >
           <Image
             src="/images/rastro-tornado-neon.svg"
-            alt=""
-            fill
-            className="object-contain"
-            unoptimized
-          />
-        </div>
-
-        {/* Rastro secundário — folha menor no canto inferior esquerdo do hero */}
-        <div
-          className="absolute -left-6 -bottom-8 pointer-events-none z-0 opacity-25"
-          style={{ width: 140, height: 140 }}
-          aria-hidden
-        >
-          <Image
-            src="/images/rastro-e-escuro.svg"
             alt=""
             fill
             className="object-contain"
@@ -125,7 +110,7 @@ export default function HomePage() {
           Tag "Novo" ABAIXO do label, não acima do ícone.
       ============================================================ */}
       <section className="pt-7 pb-4">
-        <div className="flex gap-5 overflow-x-auto no-scrollbar px-5 pb-2">
+        <div className="flex gap-5 overflow-x-auto no-scrollbar px-6 pb-2">
           {quickActions.map((action, i) => (
             <motion.button
               key={i}
@@ -157,7 +142,7 @@ export default function HomePage() {
       {/* ============================================================
           OFERTAS E BENEFÍCIOS — card com boneco flutuante
       ============================================================ */}
-      <section className="px-5 pt-6 pb-4">
+      <section className="px-6 pt-6 pb-4">
         <h2 className="text-base font-bold text-[var(--color-neutral-text)] mb-3">
           Ofertas e benefícios para você
         </h2>
