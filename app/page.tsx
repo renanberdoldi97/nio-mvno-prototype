@@ -37,14 +37,44 @@ export default function HomePage() {
           HERO — banner de descoberta do chip móvel
           Fundo verde escuro, alinhado à esquerda, chip flutuante à direita
       ============================================================ */}
-      <section className="bg-[var(--color-primary-background)] px-5 pt-4 pb-8 rounded-b-3xl relative overflow-hidden">
+      <section className="bg-[var(--color-primary-background)] px-5 pt-4 pb-10 rounded-b-3xl relative overflow-hidden">
+        {/* Rastro grande — mancha decorativa atrás do chip */}
+        <div
+          className="absolute -right-8 -top-4 pointer-events-none z-0 opacity-40"
+          style={{ width: 280, height: 280 }}
+          aria-hidden
+        >
+          <Image
+            src="/images/rastro-tornado-neon.svg"
+            alt=""
+            fill
+            className="object-contain"
+            unoptimized
+          />
+        </div>
+
+        {/* Rastro secundário — folha menor no canto inferior esquerdo do hero */}
+        <div
+          className="absolute -left-6 -bottom-8 pointer-events-none z-0 opacity-25"
+          style={{ width: 140, height: 140 }}
+          aria-hidden
+        >
+          <Image
+            src="/images/rastro-e-escuro.svg"
+            alt=""
+            fill
+            className="object-contain"
+            unoptimized
+          />
+        </div>
+
         {/* Chip flutuante — canto superior direito, ligeiramente rotacionado */}
         <motion.div
           initial={{ opacity: 0, y: -10, rotate: -15 }}
           animate={{ opacity: 1, y: 0, rotate: -12 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="absolute right-2 top-2 z-0 pointer-events-none"
-          style={{ width: 180, height: 200 }}
+          className="absolute -right-4 top-1 z-10 pointer-events-none"
+          style={{ width: 260, height: 290 }}
         >
           <Image
             src="/images/chip-flutuante.png"
@@ -57,7 +87,7 @@ export default function HomePage() {
         </motion.div>
 
         {/* Conteúdo do hero — alinhado à esquerda */}
-        <div className="relative z-10 max-w-[220px]">
+        <div className="relative z-20 max-w-[220px]">
           {/* Badge "Benefício disponível" */}
           <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--color-primary-background-high)]/20 mb-4">
             <NioIcon
@@ -94,14 +124,14 @@ export default function HomePage() {
           Sem borda, sem card ao redor. Ícone é o botão.
           Tag "Novo" ABAIXO do label, não acima do ícone.
       ============================================================ */}
-      <section className="pt-6 pb-2">
-        <div className="flex gap-3 overflow-x-auto no-scrollbar px-5 pb-2">
+      <section className="pt-7 pb-4">
+        <div className="flex gap-5 overflow-x-auto no-scrollbar px-5 pb-2">
           {quickActions.map((action, i) => (
             <motion.button
               key={i}
               whileTap={{ scale: 0.92 }}
               onClick={() => router.push(action.route)}
-              className="flex flex-col items-center flex-shrink-0 gap-1.5 w-[68px]"
+              className="flex flex-col items-center flex-shrink-0 gap-2 w-[72px]"
             >
               {/* Ícone SEM card/borda — o próprio SVG é o botão */}
               <div className="w-12 h-12 flex items-center justify-center">
