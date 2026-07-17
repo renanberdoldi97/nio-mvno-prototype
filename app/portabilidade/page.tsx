@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
-import { Message } from '@/components/ui/Message';
 import { BottomSheet } from '@/components/ui/BottomSheet';
 import { JourneyLayout } from '@/components/ui/JourneyLayout';
 import { NioIcon } from '@/components/icons';
@@ -13,7 +13,6 @@ import { MOCK_CARRIERS } from '@/lib/mock-data';
 
 export default function PortabilidadePage() {
   const router = useRouter();
-  const selectedDDD = useAppState(s => s.selectedDDD);
   const setOriginalLine = useAppState(s => s.setOriginalLine);
   const setPortabilityStatus = useAppState(s => s.setPortabilityStatus);
 
@@ -91,18 +90,10 @@ export default function PortabilidadePage() {
           <span className={carrier ? 'text-base text-[var(--color-neutral-text)]' : 'text-base text-[var(--color-neutral-text-medium)]'}>
             {carrier ?? 'Operadora atual'}
           </span>
-          <NioIcon name="arrow-down" size={18} />
+          <NioIcon name="chevron-down" size={20} />
         </button>
 
-        {carrier && (
-          <Message
-            kind="success"
-            title={`Só é possível portar números com DDD (${selectedDDD})`}
-            className="mb-5"
-          />
-        )}
-
-        <div className="bg-[var(--color-primary-background-low)] rounded-2xl p-4">
+        <Card variant="neutral">
           <p className="text-sm font-semibold text-[var(--color-neutral-text)] mb-2">
             Importante saber
           </p>
@@ -116,7 +107,7 @@ export default function PortabilidadePage() {
               <span>Para o mesmo CPF do titular da Nio Fibra</span>
             </li>
           </ul>
-        </div>
+        </Card>
       </div>
     </JourneyLayout>
   );

@@ -2,10 +2,10 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { JourneyLayout } from '@/components/ui/JourneyLayout';
+import { NioIcon } from '@/components/icons';
 import { useAppState } from '@/lib/state';
 import { MOCK_USER } from '@/lib/mock-data';
 import { sleep } from '@/lib/utils';
@@ -40,12 +40,9 @@ export default function ConfirmadoPage() {
       transition="fade"
       cta={
         isPhysical ? (
-          <>
-            <Button onClick={() => router.push('/tracking')}>Acompanhar entrega</Button>
-            <Button variant="outline" onClick={() => router.push('/')}>
-              Voltar para o início
-            </Button>
-          </>
+          <Button variant="outline" onClick={() => router.push('/')}>
+            Voltar para o início
+          </Button>
         ) : (
           <>
             <Button onClick={() => router.push('/ativar-chip/esim')}>Ativar eSIM</Button>
@@ -56,17 +53,27 @@ export default function ConfirmadoPage() {
         )
       }
     >
-      <div className="flex items-center gap-2 px-6 pt-6">
-        <Image src="/images/sucesso.png" alt="" width={28} height={28} unoptimized />
-        <h1 className="text-2xl font-bold text-[var(--color-neutral-text)]">
-          Pedido confirmado!
-        </h1>
+      <div className="px-6 pt-6">
+        {isPhysical ? (
+          <div className="flex items-center gap-2 mb-2">
+            <div className="text-[var(--color-primary-background)]">
+              <NioIcon name="check-circle" size={28} />
+            </div>
+            <h1 className="text-2xl font-bold text-[var(--color-neutral-text)]">
+              Pedido confirmado!
+            </h1>
+          </div>
+        ) : (
+          <h1 className="text-2xl font-bold text-[var(--color-neutral-text)] mb-2">
+            Tudo pronto!
+          </h1>
+        )}
       </div>
 
       <p className="text-sm text-[var(--color-neutral-text-medium)] px-6 mt-2">
         {isPhysical
           ? 'Seu chip já está sendo separado. A gente te avisa por aqui até ele chegar na sua casa.'
-          : 'Seu eSIM está pronto pra ser ativado. Garanta que seu aparelho está conectado a internet antes de começar a ativação.'}
+          : 'Seu chip móvel foi solicitado. É só ativar o eSIM agora pra começar a usar.'}
       </p>
 
       <div className="px-6 mt-6">

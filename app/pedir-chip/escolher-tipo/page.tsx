@@ -49,7 +49,7 @@ export default function EscolherTipoPage() {
       <div className="px-6 flex flex-col gap-4">
         {/* Card eSIM */}
         <Card
-          variant={selectedChipType === 'esim' ? 'selected' : 'neutral'}
+          variant={selectedChipType === 'esim' ? 'selected' : 'white'}
           onClick={() => setSelectedChipType('esim')}
           padding="md"
         >
@@ -74,7 +74,7 @@ export default function EscolherTipoPage() {
 
         {/* Card Chip Físico */}
         <Card
-          variant={selectedChipType === 'physical' ? 'selected' : 'neutral'}
+          variant={selectedChipType === 'physical' ? 'selected' : 'white'}
           onClick={() => setSelectedChipType('physical')}
           padding="md"
         >

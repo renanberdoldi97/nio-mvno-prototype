@@ -35,9 +35,16 @@ export default function AtivarFisicoPage() {
       title="Ativar chip móvel"
       onBack={() => router.push('/')}
       cta={
-        <Button onClick={() => router.push('/ativar-chip/fisico/scanner')}>
-          Ativar chip
-        </Button>
+        <>
+          <Message
+            kind="info"
+            title="Guarde o cartão do chip, nele está o código pra ativar."
+            className="mb-0"
+          />
+          <Button onClick={() => router.push('/ativar-chip/fisico/scanner')}>
+            Ativar chip
+          </Button>
+        </>
       }
       overlay={
         <BottomSheet
@@ -92,12 +99,6 @@ export default function AtivarFisicoPage() {
             </div>
           ))}
         </div>
-
-        <Message
-          kind="warning"
-          title="Importante!"
-          description="Guarde o cartão do chip, nele está o código que você vai usar pra ativar. Sem ele, a ativação não acontece."
-        />
       </div>
     </JourneyLayout>
   );

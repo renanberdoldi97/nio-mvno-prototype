@@ -22,8 +22,11 @@ const paddingStyles = {
 };
 
 const variantStyles: Record<CardVariant, string> = {
-  neutral: 'bg-white border border-[var(--color-neutral-border)]',
+  // Conteúdo passivo (resumo, informações, plano). BEGE.
+  neutral: 'bg-[var(--color-neutral-background-low)] border border-transparent',
+  // Interativo/selecionável não selecionado. BRANCO com stroke.
   white: 'bg-white border border-[var(--color-neutral-border)]',
+  // Interativo/selecionável selecionado. Verde clarinho + stroke verde escuro.
   selected: 'bg-[var(--color-primary-background-low)] border border-[var(--color-primary-background)]',
 };
 

@@ -21,12 +21,14 @@ export function Header({
 }: HeaderProps) {
   const isPrimary = variant === 'primary';
   const isTransparent = variant === 'transparent';
-  const showLogo = !showBack && !title;
+  // Logo só aparece na home (variant="primary"). Telas de jornada (white/transparent)
+  // nunca renderizam logo, mesmo sem back/title.
+  const showLogo = isPrimary && !showBack && !title;
 
   return (
     <header className={cn(
-      'w-full px-6 h-14 flex items-center relative flex-shrink-0',
-      isPrimary ? 'bg-primary-darker' : isTransparent ? 'bg-transparent' : 'bg-white border-b border-border'
+      'w-full px-6 h-16 flex items-center relative flex-shrink-0',
+      isPrimary ? 'bg-primary-darker' : isTransparent ? 'bg-transparent' : 'bg-white'
     )}>
       {/* Esquerda: back ou logo */}
       <div className="flex items-center flex-1 min-w-0">

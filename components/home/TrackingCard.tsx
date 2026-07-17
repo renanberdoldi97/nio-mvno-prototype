@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card } from '@/components/ui/Card';
 import { ChipTag } from '@/components/ui/ChipTag';
@@ -15,6 +16,18 @@ export function TrackingCard() {
   const trackingStatus = useAppState(s => s.trackingStatus);
   const setTrackingStatus = useAppState(s => s.setTrackingStatus);
 
+  // Progressão automática — caminho feliz da entrega, direto na home
+  useEffect(() => {
+    if (trackingStatus === 'confirmed') {
+      const t = setTimeout(() => setTrackingStatus('in_transit'), 8000);
+      return () => clearTimeout(t);
+    }
+    if (trackingStatus === 'in_transit') {
+      const t = setTimeout(() => setTrackingStatus('delivered'), 8000);
+      return () => clearTimeout(t);
+    }
+  }, [trackingStatus, setTrackingStatus]);
+
   const steps = TRACKING_STEPPER[trackingStatus].map((status, i) => ({
     key: STEP_LABELS[i],
     label: STEP_LABELS[i],
@@ -23,9 +36,6 @@ export function TrackingCard() {
 
   function handleCta() {
     switch (trackingStatus) {
-      case 'confirmed':
-        router.push('/tracking');
-        break;
       case 'in_transit':
         setTrackingStatus('delivered');
         break;
@@ -55,7 +65,9 @@ export function TrackingCard() {
         </div>
       )}
 
-      <Button onClick={handleCta}>{TRACKING_CTA_LABEL[trackingStatus]}</Button>
+      {trackingStatus !== 'confirmed' && (
+        <Button onClick={handleCta}>{TRACKING_CTA_LABEL[trackingStatus]}</Button>
+      )}
     </Card>
   );
 }

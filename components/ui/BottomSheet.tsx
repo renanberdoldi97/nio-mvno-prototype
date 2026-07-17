@@ -53,7 +53,7 @@ export function BottomSheet({
             exit={{ y: '100%' }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             className={cn(
-              'absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl z-50',
+              'absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl z-50',
               'max-h-[90%] overflow-y-auto no-scrollbar',
               className
             )}

@@ -31,6 +31,7 @@ const ICON_MAP: Record<string, string> = {
   'arrow-right': '/icons/SetaDireita.svg',
   'arrow-up': '/icons/SetaCima.svg',
   'arrow-down': '/icons/SetaBaixo.svg',
+  'chevron-down': '/icons/ChevronBaixo.svg',
   'menu': '/icons/Menu.svg',
   'more': '/icons/TresPontosMenu.svg',
   'three-dots': '/icons/DotsThreeOutlineFill.svg',

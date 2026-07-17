@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Message } from '@/components/ui/Message';
@@ -35,8 +34,7 @@ export default function ConcluidoFisicoPage() {
         </>
       }
     >
-      <div className="flex items-center gap-2 px-6 pt-6">
-        <Image src="/images/sucesso.png" alt="" width={28} height={28} unoptimized />
+      <div className="px-6 pt-6">
         <h1 className="text-2xl font-bold text-[var(--color-neutral-text)]">
           Ativação concluída!
         </h1>

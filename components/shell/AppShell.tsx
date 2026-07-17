@@ -27,7 +27,7 @@ export function AppShell({
   return (
     <div className="w-full h-full flex flex-col bg-[var(--color-neutral-background)] relative">
       <Header variant={variant} showUser={showUser} />
-      <main className="flex-1 overflow-y-auto no-scrollbar pb-20">
+      <main className="flex-1 overflow-y-auto no-scrollbar pt-4 pb-20">
         {children}
       </main>
       {showBottomNav && <BottomNav />}

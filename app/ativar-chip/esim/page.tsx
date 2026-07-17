@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
@@ -10,6 +9,7 @@ import { Message } from '@/components/ui/Message';
 import { BottomSheet } from '@/components/ui/BottomSheet';
 import { JourneyLayout } from '@/components/ui/JourneyLayout';
 import { ProgressCircle } from '@/components/ui/ProgressCircle';
+import { NioIcon } from '@/components/icons';
 import { useAppState } from '@/lib/state';
 
 type Step = 'idle' | 'activated' | 'configuring';
@@ -99,8 +99,10 @@ export default function AtivarEsimPage() {
       }
     >
       <div className="px-6 pt-6">
-        <div className="flex items-center gap-2">
-          <Image src="/images/sucesso.png" alt="" width={28} height={28} unoptimized />
+        <div className="flex items-center gap-2 mb-2">
+          <div className="text-[var(--color-primary-background)]">
+            <NioIcon name="check-circle" size={28} />
+          </div>
           <h1 className="text-2xl font-bold text-[var(--color-neutral-text)]">
             Pedido confirmado!
           </h1>

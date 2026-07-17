@@ -34,78 +34,84 @@ export default function HomePage() {
   const router = useRouter();
   const orderStatus = useAppState(s => s.orderStatus);
 
+  // Esconde o hero de descoberta quando já existe um pedido de chip em andamento
+  const hasActiveOrder = ['pending_delivery', 'in_transit', 'delivered', 'ready_to_activate']
+    .includes(orderStatus);
+
   return (
     <AppShell headerVariant="home">
       {/* ============================================================
           HERO — banner de descoberta do chip móvel
           Fundo verde escuro, alinhado à esquerda, chip flutuante à direita
       ============================================================ */}
-      <section className="bg-[var(--color-primary-background)] px-6 pt-4 pb-10 rounded-b-3xl relative overflow-hidden">
-        {/* Rastro decorativo — único SVG grande, muito sutil, atrás do chip */}
-        <div
-          className="absolute -right-12 -top-8 pointer-events-none z-0 opacity-20"
-          style={{ width: 320, height: 320 }}
-          aria-hidden
-        >
-          <Image
-            src="/images/rastro-tornado-neon.svg"
-            alt=""
-            fill
-            className="object-contain"
-            unoptimized
-          />
-        </div>
-
-        {/* Chip flutuante — canto superior direito, ligeiramente rotacionado */}
-        <motion.div
-          initial={{ opacity: 0, y: -10, rotate: -15 }}
-          animate={{ opacity: 1, y: 0, rotate: -12 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="absolute -right-4 top-1 z-10 pointer-events-none"
-          style={{ width: 260, height: 290 }}
-        >
-          <Image
-            src="/images/chip-flutuante.png"
-            alt=""
-            fill
-            className="object-contain"
-            unoptimized
-            priority
-          />
-        </motion.div>
-
-        {/* Conteúdo do hero — alinhado à esquerda */}
-        <div className="relative z-20 max-w-[220px]">
-          {/* Badge "Benefício disponível" */}
-          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--color-primary-background-high)]/20 mb-4">
-            <NioIcon
-              name="check-circle"
-              size={14}
-              className="brightness-0 invert opacity-90"
+      {!hasActiveOrder && (
+        <section className="bg-[var(--color-primary-background)] px-6 pt-4 pb-10 rounded-b-2xl relative overflow-hidden">
+          {/* Rastro decorativo — único SVG grande, muito sutil, atrás do chip */}
+          <div
+            className="absolute -right-12 -top-8 pointer-events-none z-0 opacity-20"
+            style={{ width: 320, height: 320 }}
+            aria-hidden
+          >
+            <Image
+              src="/images/rastro-tornado-neon.svg"
+              alt=""
+              fill
+              className="object-contain"
+              unoptimized
             />
-            <span className="text-[11px] font-semibold text-white">Benefício disponível</span>
           </div>
 
-          {/* Título */}
-          <h1 className="text-[26px] font-bold text-white leading-[1.15] mb-2">
-            Peça agora<br />seu chip móvel
-          </h1>
-
-          {/* Descrição */}
-          <p className="text-[13px] text-white/80 mb-5 leading-relaxed">
-            Internet que te acompanha, já inclusa no seu plano Nio Fibra.
-          </p>
-
-          {/* CTA branco arredondado, alinhado à esquerda */}
-          <motion.button
-            whileTap={{ scale: 0.96 }}
-            onClick={() => router.push('/pedir-chip')}
-            className="bg-white text-[var(--color-primary-text)] font-bold px-6 py-3 rounded-full text-sm"
+          {/* Chip flutuante — canto superior direito, ligeiramente rotacionado */}
+          <motion.div
+            initial={{ opacity: 0, y: -10, rotate: -15 }}
+            animate={{ opacity: 1, y: 0, rotate: -12 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            className="absolute -right-4 top-1 z-10 pointer-events-none"
+            style={{ width: 260, height: 290 }}
           >
-            Pedir meu chip
-          </motion.button>
-        </div>
-      </section>
+            <Image
+              src="/images/chip-flutuante.png"
+              alt=""
+              fill
+              className="object-contain"
+              unoptimized
+              priority
+            />
+          </motion.div>
+
+          {/* Conteúdo do hero — alinhado à esquerda */}
+          <div className="relative z-20 max-w-[220px]">
+            {/* Badge "Benefício disponível" */}
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--color-primary-background-high)]/20 mb-4">
+              <NioIcon
+                name="check-circle"
+                size={14}
+                className="brightness-0 invert opacity-90"
+              />
+              <span className="text-[11px] font-semibold text-white">Benefício disponível</span>
+            </div>
+
+            {/* Título */}
+            <h1 className="text-[26px] font-bold text-white leading-[1.15] mb-2">
+              Peça agora<br />seu chip móvel
+            </h1>
+
+            {/* Descrição */}
+            <p className="text-[13px] text-white/80 mb-5 leading-relaxed">
+              Internet que te acompanha, já inclusa no seu plano Nio Fibra.
+            </p>
+
+            {/* CTA branco arredondado, alinhado à esquerda */}
+            <motion.button
+              whileTap={{ scale: 0.96 }}
+              onClick={() => router.push('/pedir-chip')}
+              className="bg-white text-[var(--color-primary-text)] font-bold px-6 py-3 rounded-full text-sm"
+            >
+              Pedir meu chip
+            </motion.button>
+          </div>
+        </section>
+      )}
 
       {/* ============================================================
           TRACKING — card de acompanhamento do chip físico em entrega
