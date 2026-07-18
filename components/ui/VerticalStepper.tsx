@@ -1,25 +1,45 @@
 'use client';
 
-import { NioIcon } from '@/components/icons';
+import { NioIcon, type IconName } from '@/components/icons';
 import { cn } from '@/lib/utils';
 
 export type VerticalStep = {
   key: string;
   title: string;
+  caption?: string;
   description?: string;
+  icon?: IconName;
   status: 'completed' | 'active' | 'pending';
 };
 
-export function VerticalStepper({ steps }: { steps: VerticalStep[] }) {
+type VerticalStepperProps = {
+  steps: VerticalStep[];
+  // 'progress' = comportamento padrão com check/pending/active (tracking, portabilidade)
+  // 'timeline' = todos os círculos ficam verde clarinho com ícone customizado dentro,
+  // usado pra sequências informativas (não representam progresso real do usuário)
+  variant?: 'progress' | 'timeline';
+};
+
+export function VerticalStepper({ steps, variant = 'progress' }: VerticalStepperProps) {
+  const isTimeline = variant === 'timeline';
+
   return (
     <div className="flex flex-col">
       {steps.map((step, i) => (
         <div key={step.key} className="flex gap-3">
           {/* Coluna do círculo + linha */}
           <div className="flex flex-col items-center">
-            {step.status === 'completed' ? (
+            {isTimeline ? (
+              <div className="w-6 h-6 rounded-full bg-[var(--color-primary-background-low)] flex items-center justify-center flex-shrink-0">
+                {step.icon && <NioIcon name={step.icon} size={14} />}
+              </div>
+            ) : step.status === 'completed' ? (
               <div className="w-6 h-6 rounded-full bg-[var(--color-primary-background)] flex items-center justify-center flex-shrink-0">
-                <NioIcon name="check" size={14} className="brightness-0 invert" />
+                <NioIcon
+                  name={step.icon ?? 'check'}
+                  size={14}
+                  className="brightness-0 invert"
+                />
               </div>
             ) : step.status === 'active' ? (
               <div className="w-6 h-6 rounded-full border-2 border-[var(--color-primary-background)] bg-white flex items-center justify-center flex-shrink-0">
@@ -33,7 +53,9 @@ export function VerticalStepper({ steps }: { steps: VerticalStep[] }) {
             {i < steps.length - 1 && (
               <div className={cn(
                 'w-0.5 flex-1 min-h-[32px] mt-1 mb-1',
-                step.status === 'completed'
+                isTimeline
+                  ? 'bg-[var(--color-primary-background-low)]'
+                  : step.status === 'completed'
                   ? 'bg-[var(--color-primary-background)]'
                   : 'bg-[var(--color-neutral-border)]'
               )} />
@@ -45,6 +67,11 @@ export function VerticalStepper({ steps }: { steps: VerticalStep[] }) {
             'flex-1',
             i < steps.length - 1 ? 'pb-5' : ''
           )}>
+            {step.caption && (
+              <p className="text-xs text-[var(--color-neutral-text-medium)] mb-0.5">
+                {step.caption}
+              </p>
+            )}
             <p className={cn(
               'text-base font-bold leading-tight',
               step.status === 'pending'

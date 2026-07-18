@@ -19,24 +19,29 @@ type QuickAction = {
   isNew?: boolean;
 };
 
-const quickActions: QuickAction[] = [
-  { label: 'Pedir\nmeu chip', icon: 'shortcut-pedir-chip', route: '/pedir-chip', isNew: true },
-  { label: '2ª via\nde conta', icon: 'shortcut-segunda-via', route: '/contas' },
-  { label: 'Consultar\ncontas pagas', icon: 'shortcut-contas-pagas', route: '/contas/pagas' },
-  { label: 'Mudar de\nendereço', icon: 'shortcut-mudar-endereco', route: '/endereco' },
-  { label: 'Alterar meio\nde pagamento', icon: 'shortcut-meio-pagamento', route: '/pagamento' },
-  { label: 'Gerenciar\nprodutos', icon: 'shortcut-gerenciar-produtos', route: '/produtos' },
-  { label: 'Diagnosticar\nrede', icon: 'shortcut-diagnosticar-rede', route: '/suporte' },
-  { label: 'Trocar senha\ndo Wi-Fi', icon: 'shortcut-trocar-senha-wifi', route: '/suporte' },
-];
-
 export default function HomePage() {
   const router = useRouter();
   const orderStatus = useAppState(s => s.orderStatus);
+  const selectedChipType = useAppState(s => s.selectedChipType);
 
-  // Esconde o hero de descoberta quando já existe um pedido de chip em andamento
-  const hasActiveOrder = ['pending_delivery', 'in_transit', 'delivered', 'ready_to_activate']
-    .includes(orderStatus);
+  // Hero de descoberta só aparece pro cliente que nunca pediu chip
+  const showHero = orderStatus === 'not_started';
+  // Card de tracking só aparece pra pedido físico ainda em curso
+  const showTracking = selectedChipType === 'physical' &&
+    ['pending_delivery', 'in_transit', 'delivered', 'ready_to_activate'].includes(orderStatus);
+
+  const quickActions: QuickAction[] = [
+    orderStatus === 'active'
+      ? { label: 'Meu chip\nmóvel', icon: 'shortcut-pedir-chip', route: '/chip-movel', isNew: false }
+      : { label: 'Pedir\nmeu chip', icon: 'shortcut-pedir-chip', route: '/pedir-chip', isNew: true },
+    { label: '2ª via\nde conta', icon: 'shortcut-segunda-via', route: '/contas' },
+    { label: 'Consultar\ncontas pagas', icon: 'shortcut-contas-pagas', route: '/contas/pagas' },
+    { label: 'Mudar de\nendereço', icon: 'shortcut-mudar-endereco', route: '/endereco' },
+    { label: 'Alterar meio\nde pagamento', icon: 'shortcut-meio-pagamento', route: '/pagamento' },
+    { label: 'Gerenciar\nprodutos', icon: 'shortcut-gerenciar-produtos', route: '/produtos' },
+    { label: 'Diagnosticar\nrede', icon: 'shortcut-diagnosticar-rede', route: '/suporte' },
+    { label: 'Trocar senha\ndo Wi-Fi', icon: 'shortcut-trocar-senha-wifi', route: '/suporte' },
+  ];
 
   return (
     <AppShell headerVariant="home">
@@ -44,7 +49,7 @@ export default function HomePage() {
           HERO — banner de descoberta do chip móvel
           Fundo verde escuro, alinhado à esquerda, chip flutuante à direita
       ============================================================ */}
-      {!hasActiveOrder && (
+      {showHero && (
         <section className="bg-[var(--color-primary-background)] px-6 pt-4 pb-10 rounded-b-2xl relative overflow-hidden">
           {/* Rastro decorativo — único SVG grande, muito sutil, atrás do chip */}
           <div
@@ -117,7 +122,7 @@ export default function HomePage() {
           TRACKING — card de acompanhamento do chip físico em entrega
           Aparece só quando há um pedido físico pendente de entrega.
       ============================================================ */}
-      {orderStatus === 'pending_delivery' && (
+      {showTracking && (
         <div className="px-6 mt-4">
           <TrackingCard />
         </div>

@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Message } from '@/components/ui/Message';
 import { JourneyLayout } from '@/components/ui/JourneyLayout';
-import { NioIcon } from '@/components/icons';
 
 export default function PortabilidadeConfirmadoPage() {
   const router = useRouter();
@@ -26,14 +25,9 @@ export default function PortabilidadeConfirmadoPage() {
       }
     >
       <div className="px-6 pt-6">
-        <div className="flex items-center gap-2 mb-2">
-          <div className="text-[var(--color-primary-background)]">
-            <NioIcon name="check-circle" size={28} />
-          </div>
-          <h1 className="text-2xl font-bold text-[var(--color-neutral-text)]">
-            Pedido confirmado!
-          </h1>
-        </div>
+        <h1 className="text-2xl font-bold text-[var(--color-neutral-text)] leading-tight">
+          Pedido confirmado!
+        </h1>
 
         <p className="text-sm text-[var(--color-neutral-text-medium)] mt-2">
           O processo de portabilidade pode levar até 3 dias úteis. Enquanto isso, seus dois

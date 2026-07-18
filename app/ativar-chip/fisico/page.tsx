@@ -7,14 +7,14 @@ import { Input } from '@/components/ui/Input';
 import { Message } from '@/components/ui/Message';
 import { BottomSheet } from '@/components/ui/BottomSheet';
 import { JourneyLayout } from '@/components/ui/JourneyLayout';
-import { NioIcon } from '@/components/icons';
+import { VerticalStepper, type VerticalStep } from '@/components/ui/VerticalStepper';
 import { useAppState } from '@/lib/state';
 
-const STEPS: { icon: 'wifi-on' | 'smartphone' | 'chip-sim'; text: string }[] = [
-  { icon: 'wifi-on', text: 'Garanta que seu Wi-Fi está conectado' },
-  { icon: 'smartphone', text: 'Desligue o celular' },
-  { icon: 'chip-sim', text: 'Insira o chip recebido' },
-  { icon: 'smartphone', text: 'Ligue o celular novamente' },
+const STEPS: VerticalStep[] = [
+  { key: 'wifi', icon: 'wifi-on', title: 'Garanta que seu Wi-Fi está conectado', status: 'completed' },
+  { key: 'desligar', icon: 'smartphone', title: 'Desligue o celular', status: 'completed' },
+  { key: 'inserir', icon: 'chip-sim', title: 'Insira o chip recebido', status: 'completed' },
+  { key: 'ligar', icon: 'smartphone', title: 'Ligue o celular novamente', status: 'completed' },
 ];
 
 export default function AtivarFisicoPage() {
@@ -91,13 +91,8 @@ export default function AtivarFisicoPage() {
           Caso você já tenha realizado os passos abaixo, clique em Ativar chip
         </p>
 
-        <div className="flex flex-col gap-4 mb-5">
-          {STEPS.map((step, i) => (
-            <div key={i} className="flex items-center gap-3">
-              <NioIcon name={step.icon} size={22} />
-              <span className="text-sm text-[var(--color-neutral-text)]">{step.text}</span>
-            </div>
-          ))}
+        <div className="mb-5">
+          <VerticalStepper variant="timeline" steps={STEPS} />
         </div>
       </div>
     </JourneyLayout>

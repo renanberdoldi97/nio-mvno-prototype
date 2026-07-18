@@ -13,12 +13,26 @@ import { MOCK_CHIP } from '@/lib/mock-data';
 export default function ConcluidoPage() {
   const router = useRouter();
   const esimNumberAvailable = useAppState(s => s.esimNumberAvailable);
+  const setOrderStatus = useAppState(s => s.setOrderStatus);
+  const setIsOtherDevice = useAppState(s => s.setIsOtherDevice);
   const [copied, setCopied] = useState(false);
 
   async function handleCopy() {
     await navigator.clipboard.writeText(MOCK_CHIP.fullNumber);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  }
+
+  function goToChipMovel() {
+    setOrderStatus('active');
+    setIsOtherDevice(false);
+    router.push('/chip-movel');
+  }
+
+  function goToPortabilidade() {
+    setOrderStatus('active');
+    setIsOtherDevice(false);
+    router.push('/portabilidade');
   }
 
   return (
@@ -29,10 +43,10 @@ export default function ConcluidoPage() {
       transition="fade"
       cta={
         <>
-          <Button onClick={() => router.push('/')}>
+          <Button onClick={goToChipMovel}>
             {esimNumberAvailable ? 'Informações do chip móvel' : 'Meu chip móvel'}
           </Button>
-          <Button variant="outline" onClick={() => router.push('/portabilidade')}>
+          <Button variant="outline" onClick={goToPortabilidade}>
             Pedir portabilidade
           </Button>
         </>

@@ -26,6 +26,10 @@ type AppState = {
   // Tracking do chip físico
   trackingStatus: 'confirmed' | 'in_transit' | 'delivered' | 'failed';
 
+  // Jornada "chip pra outro aparelho"
+  identifiedDevice: string | null;
+  isOtherDevice: boolean;
+
   // Ações
   setOrderStatus: (status: OrderStatus) => void;
   setChipDDD: (ddd: string) => void;
@@ -37,6 +41,8 @@ type AppState = {
   setEsimActivationStep: (step: AppState['esimActivationStep']) => void;
   setEsimNumberAvailable: (available: boolean) => void;
   setTrackingStatus: (status: AppState['trackingStatus']) => void;
+  setIdentifiedDevice: (device: string) => void;
+  setIsOtherDevice: (value: boolean) => void;
   reset: () => void;
 };
 
@@ -52,6 +58,8 @@ const initialState = {
   esimActivationStep: 'idle' as const,
   esimNumberAvailable: false,
   trackingStatus: 'confirmed' as const,
+  identifiedDevice: null,
+  isOtherDevice: false,
 };
 
 export const useAppState = create<AppState>()(
@@ -69,6 +77,8 @@ export const useAppState = create<AppState>()(
       setEsimActivationStep: (esimActivationStep) => set({ esimActivationStep }),
       setEsimNumberAvailable: (esimNumberAvailable) => set({ esimNumberAvailable }),
       setTrackingStatus: (trackingStatus) => set({ trackingStatus }),
+      setIdentifiedDevice: (identifiedDevice) => set({ identifiedDevice }),
+      setIsOtherDevice: (isOtherDevice) => set({ isOtherDevice }),
       reset: () => set(initialState),
     }),
     { name: 'nio-mvno-state' }

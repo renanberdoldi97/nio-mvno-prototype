@@ -1,0 +1,145 @@
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { BottomSheet } from '@/components/ui/BottomSheet';
+import { JourneyLayout } from '@/components/ui/JourneyLayout';
+import { NioIcon } from '@/components/icons';
+import { useAppState } from '@/lib/state';
+import { MOCK_USER } from '@/lib/mock-data';
+
+export default function OutroAparelhoResumoPage() {
+  const router = useRouter();
+  const identifiedDevice = useAppState(s => s.identifiedDevice);
+  const selectedChipType = useAppState(s => s.selectedChipType);
+  const selectedDDD = useAppState(s => s.selectedDDD);
+  const [planSheetOpen, setPlanSheetOpen] = useState(false);
+
+  const isEsim = selectedChipType !== 'physical';
+
+  return (
+    <JourneyLayout
+      title="Pedir chip móvel"
+      onBack={() => router.push('/pedir-chip/outro-aparelho/escolher-tipo')}
+      cta={
+        <Button onClick={() => router.push('/pedir-chip/confirmando')}>
+          Confirmar pedido
+        </Button>
+      }
+      overlay={
+        <BottomSheet
+          isOpen={planSheetOpen}
+          onClose={() => setPlanSheetOpen(false)}
+        >
+          <div className="flex items-center gap-2 mb-4">
+            <NioIcon name="info" size={20} />
+            <h3 className="text-lg font-bold text-[var(--color-neutral-text)]">Plano 50 GB</h3>
+          </div>
+
+          <Card variant="neutral" padding="md">
+            <span className="text-sm text-[var(--color-neutral-text-medium)]">Seu plano</span>
+            <p className="text-sm mt-2 text-[var(--color-neutral-text)]">
+              Seu chip móvel inclui <strong>50 GB por mês</strong>. A franquia é separada da sua internet Nio Fibra.
+            </p>
+
+            <div className="flex flex-col gap-4 mt-5">
+              <div className="flex items-start gap-3">
+                <NioIcon name="smartphone" size={22} className="flex-shrink-0" />
+                <div>
+                  <p className="text-xs text-[var(--color-neutral-text-medium)]">Ligações e SMS ilimitados</p>
+                  <p className="text-sm font-bold text-[var(--color-neutral-text)] mt-0.5">
+                    Pra qualquer operadora, em todo o Brasil
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <NioIcon name="whatsapp" size={22} className="flex-shrink-0" />
+                <div>
+                  <p className="text-xs text-[var(--color-neutral-text-medium)]">WhatsApp ilimitado</p>
+                  <p className="text-sm font-bold text-[var(--color-neutral-text)] mt-0.5">
+                    Pra mensagens de texto e voz
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          <p className="text-xs text-[var(--color-neutral-text-medium)] my-5">
+            Quando os dados da franquia acabarem, a velocidade reduz.
+          </p>
+
+          <Button onClick={() => setPlanSheetOpen(false)}>Entendi</Button>
+        </BottomSheet>
+      }
+    >
+      <div className="px-6 pt-6 pb-5">
+        <h1 className="text-2xl font-bold text-[var(--color-neutral-text)] leading-tight">
+          Confira os detalhes<br />do seu pedido
+        </h1>
+      </div>
+
+      <div className="px-6 flex flex-col gap-4">
+        {/* Card — Aparelho */}
+        <Card variant="neutral">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-[var(--color-neutral-text-medium)]">Aparelho</span>
+            <button
+              onClick={() => router.push('/pedir-chip/outro-aparelho')}
+              className="text-sm font-semibold text-[var(--color-primary-background)]"
+            >
+              Alterar
+            </button>
+          </div>
+          <p className="font-bold text-[var(--color-neutral-text)]">{identifiedDevice}</p>
+        </Card>
+
+        {/* Card — Tipo de chip */}
+        <Card variant="neutral">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-[var(--color-neutral-text-medium)]">Tipo de chip</span>
+            <button
+              onClick={() => router.push('/pedir-chip/outro-aparelho/escolher-tipo')}
+              className="text-sm font-semibold text-[var(--color-primary-background)]"
+            >
+              Alterar
+            </button>
+          </div>
+          {isEsim ? (
+            <p className="font-bold text-[var(--color-neutral-text)]">eSIM</p>
+          ) : (
+            <>
+              <p className="font-bold text-[var(--color-neutral-text)]">Chip físico</p>
+              <p className="text-sm text-[var(--color-neutral-text-medium)] mt-1">{MOCK_USER.address.short}</p>
+            </>
+          )}
+        </Card>
+
+        {/* Card — Número novo */}
+        <Card variant="neutral">
+          <p className="text-sm text-[var(--color-neutral-text-medium)] mb-2">Número novo</p>
+          <p className="font-bold text-[var(--color-neutral-text)]">
+            Seu chip vem com DDD ({selectedDDD}), correspondente ao endereço da sua Nio Fibra.
+          </p>
+          <p className="text-xs text-[var(--color-neutral-text-medium)] mt-2">
+            Você pode trazer seu número de outra operadora depois de ativar.
+          </p>
+        </Card>
+
+        {/* Card — Plano */}
+        <Card variant="neutral">
+          <div className="flex items-start justify-between">
+            <div className="flex-1">
+              <span className="text-sm text-[var(--color-neutral-text-medium)]">Plano</span>
+              <p className="font-bold text-[var(--color-neutral-text)] mt-2">50 GB + Ligações ilimitadas</p>
+            </div>
+            <button onClick={() => setPlanSheetOpen(true)} className="flex-shrink-0 ml-3">
+              <NioIcon name="info" size={20} />
+            </button>
+          </div>
+        </Card>
+      </div>
+    </JourneyLayout>
+  );
+}

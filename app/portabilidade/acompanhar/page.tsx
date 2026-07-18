@@ -35,6 +35,7 @@ export default function AcompanharPortabilidadePage() {
   const router = useRouter();
   const rawStatus = useAppState(s => s.portabilityStatus);
   const setPortabilityStatus = useAppState(s => s.setPortabilityStatus);
+  const setOrderStatus = useAppState(s => s.setOrderStatus);
   // Fora do caminho feliz, trata como "aguardando liberação" nesta tela
   const status: PortabilityStatus = rawStatus === 'idle' ? 'awaiting_release' : rawStatus;
 
@@ -52,6 +53,22 @@ export default function AcompanharPortabilidadePage() {
 
   function handleCancelRequest() {
     setPortabilityStatus('idle');
+    router.push('/');
+  }
+
+  function handlePrimaryCta() {
+    if (status === 'completed') {
+      setOrderStatus('active');
+      router.push('/chip-movel');
+    } else {
+      router.push('/');
+    }
+  }
+
+  function handleBackHome() {
+    if (status === 'completed') {
+      setOrderStatus('active');
+    }
     router.push('/');
   }
 
@@ -89,8 +106,8 @@ export default function AcompanharPortabilidadePage() {
           </Button>
         ) : (
           <>
-            <Button onClick={() => router.push('/')}>Informações do chip móvel</Button>
-            <Button variant="outline" onClick={() => router.push('/')}>
+            <Button onClick={handlePrimaryCta}>Informações do chip móvel</Button>
+            <Button variant="outline" onClick={handleBackHome}>
               Voltar pro início
             </Button>
           </>
