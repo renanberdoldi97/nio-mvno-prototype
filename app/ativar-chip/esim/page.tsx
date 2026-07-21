@@ -47,9 +47,7 @@ export default function AtivarEsimPage() {
         <>
           <Message
             kind="info"
-            title={`Você está ativando com DDD (${selectedDDD}). Quer alterar?`}
-            ctaLabel="Alterar DDD"
-            onCta={() => setDddSheetOpen(true)}
+            title="O DDD não poderá ser alterado depois da ativação do chip."
           />
 
           <Button
