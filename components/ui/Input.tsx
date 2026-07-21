@@ -15,6 +15,7 @@ type InputProps = {
   className?: string;
   inputMode?: 'text' | 'numeric' | 'tel' | 'email';
   prefix?: string; // ex: "(11) " pra campo de telefone
+  autoFocus?: boolean;
 };
 
 export function Input({
@@ -29,6 +30,7 @@ export function Input({
   className,
   inputMode,
   prefix,
+  autoFocus,
 }: InputProps) {
   const [focused, setFocused] = useState(false);
   const hasValue = value.length > 0;
@@ -65,6 +67,7 @@ export function Input({
           onBlur={() => setFocused(false)}
           maxLength={maxLength}
           inputMode={inputMode}
+          autoFocus={autoFocus}
           placeholder={isFloated ? placeholder : ''}
           className={cn(
             'w-full h-full bg-transparent outline-none text-text-primary text-base',

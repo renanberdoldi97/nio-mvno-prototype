@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
-import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
+import { Message } from '@/components/ui/Message';
 import { BottomSheet } from '@/components/ui/BottomSheet';
 import { JourneyLayout } from '@/components/ui/JourneyLayout';
 import { NioIcon } from '@/components/icons';
@@ -19,6 +19,7 @@ export default function PortabilidadePage() {
   const [number, setNumber] = useState('');
   const [carrier, setCarrier] = useState<string | null>(null);
   const [carrierSheetOpen, setCarrierSheetOpen] = useState(false);
+  const [operadoraManual, setOperadoraManual] = useState(false);
 
   const canSubmit = number.length > 0 && carrier !== null;
 
@@ -61,6 +62,15 @@ export default function PortabilidadePage() {
                 {c}
               </button>
             ))}
+            <button
+              onClick={() => {
+                setOperadoraManual(true);
+                setCarrierSheetOpen(false);
+              }}
+              className="text-left py-3 text-base font-semibold text-[var(--color-primary-text)]"
+            >
+              Não encontrei minha operadora
+            </button>
           </div>
         </BottomSheet>
       }
@@ -83,31 +93,31 @@ export default function PortabilidadePage() {
           className="mb-4"
         />
 
-        <button
-          onClick={() => setCarrierSheetOpen(true)}
-          className="w-full h-14 rounded-xl border-[1.5px] border-[var(--color-neutral-border)] bg-white flex items-center justify-between px-4 mb-4"
-        >
-          <span className={carrier ? 'text-base text-[var(--color-neutral-text)]' : 'text-base text-[var(--color-neutral-text-medium)]'}>
-            {carrier ?? 'Operadora atual'}
-          </span>
-          <NioIcon name="chevron-down" size={24} />
-        </button>
+        {operadoraManual ? (
+          <Input
+            label="Digite o nome da operadora"
+            value={carrier ?? ''}
+            onChange={setCarrier}
+            autoFocus
+            className="mb-4"
+          />
+        ) : (
+          <button
+            onClick={() => setCarrierSheetOpen(true)}
+            className="w-full h-14 rounded-xl border-[1.5px] border-[var(--color-neutral-border)] bg-white flex items-center justify-between px-4 mb-4"
+          >
+            <span className={carrier ? 'text-base text-[var(--color-neutral-text)]' : 'text-base text-[var(--color-neutral-text-medium)]'}>
+              {carrier ?? 'Operadora atual'}
+            </span>
+            <NioIcon name="chevron-down" size={24} />
+          </button>
+        )}
 
-        <Card variant="neutral">
-          <p className="text-sm font-semibold text-[var(--color-neutral-text)] mb-2">
-            Importante saber
-          </p>
-          <ul className="flex flex-col gap-2">
-            <li className="text-sm text-[var(--color-neutral-text)] flex gap-2">
-              <span>•</span>
-              <span>Você continua com o mesmo DDD e número da operadora atual</span>
-            </li>
-            <li className="text-sm text-[var(--color-neutral-text)] flex gap-2">
-              <span>•</span>
-              <span>Para o mesmo CPF do titular da Nio Fibra</span>
-            </li>
-          </ul>
-        </Card>
+        <Message
+          kind="info"
+          title="Importante saber"
+          description="Você continua com o mesmo DDD e número da operadora atual. Para o mesmo CPF do titular da Nio Fibra."
+        />
       </div>
     </JourneyLayout>
   );
