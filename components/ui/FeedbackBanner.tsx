@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 type FeedbackBannerProps = {
   title: string;
   className?: string;
-  autoHideMs?: number; // padrão 6000ms
+  autoHideMs?: number;
 };
 
 export function FeedbackBanner({
@@ -24,27 +24,25 @@ export function FeedbackBanner({
   }, [autoHideMs]);
 
   return (
-    <AnimatePresence>
-      {visible && (
-        <motion.div
-          initial={{ opacity: 1, height: 56 }}
-          exit={{ opacity: 0, height: 0 }}
-          transition={{ duration: 0.3, ease: 'easeOut' }}
-          className={cn(
-            'flex items-center gap-4 px-4 mb-6 overflow-hidden',
-            'bg-[#C5FCD1]',
-            className
-          )}
-          style={{ borderRadius: 8 }}
-        >
-          <div className="text-[#094B18] flex-shrink-0">
-            <NioIcon name="check-circle" size={20} />
-          </div>
-          <p className="text-sm font-semibold text-[#094B18] leading-tight">
-            {title}
-          </p>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <div className={cn('mb-6', className)}>
+      <AnimatePresence>
+        {visible && (
+          <motion.div
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center gap-4 px-4 bg-[#C5FCD1]"
+            style={{ height: 56, borderRadius: 8 }}
+          >
+            <div className="text-[#094B18] flex-shrink-0">
+              <NioIcon name="check-circle" size={20} />
+            </div>
+            <p className="text-sm font-semibold text-[#094B18] leading-tight">
+              {title}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
