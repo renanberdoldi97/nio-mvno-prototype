@@ -65,6 +65,7 @@ export default function PortabilidadePage() {
             <button
               onClick={() => {
                 setOperadoraManual(true);
+                setCarrier('');
                 setCarrierSheetOpen(false);
               }}
               className="text-left py-3 text-base font-semibold text-[var(--color-primary-text)]"
