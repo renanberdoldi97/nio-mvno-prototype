@@ -103,7 +103,7 @@ export default function ResumoPage() {
         {/* Card 2 — Número novo */}
         <Card variant="neutral" padding="md">
           <p className="text-xs text-[var(--color-neutral-text-medium)]">Número novo</p>
-          <p className="text-sm text-[var(--color-neutral-text)] mt-2 leading-relaxed">
+          <p className="text-sm font-semibold text-[var(--color-neutral-text)] mt-2 leading-relaxed">
             Seu chip vem com o DDD do endereço da sua instalação Nio Fibra.
           </p>
           <p className="text-xs text-[var(--color-neutral-text-medium)] mt-2">
