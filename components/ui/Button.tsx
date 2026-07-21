@@ -52,7 +52,7 @@ export function Button({
 
   return (
     <motion.button
-      whileTap={isDisabled ? {} : { scale: 0.96 }}
+      whileTap={isDisabled || variant !== 'primary' ? {} : { scale: 0.97 }}
       transition={{ type: 'spring', stiffness: 400, damping: 25 }}
       onClick={isDisabled ? undefined : onClick}
       className={cn(

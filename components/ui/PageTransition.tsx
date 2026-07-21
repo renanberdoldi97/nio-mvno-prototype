@@ -15,9 +15,9 @@ export function PageTransition({
     return (
       <motion.div
         className="w-full h-full"
-        initial={{ opacity: 0, scale: 0.97 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.25, ease: 'easeOut' }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.15 }}
       >
         {children}
       </motion.div>
@@ -27,9 +27,9 @@ export function PageTransition({
   return (
     <motion.div
       className="w-full h-full"
-      initial={{ opacity: 0, x: 40 }}
+      initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 40 }}
     >
       {children}
     </motion.div>

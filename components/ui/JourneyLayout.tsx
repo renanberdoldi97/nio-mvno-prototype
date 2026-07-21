@@ -41,7 +41,7 @@ export function JourneyLayout({
           onBack={onBack}
           title={title}
         />
-        <main className="flex-1 overflow-y-auto no-scrollbar pt-4 pb-32">
+        <main className="flex-1 overflow-y-auto no-scrollbar pt-4 pb-40">
           {children}
         </main>
         {cta && (

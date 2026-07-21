@@ -129,7 +129,7 @@ export default function PedirChipIntroPage() {
         </div>
       }
     >
-      <div className="px-6 pt-6 pb-24">
+      <div className="px-6 pt-6 pb-36">
         <div className="flex items-center justify-between">
           <h1 className="font-bold text-2xl text-[var(--color-neutral-text)]">{MOCK_USER.plan.name}</h1>
           <ChipTag variant="status">Plano ativo</ChipTag>

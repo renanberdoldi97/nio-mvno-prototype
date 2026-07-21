@@ -91,7 +91,7 @@ export default function AcompanharPedidoPage() {
         </>
       }
     >
-      <div className="px-6 pt-6">
+      <div className="px-6 pt-6 pb-8">
         <Card variant="neutral">
           <h2 className="font-bold text-xl leading-tight text-[var(--color-neutral-text)]">
             {title}

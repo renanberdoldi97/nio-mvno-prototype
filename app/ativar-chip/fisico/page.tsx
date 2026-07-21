@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { Message } from '@/components/ui/Message';
 import { BottomSheet } from '@/components/ui/BottomSheet';
@@ -21,14 +22,7 @@ export default function AtivarFisicoPage() {
   const router = useRouter();
   const selectedDDD = useAppState(s => s.selectedDDD);
   const setSelectedDDD = useAppState(s => s.setSelectedDDD);
-  const [dddConfirmed, setDddConfirmed] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
-
-  // Confirmação de DDD aparece automaticamente na primeira visita da tela
-  useEffect(() => {
-    if (!dddConfirmed) setSheetOpen(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <JourneyLayout
@@ -38,8 +32,9 @@ export default function AtivarFisicoPage() {
         <>
           <Message
             kind="info"
-            title="Guarde o cartão do chip, nele está o código pra ativar."
-            className="mb-0"
+            title={`Você está ativando com DDD (${selectedDDD}).`}
+            ctaLabel="Alterar DDD"
+            onCta={() => setSheetOpen(true)}
           />
           <Button onClick={() => router.push('/ativar-chip/fisico/scanner')}>
             Ativar chip
@@ -72,12 +67,7 @@ export default function AtivarFisicoPage() {
             className="mb-4"
           />
 
-          <Button
-            onClick={() => {
-              setDddConfirmed(true);
-              setSheetOpen(false);
-            }}
-          >
+          <Button onClick={() => setSheetOpen(false)}>
             Confirmar
           </Button>
         </BottomSheet>
@@ -94,6 +84,23 @@ export default function AtivarFisicoPage() {
         <div className="mb-5">
           <VerticalStepper variant="timeline" steps={STEPS} />
         </div>
+
+        <Card variant="neutral" padding="md">
+          <div className="flex items-start justify-between">
+            <div className="flex-1">
+              <p className="text-xs text-[var(--color-neutral-text-medium)]">Número novo</p>
+              <p className="font-bold text-[var(--color-neutral-text)] mt-1">
+                Ativando com DDD ({selectedDDD})
+              </p>
+            </div>
+            <button
+              onClick={() => setSheetOpen(true)}
+              className="text-[var(--color-primary-text)] text-sm font-semibold ml-4 flex-shrink-0"
+            >
+              Alterar
+            </button>
+          </div>
+        </Card>
       </div>
     </JourneyLayout>
   );
