@@ -31,10 +31,9 @@ export default function AtivarFisicoPage() {
       cta={
         <>
           <Message
-            kind="info"
-            title={`Você está ativando com DDD (${selectedDDD}).`}
-            ctaLabel="Alterar DDD"
-            onCta={() => setSheetOpen(true)}
+            kind="warning"
+            title="Não jogue fora o cartão do chip"
+            description="Você precisará do código que vem nesse cartão para ativar o chip."
           />
           <Button onClick={() => router.push('/ativar-chip/fisico/scanner')}>
             Ativar chip
@@ -85,17 +84,23 @@ export default function AtivarFisicoPage() {
           <VerticalStepper variant="timeline" steps={STEPS} />
         </div>
 
-        <Card variant="neutral" padding="md">
+        <Card variant="neutral" padding="md" className="mt-5">
           <div className="flex items-start justify-between">
             <div className="flex-1">
-              <p className="text-xs text-[var(--color-neutral-text-medium)]">Número novo</p>
+              <p className="text-xs text-[var(--color-neutral-text-medium)]">
+                Número novo
+              </p>
               <p className="font-bold text-[var(--color-neutral-text)] mt-1">
-                Ativando com DDD ({selectedDDD})
+                DDD atual: ({selectedDDD})
+              </p>
+              <p className="text-xs text-[var(--color-neutral-text-medium)] mt-2 leading-relaxed">
+                Confira o DDD. Depois da ativação, ele não poderá ser alterado.
+                Para portabilidade, escolha o mesmo DDD do número atual.
               </p>
             </div>
             <button
               onClick={() => setSheetOpen(true)}
-              className="text-[var(--color-primary-text)] text-sm font-semibold ml-4 flex-shrink-0"
+              className="text-[var(--color-primary-text)] text-sm font-semibold ml-4 flex-shrink-0 mt-0.5"
             >
               Alterar
             </button>
