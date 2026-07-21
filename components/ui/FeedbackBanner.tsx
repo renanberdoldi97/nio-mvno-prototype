@@ -27,11 +27,11 @@ export function FeedbackBanner({
     <AnimatePresence>
       {visible && (
         <motion.div
-          initial={{ opacity: 1, height: 56, marginBottom: 0 }}
-          exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+          initial={{ opacity: 1, height: 56 }}
+          exit={{ opacity: 0, height: 0 }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
           className={cn(
-            'flex items-center gap-4 px-4 overflow-hidden',
+            'flex items-center gap-4 px-4 mb-6 overflow-hidden',
             'bg-[#C5FCD1]',
             className
           )}
