@@ -32,7 +32,7 @@ export const MOCK_ESIM = {
   deepLinkAndroid: 'intent:#Intent;action=android.settings.NETWORK_OPERATOR_SETTINGS;end',
 };
 
-export const MOCK_CARRIERS = ['Vivo', 'Claro', 'TIM', 'NuCel', 'Não encontrei minha operadora'];
+export const MOCK_CARRIERS = ['Vivo', 'Claro', 'TIM', 'NuCel'];
 
 export const MOCK_TRACKING = {
   confirmedAt: '18/07/2026 - 14:30',
