@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue } from 'framer-motion';
 import { useEffect } from 'react';
 import { cn } from '@/lib/utils';
 
@@ -21,6 +21,8 @@ export function BottomSheet({
   blocking = false,
   className,
 }: BottomSheetProps) {
+  const y = useMotionValue(0);
+
   // Previne scroll do body enquanto sheet está aberto
   useEffect(() => {
     if (isOpen) {
@@ -48,6 +50,15 @@ export function BottomSheet({
           {/* Sheet */}
           <motion.div
             key="sheet"
+            style={{ y }}
+            drag="y"
+            dragConstraints={{ top: 0 }}
+            dragElastic={0.1}
+            onDragEnd={(_, info) => {
+              if (info.offset.y > 100) {
+                onClose();
+              }
+            }}
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}

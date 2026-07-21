@@ -73,7 +73,7 @@ export function Header({
           <div className="flex items-center gap-2">
             <NioIcon
               name="user-circle"
-              size={20}
+              size={24}
               className={isPrimary ? 'opacity-90 invert brightness-0 invert' : ''}
             />
             <span className={cn(

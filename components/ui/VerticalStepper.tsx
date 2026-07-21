@@ -15,7 +15,7 @@ export type VerticalStep = {
 type VerticalStepperProps = {
   steps: VerticalStep[];
   // 'progress' = comportamento padrão com check/pending/active (tracking, portabilidade)
-  // 'timeline' = todos os círculos ficam verde clarinho com ícone customizado dentro,
+  // 'timeline' = todos os círculos ficam azul-clarinho (info) com ícone customizado dentro,
   // usado pra sequências informativas (não representam progresso real do usuário)
   variant?: 'progress' | 'timeline';
 };
@@ -30,8 +30,10 @@ export function VerticalStepper({ steps, variant = 'progress' }: VerticalStepper
           {/* Coluna do círculo + linha */}
           <div className="flex flex-col items-center">
             {isTimeline ? (
-              <div className="w-6 h-6 rounded-full bg-[var(--color-primary-background-low)] flex items-center justify-center flex-shrink-0">
-                {step.icon && <NioIcon name={step.icon} size={14} />}
+              // Nota: os SVGs do DS usam fill fixo (#292C28), não currentColor —
+              // não é possível recolorir o ícone via CSS sem alterar o asset.
+              <div className="w-10 h-10 rounded-full bg-[#DBECEA] flex items-center justify-center flex-shrink-0">
+                {step.icon && <NioIcon name={step.icon} size={20} />}
               </div>
             ) : step.status === 'completed' ? (
               <div className="w-6 h-6 rounded-full bg-[var(--color-primary-background)] flex items-center justify-center flex-shrink-0">
@@ -52,9 +54,10 @@ export function VerticalStepper({ steps, variant = 'progress' }: VerticalStepper
             {/* Linha conectora — não renderiza no último */}
             {i < steps.length - 1 && (
               <div className={cn(
-                'w-0.5 flex-1 min-h-[32px] mt-1 mb-1',
+                'w-0.5 flex-1 mt-1 mb-1',
+                isTimeline ? 'min-h-[24px]' : 'min-h-[32px]',
                 isTimeline
-                  ? 'bg-[var(--color-primary-background-low)]'
+                  ? 'bg-[#DBECEA]'
                   : step.status === 'completed'
                   ? 'bg-[var(--color-primary-background)]'
                   : 'bg-[var(--color-neutral-border)]'

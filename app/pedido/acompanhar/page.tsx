@@ -103,15 +103,15 @@ export default function AcompanharPedidoPage() {
           <div className="border-t border-[var(--color-neutral-border)] mt-4 pt-4 flex flex-col gap-3">
             <p className="text-sm font-bold text-[var(--color-neutral-text)]">Seu pedido:</p>
             <div className="flex items-center gap-2">
-              <NioIcon name="chip-sim" size={18} />
+              <NioIcon name="chip-sim" size={24} />
               <span className="text-sm text-[var(--color-neutral-text)]">1 chip móvel de 50 GB</span>
             </div>
             <div className="flex items-center gap-2">
-              <NioIcon name="home" size={18} />
+              <NioIcon name="home" size={24} />
               <span className="text-sm text-[var(--color-neutral-text)]">{MOCK_USER.address.short}</span>
             </div>
             <div className="flex items-center gap-2">
-              <NioIcon name="calendar" size={18} />
+              <NioIcon name="calendar" size={24} />
               <span className="text-sm text-[var(--color-neutral-text)]">Chega até 22/07/2026</span>
             </div>
           </div>

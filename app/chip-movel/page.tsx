@@ -69,7 +69,7 @@ export default function ChipMovelPage() {
       overlay={
         <BottomSheet isOpen={planSheetOpen} onClose={() => setPlanSheetOpen(false)}>
           <div className="flex items-center gap-2 mb-4">
-            <NioIcon name="info" size={20} />
+            <NioIcon name="info" size={28} />
             <h3 className="text-lg font-bold text-[var(--color-neutral-text)]">Plano 50 GB</h3>
           </div>
 
@@ -155,13 +155,13 @@ export default function ChipMovelPage() {
             <Card key={action.key} variant="white" padding="md" onClick={action.onClick}>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-[var(--color-primary-background-low)] flex items-center justify-center flex-shrink-0">
-                  <NioIcon name={action.icon} size={20} />
+                  <NioIcon name={action.icon} size={24} />
                 </div>
                 <div className="flex-1">
                   <p className="font-bold text-[var(--color-neutral-text)]">{action.title}</p>
                   <p className="text-sm text-[var(--color-neutral-text-medium)] mt-0.5">{action.subtitle}</p>
                 </div>
-                <NioIcon name="arrow-right" size={16} />
+                <NioIcon name="arrow-right" size={24} />
               </div>
             </Card>
           ))}

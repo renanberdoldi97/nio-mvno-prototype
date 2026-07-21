@@ -176,32 +176,32 @@ export default function AtivarEsimPage() {
           {isOtherDevice ? 'Vamos ativar o eSIM no outro aparelho' : 'Pedido confirmado!'}
         </h1>
 
-        <p className="text-sm text-[var(--color-neutral-text-medium)] mt-2">
+        <p className="text-sm text-[var(--color-neutral-text-medium)] mt-2 leading-relaxed">
           {isOtherDevice
             ? 'Vamos exibir um QR Code pra você escanear com o aparelho de origem do outro chip.'
-            : 'Seu eSIM está pronto pra ser ativado. Garanta que seu aparelho está conectado a internet antes de começar a ativação.'}
+            : 'Seu eSIM está pronto pra ser ativado. Garanta que seu aparelho está conectado à internet antes de começar a ativação.'}
         </p>
 
-        <div className="mt-6">
-          <Card variant="neutral">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-[var(--color-neutral-text-medium)]">Número novo</span>
-              <button
-                onClick={() => setDddSheetOpen(true)}
-                className="text-sm font-semibold text-[var(--color-primary-background)]"
-              >
-                Alterar
-              </button>
+        <Card variant="neutral" padding="md" className="mt-5">
+          <div className="flex items-start justify-between">
+            <div className="flex-1">
+              <p className="text-xs text-[var(--color-neutral-text-medium)]">Número novo</p>
+              <p className="font-bold text-[var(--color-neutral-text)] mt-1">
+                Ativando com DDD ({selectedDDD})
+              </p>
+              <p className="text-xs text-[var(--color-neutral-text-medium)] mt-1">
+                O DDD não pode ser alterado depois. Pra fazer a portabilidade depois,
+                o número precisa ter o DDD escolhido aqui.
+              </p>
             </div>
-            <p className="font-bold text-[var(--color-neutral-text)]">
-              Ativando com DDD ({selectedDDD})
-            </p>
-            <p className="text-xs text-[var(--color-neutral-text-medium)] mt-2">
-              O DDD não pode ser alterado depois. Pra fazer a portabilidade depois, o número
-              precisa ter o DDD escolhido aqui.
-            </p>
-          </Card>
-        </div>
+            <button
+              onClick={() => setDddSheetOpen(true)}
+              className="text-[var(--color-primary-text)] text-sm font-semibold ml-3 flex-shrink-0"
+            >
+              Alterar
+            </button>
+          </div>
+        </Card>
       </div>
     </JourneyLayout>
   );

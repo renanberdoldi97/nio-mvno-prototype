@@ -16,12 +16,18 @@ export default function ConfirmandoPage() {
     let active = true;
     (async () => {
       await sleep(1400);
-      if (active) router.replace('/pedir-chip/confirmado');
+      if (active) {
+        if (selectedChipType === 'physical') {
+          router.replace('/pedir-chip/confirmado');
+        } else {
+          router.replace('/ativar-chip/esim');
+        }
+      }
     })();
     return () => {
       active = false;
     };
-  }, [router]);
+  }, [router, selectedChipType]);
 
   return (
     <PageTransition variant="fade">

@@ -34,7 +34,7 @@ export default function OutroAparelhoResumoPage() {
           onClose={() => setPlanSheetOpen(false)}
         >
           <div className="flex items-center gap-2 mb-4">
-            <NioIcon name="info" size={20} />
+            <NioIcon name="info" size={28} />
             <h3 className="text-lg font-bold text-[var(--color-neutral-text)]">Plano 50 GB</h3>
           </div>
 
@@ -117,13 +117,13 @@ export default function OutroAparelhoResumoPage() {
         </Card>
 
         {/* Card — Número novo */}
-        <Card variant="neutral">
-          <p className="text-sm text-[var(--color-neutral-text-medium)] mb-2">Número novo</p>
-          <p className="font-bold text-[var(--color-neutral-text)]">
-            Seu chip vem com DDD ({selectedDDD}), correspondente ao endereço da sua Nio Fibra.
+        <Card variant="neutral" padding="md">
+          <p className="text-xs text-[var(--color-neutral-text-medium)]">Número novo</p>
+          <p className="font-bold text-[var(--color-neutral-text)] mt-2">
+            DDD ({selectedDDD})
           </p>
           <p className="text-xs text-[var(--color-neutral-text-medium)] mt-2">
-            Você pode trazer seu número de outra operadora depois de ativar.
+            Você pode alterar o DDD antes de ativar.
           </p>
         </Card>
 
@@ -135,7 +135,7 @@ export default function OutroAparelhoResumoPage() {
               <p className="font-bold text-[var(--color-neutral-text)] mt-2">50 GB + Ligações ilimitadas</p>
             </div>
             <button onClick={() => setPlanSheetOpen(true)} className="flex-shrink-0 ml-3">
-              <NioIcon name="info" size={20} />
+              <NioIcon name="info" size={24} />
             </button>
           </div>
         </Card>

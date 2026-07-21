@@ -62,7 +62,7 @@ export default function EscolherTipoPage() {
         >
           <div className="flex gap-3 items-start">
             <div className="w-11 h-11 rounded-full bg-[var(--color-primary-background-low)] flex items-center justify-center flex-shrink-0">
-              <NioIcon name="chip-sim" size={22} />
+              <NioIcon name="chip-sim" size={24} />
             </div>
             <div className="flex-1">
               <p className="text-sm text-[var(--color-neutral-text-medium)]">eSIM</p>
@@ -87,7 +87,7 @@ export default function EscolherTipoPage() {
         >
           <div className="flex gap-3 items-start">
             <div className="w-11 h-11 rounded-full bg-[var(--color-primary-background-low)] flex items-center justify-center flex-shrink-0">
-              <NioIcon name="chip" size={22} />
+              <NioIcon name="chip" size={24} />
             </div>
             <div className="flex-1">
               <p className="text-sm text-[var(--color-neutral-text-medium)]">Chip físico</p>

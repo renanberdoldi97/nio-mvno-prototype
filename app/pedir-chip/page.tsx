@@ -8,6 +8,7 @@ import { ChipTag } from '@/components/ui/ChipTag';
 import { BottomSheet } from '@/components/ui/BottomSheet';
 import { JourneyLayout } from '@/components/ui/JourneyLayout';
 import { VerticalStepper, type VerticalStep } from '@/components/ui/VerticalStepper';
+import { NioIcon } from '@/components/icons';
 import { MOCK_USER } from '@/lib/mock-data';
 
 const HOW_IT_WORKS_STEPS: VerticalStep[] = [
@@ -51,9 +52,17 @@ export default function PedirChipIntroPage() {
       onBack={() => router.push('/')}
       overlay={
         <BottomSheet isOpen={detailsOpen} onClose={() => setDetailsOpen(false)}>
-          <h2 className="text-2xl font-bold text-[var(--color-neutral-text)] mb-4">
-            Mais detalhes
-          </h2>
+          <div className="flex items-center justify-between mb-5">
+            <h3 className="text-2xl font-bold text-[var(--color-neutral-text)]">
+              Mais detalhes
+            </h3>
+            <button
+              onClick={() => setDetailsOpen(false)}
+              className="w-8 h-8 flex items-center justify-center"
+            >
+              <NioIcon name="x" size={24} />
+            </button>
+          </div>
 
           <div className="flex flex-col gap-3">
             <Card variant="neutral">

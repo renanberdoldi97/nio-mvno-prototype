@@ -90,7 +90,7 @@ export default function PortabilidadePage() {
           <span className={carrier ? 'text-base text-[var(--color-neutral-text)]' : 'text-base text-[var(--color-neutral-text-medium)]'}>
             {carrier ?? 'Operadora atual'}
           </span>
-          <NioIcon name="chevron-down" size={20} />
+          <NioIcon name="chevron-down" size={24} />
         </button>
 
         <Card variant="neutral">

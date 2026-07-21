@@ -66,7 +66,7 @@ export default function ConcluidoFisicoPage() {
             <p className="font-bold text-xl text-[var(--color-neutral-text)]">{MOCK_CHIP.fullNumber}</p>
           </div>
           <button onClick={handleCopy} className="flex-shrink-0">
-            <NioIcon name={copied ? 'check' : 'copy'} size={20} />
+            <NioIcon name={copied ? 'check' : 'copy'} size={24} />
           </button>
         </Card>
       </div>

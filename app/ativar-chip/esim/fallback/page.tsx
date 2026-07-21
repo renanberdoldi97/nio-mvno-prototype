@@ -70,7 +70,7 @@ export default function FallbackPage() {
           <div className="flex items-center justify-between gap-3">
             <span className="font-mono text-sm text-[var(--color-neutral-text)] break-all">{LPA_DISPLAY}</span>
             <button onClick={handleCopy} className="flex-shrink-0">
-              <NioIcon name={copied ? 'check' : 'copy'} size={20} />
+              <NioIcon name={copied ? 'check' : 'copy'} size={24} />
             </button>
           </div>
         </Card>

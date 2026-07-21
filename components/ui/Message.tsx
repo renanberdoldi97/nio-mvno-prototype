@@ -56,7 +56,7 @@ export function Message({
       className,
     )}>
       <div className={cn('flex-shrink-0 mt-0.5', styles.text)}>
-        <NioIcon name={styles.icon} size={20} />
+        <NioIcon name={styles.icon} size={24} />
       </div>
       <div className="flex-1 min-w-0">
         <p className={cn('text-sm font-bold leading-tight', styles.text)}>{title}</p>
@@ -76,7 +76,7 @@ export function Message({
       </div>
       {onClose && (
         <button onClick={onClose} className={cn('flex-shrink-0 mt-0.5', styles.text)}>
-          <NioIcon name="x" size={16} />
+          <NioIcon name="x" size={24} />
         </button>
       )}
     </div>

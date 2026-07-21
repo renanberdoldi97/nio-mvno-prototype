@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { AppShell } from '@/components/shell/AppShell';
 import { NioIcon, IconName } from '@/components/icons';
 import { Button } from '@/components/ui/Button';
@@ -8,6 +9,12 @@ import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useAppState } from '@/lib/state';
+
+function resetDemoState() {
+  useAppState.getState().reset();
+  localStorage.removeItem('nio-mvno-state');
+  window.location.reload();
+}
 
 // ============================================================
 // QUICK ACTIONS — 8 atalhos horizontal scroll
@@ -24,11 +31,29 @@ export default function HomePage() {
   const orderStatus = useAppState(s => s.orderStatus);
   const selectedChipType = useAppState(s => s.selectedChipType);
 
+  // Zustand persist hidrata o state do localStorage DEPOIS do primeiro render —
+  // sem essa guarda, a home pisca com o initialState (hero visível) antes de
+  // trocar pro estado real já persistido (hero some), daí o efeito "aparece e some".
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  // Permite limpar o state via querystring (?reset=1), útil pra demos/avaliação
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.search.includes('reset=1')) {
+      useAppState.getState().reset();
+      localStorage.removeItem('nio-mvno-state');
+      window.history.replaceState({}, '', '/');
+      window.location.reload();
+    }
+  }, []);
+
   // Hero de descoberta só aparece pro cliente que nunca pediu chip
   const showHero = orderStatus === 'not_started';
   // Card de tracking só aparece pra pedido físico ainda em curso
   const showTracking = selectedChipType === 'physical' &&
-    ['pending_delivery', 'in_transit', 'delivered', 'ready_to_activate'].includes(orderStatus);
+    ['pending_delivery', 'in_transit', 'delivered'].includes(orderStatus);
 
   const quickActions: QuickAction[] = [
     orderStatus === 'active'
@@ -43,15 +68,27 @@ export default function HomePage() {
     { label: 'Trocar senha\ndo Wi-Fi', icon: 'shortcut-trocar-senha-wifi', route: '/suporte' },
   ];
 
+  // Evita renderizar com o initialState antes do Zustand persist hidratar
+  if (!hydrated) return (
+    <div className="w-full h-full bg-white" />
+  );
+
+  // DEBUG — remover após confirmar
+  console.log('orderStatus:', orderStatus, 'selectedChipType:', selectedChipType, 'showTracking:', showTracking);
+
   return (
     <AppShell headerVariant="home">
-      {/* ============================================================
-          HERO — banner de descoberta do chip móvel
-          Fundo verde escuro, alinhado à esquerda, chip flutuante à direita
-      ============================================================ */}
+      {/* Reinicia o protótipo pro estado inicial — visível em dev e produção
+          pra facilitar demos e reavaliação da jornada do zero. */}
+      <button
+        onClick={resetDemoState}
+        className="fixed top-2 left-2 z-50 bg-black/10 text-[var(--color-neutral-text-medium)] text-[10px] px-2 py-1 rounded-full backdrop-blur-sm"
+      >
+        Reiniciar demo
+      </button>
+      {/* HERO — desabilitado na v1, habilitar na v2
       {showHero && (
         <section className="bg-[var(--color-primary-background)] px-6 pt-4 pb-10 rounded-b-2xl relative overflow-hidden">
-          {/* Rastro decorativo — único SVG grande, muito sutil, atrás do chip */}
           <div
             className="absolute -right-12 -top-8 pointer-events-none z-0 opacity-20"
             style={{ width: 320, height: 320 }}
@@ -66,7 +103,6 @@ export default function HomePage() {
             />
           </div>
 
-          {/* Chip flutuante — canto superior direito, ligeiramente rotacionado */}
           <motion.div
             initial={{ opacity: 0, y: -10, rotate: -15 }}
             animate={{ opacity: 1, y: 0, rotate: -12 }}
@@ -84,9 +120,7 @@ export default function HomePage() {
             />
           </motion.div>
 
-          {/* Conteúdo do hero — alinhado à esquerda */}
           <div className="relative z-20 max-w-[220px]">
-            {/* Badge "Benefício disponível" */}
             <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--color-primary-background-high)]/20 mb-4">
               <NioIcon
                 name="check-circle"
@@ -96,17 +130,14 @@ export default function HomePage() {
               <span className="text-[11px] font-semibold text-white">Benefício disponível</span>
             </div>
 
-            {/* Título */}
             <h1 className="text-[26px] font-bold text-white leading-[1.15] mb-2">
               Peça agora<br />seu chip móvel
             </h1>
 
-            {/* Descrição */}
             <p className="text-[13px] text-white/80 mb-5 leading-relaxed">
               Internet que te acompanha, já inclusa no seu plano Nio Fibra.
             </p>
 
-            {/* CTA branco arredondado, alinhado à esquerda */}
             <motion.button
               whileTap={{ scale: 0.96 }}
               onClick={() => router.push('/pedir-chip')}
@@ -117,6 +148,7 @@ export default function HomePage() {
           </div>
         </section>
       )}
+      */}
 
       {/* ============================================================
           TRACKING — card de acompanhamento do chip físico em entrega
@@ -133,7 +165,7 @@ export default function HomePage() {
           Sem borda, sem card ao redor. Ícone é o botão.
           Tag "Novo" ABAIXO do label, não acima do ícone.
       ============================================================ */}
-      <section className="pt-7 pb-4">
+      <section className="pt-10 pb-4">
         <div className="flex gap-5 overflow-x-auto no-scrollbar px-6 pb-2">
           {quickActions.map((action, i) => (
             <motion.button
