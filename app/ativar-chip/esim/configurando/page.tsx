@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
+import { FeedbackBanner } from '@/components/ui/FeedbackBanner';
 import { Message } from '@/components/ui/Message';
 import { JourneyLayout } from '@/components/ui/JourneyLayout';
 import { ProgressCircle } from '@/components/ui/ProgressCircle';
@@ -41,13 +42,7 @@ export default function ConfigurandoESIMPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25 }}
           >
-            <div className="inline-flex items-center gap-2 px-3 py-2 rounded-xl
-              bg-[var(--color-primary-background-low)] mb-5">
-              <span className="text-sm font-semibold
-                text-[var(--color-primary-background)]">
-                ✓ Chip ativado
-              </span>
-            </div>
+            <FeedbackBanner title="Chip ativado" className="mb-5" />
 
             <h1 className="text-2xl font-bold text-[var(--color-neutral-text)]
               leading-tight mb-3">

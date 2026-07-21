@@ -4,13 +4,14 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
+import { FeedbackBanner } from '@/components/ui/FeedbackBanner';
 import { Input } from '@/components/ui/Input';
 import { Message } from '@/components/ui/Message';
 import { BottomSheet } from '@/components/ui/BottomSheet';
 import { JourneyLayout } from '@/components/ui/JourneyLayout';
 import { useAppState } from '@/lib/state';
 
-type Step = 'idle' | 'activated' | 'configuring';
+type Step = 'idle' | 'activated';
 
 // Padrão fixo (não randômico — evita mismatch de hidratação) representando
 // um QR Code fake pro fluxo de "outro aparelho".
@@ -96,46 +97,35 @@ export default function AtivarEsimPage() {
           </BottomSheet>
 
           {isOtherDevice && (
-            <>
-              <BottomSheet
-                isOpen={step === 'activated'}
-                onClose={() => setStep('idle')}
-                title="Escaneie pra ativar seu eSIM"
-              >
-                <div className="mx-auto grid grid-cols-8 gap-0 border-[6px] border-white rounded-lg overflow-hidden" style={{ width: 240, height: 240 }}>
-                  {QR_PATTERN.map((cell, i) => (
-                    <div key={i} className={cell ? 'bg-black' : 'bg-white'} />
-                  ))}
-                </div>
-                <p className="text-sm text-[var(--color-neutral-text-medium)] mt-4 text-center">
-                  Aponte a câmera do dispositivo que o eSIM será ativado.
-                </p>
-                <Button className="mt-4" onClick={() => setStep('configuring')}>
-                  Já foi escaneado
-                </Button>
-              </BottomSheet>
-
-              <BottomSheet
-                isOpen={step === 'configuring'}
-                onClose={() => {}}
-                blocking
-                title="Configurando o eSIM"
-              >
-                <p className="text-sm text-[var(--color-neutral-text-medium)] mb-4">
-                  No outro aparelho serão exibidas instruções pra ativar o eSIM, é só seguir
-                  até o fim. Quando terminar, volte aqui pra finalizar a configuração.
-                </p>
-                <Button onClick={handleAlreadyConfigured}>Já foi configurado</Button>
-              </BottomSheet>
-            </>
+            <BottomSheet
+              isOpen={step === 'activated'}
+              onClose={() => setStep('idle')}
+              title="Escaneie pra ativar seu eSIM"
+            >
+              <div className="mx-auto grid grid-cols-8 gap-0 border-[6px] border-white rounded-lg overflow-hidden" style={{ width: 240, height: 240 }}>
+                {QR_PATTERN.map((cell, i) => (
+                  <div key={i} className={cell ? 'bg-black' : 'bg-white'} />
+                ))}
+              </div>
+              <p className="text-sm text-[var(--color-neutral-text-medium)] mt-4 text-center">
+                Aponte a câmera do dispositivo que o eSIM será ativado.
+              </p>
+              <Button className="mt-4" onClick={handleAlreadyConfigured}>
+                Já foi escaneado
+              </Button>
+            </BottomSheet>
           )}
         </>
       }
     >
       <div className="px-6 pt-6">
-        <h1 className="text-2xl font-bold text-[var(--color-neutral-text)] leading-tight">
-          {isOtherDevice ? 'Vamos ativar o eSIM no outro aparelho' : 'Pedido confirmado!'}
-        </h1>
+        {isOtherDevice ? (
+          <h1 className="text-2xl font-bold text-[var(--color-neutral-text)] leading-tight">
+            Vamos ativar o eSIM no outro aparelho
+          </h1>
+        ) : (
+          <FeedbackBanner title="Pedido confirmado" className="mb-5" />
+        )}
 
         <p className="text-sm text-[var(--color-neutral-text-medium)] mt-2 leading-relaxed">
           {isOtherDevice
@@ -146,18 +136,20 @@ export default function AtivarEsimPage() {
         <Card variant="neutral" padding="md" className="mt-5">
           <div className="flex items-start justify-between">
             <div className="flex-1">
-              <p className="text-xs text-[var(--color-neutral-text-medium)]">Número novo</p>
-              <p className="font-bold text-[var(--color-neutral-text)] mt-1">
-                Ativando com DDD ({selectedDDD})
+              <p className="text-xs text-[var(--color-neutral-text-medium)]">
+                Número novo
               </p>
-              <p className="text-xs text-[var(--color-neutral-text-medium)] mt-1">
-                O DDD não pode ser alterado depois. Pra fazer a portabilidade depois,
-                o número precisa ter o DDD escolhido aqui.
+              <p className="font-bold text-[var(--color-neutral-text)] mt-1">
+                DDD atual: ({selectedDDD})
+              </p>
+              <p className="text-xs text-[var(--color-neutral-text-medium)] mt-2 leading-relaxed">
+                Confira o DDD. Depois da ativação, ele não poderá ser alterado.
+                Para portabilidade, escolha o mesmo DDD do número atual.
               </p>
             </div>
             <button
               onClick={() => setDddSheetOpen(true)}
-              className="text-[var(--color-primary-text)] text-sm font-semibold ml-3 flex-shrink-0"
+              className="text-[var(--color-primary-text)] text-sm font-semibold ml-4 flex-shrink-0 mt-0.5"
             >
               Alterar
             </button>
