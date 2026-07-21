@@ -42,7 +42,7 @@ export default function ConfigurandoESIMPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25 }}
           >
-            <FeedbackBanner title="Chip ativado" className="mb-5" />
+            <FeedbackBanner title="Chip ativado" className="mb-6" />
 
             <h1 className="text-2xl font-bold text-[var(--color-neutral-text)]
               leading-tight mb-3">
