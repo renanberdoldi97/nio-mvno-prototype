@@ -62,7 +62,12 @@ export function BottomSheet({
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            transition={{
+              type: 'spring',
+              stiffness: 200,
+              damping: 40,
+              mass: 1.2,
+            }}
             className={cn(
               'absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl z-50',
               'max-h-[90%] overflow-y-auto no-scrollbar',

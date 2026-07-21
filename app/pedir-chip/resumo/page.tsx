@@ -13,7 +13,6 @@ import { MOCK_USER } from '@/lib/mock-data';
 export default function ResumoPage() {
   const router = useRouter();
   const selectedChipType = useAppState(s => s.selectedChipType);
-  const selectedDDD = useAppState(s => s.selectedDDD);
   const [planSheetOpen, setPlanSheetOpen] = useState(false);
 
   const isEsim = selectedChipType !== 'physical';
@@ -104,8 +103,8 @@ export default function ResumoPage() {
         {/* Card 2 — Número novo */}
         <Card variant="neutral" padding="md">
           <p className="text-xs text-[var(--color-neutral-text-medium)]">Número novo</p>
-          <p className="font-bold text-[var(--color-neutral-text)] mt-2">
-            DDD ({selectedDDD})
+          <p className="text-sm text-[var(--color-neutral-text)] mt-2 leading-relaxed">
+            Seu chip vem com o DDD do endereço da sua instalação Nio Fibra.
           </p>
           <p className="text-xs text-[var(--color-neutral-text-medium)] mt-2">
             Você pode alterar o DDD antes de ativar.

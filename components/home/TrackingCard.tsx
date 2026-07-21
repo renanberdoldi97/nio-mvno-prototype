@@ -66,7 +66,9 @@ export function TrackingCard() {
       )}
 
       {trackingStatus !== 'confirmed' && (
-        <Button onClick={handleCta}>{TRACKING_CTA_LABEL[trackingStatus]}</Button>
+        <Button onClick={handleCta} fullWidth={false} className="w-auto">
+          {TRACKING_CTA_LABEL[trackingStatus]}
+        </Button>
       )}
     </Card>
   );
