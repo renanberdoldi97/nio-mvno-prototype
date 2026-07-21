@@ -119,13 +119,10 @@ export default function AtivarEsimPage() {
       }
     >
       <div className="px-6 pt-6">
-        {isOtherDevice ? (
-          <h1 className="text-2xl font-bold text-[var(--color-neutral-text)] leading-tight">
-            Vamos ativar o eSIM no outro aparelho
-          </h1>
-        ) : (
-          <FeedbackBanner title="Pedido confirmado" className="mb-5" />
-        )}
+        <FeedbackBanner title="Pedido confirmado" className="mb-4" />
+        <h1 className="text-2xl font-bold text-[var(--color-neutral-text)] leading-tight mb-2">
+          {isOtherDevice ? 'Vamos ativar o eSIM no outro aparelho' : 'Tudo pronto!'}
+        </h1>
 
         <p className="text-sm text-[var(--color-neutral-text-medium)] mt-2 leading-relaxed">
           {isOtherDevice
