@@ -91,15 +91,11 @@ export default function AtivarFisicoPage() {
               <p className="text-xs text-[var(--color-neutral-text-medium)]">
                 Número novo
               </p>
-              <p className="text-base font-semibold text-[var(--color-neutral-text)] mt-2 leading-relaxed">
-                Confira seu DDD antes de ativar
-              </p>
               <p className="text-sm font-bold text-[var(--color-neutral-text)] mt-2">
                 DDD atual: ({selectedDDD})
               </p>
               <p className="text-sm text-[var(--color-neutral-text-medium)] mt-2 leading-relaxed">
-                Depois da ativação, ele não poderá ser alterado.
-                Para portabilidade, escolha o mesmo DDD do número atual.
+                Confira seu DDD antes de ativar. Depois da ativação, ele não poderá ser alterado. Para portabilidade, escolha o mesmo DDD do número atual.
               </p>
             </div>
             <button
