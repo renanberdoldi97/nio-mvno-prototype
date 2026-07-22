@@ -29,6 +29,7 @@ type AppState = {
   // Jornada "chip pra outro aparelho"
   identifiedDevice: string | null;
   isOtherDevice: boolean;
+  esimSupported: boolean; // aparelho identificado suporta eSIM
 
   // Ações
   setOrderStatus: (status: OrderStatus) => void;
@@ -43,6 +44,7 @@ type AppState = {
   setTrackingStatus: (status: AppState['trackingStatus']) => void;
   setIdentifiedDevice: (device: string) => void;
   setIsOtherDevice: (value: boolean) => void;
+  setEsimSupported: (value: boolean) => void;
   reset: () => void;
 };
 
@@ -60,6 +62,7 @@ const initialState = {
   trackingStatus: 'confirmed' as const,
   identifiedDevice: null,
   isOtherDevice: false,
+  esimSupported: true,
 };
 
 export const useAppState = create<AppState>()(
@@ -79,6 +82,7 @@ export const useAppState = create<AppState>()(
       setTrackingStatus: (trackingStatus) => set({ trackingStatus }),
       setIdentifiedDevice: (identifiedDevice) => set({ identifiedDevice }),
       setIsOtherDevice: (isOtherDevice) => set({ isOtherDevice }),
+      setEsimSupported: (esimSupported) => set({ esimSupported }),
       reset: () => set(initialState),
     }),
     { name: 'nio-mvno-state' }

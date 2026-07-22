@@ -9,18 +9,16 @@ import { NioIcon } from '@/components/icons';
 import { useAppState } from '@/lib/state';
 import { MOCK_USER } from '@/lib/mock-data';
 
-// Simplificação do protótipo: todo aparelho identificado suporta eSIM.
-const isEsimSupported = true;
-
 export default function OutroAparelhoEscolherTipoPage() {
   const router = useRouter();
   const identifiedDevice = useAppState(s => s.identifiedDevice);
   const selectedChipType = useAppState(s => s.selectedChipType);
   const setSelectedChipType = useAppState(s => s.setSelectedChipType);
+  const esimSupported = useAppState(s => s.esimSupported);
 
   useEffect(() => {
-    if (!selectedChipType && isEsimSupported) {
-      setSelectedChipType('esim');
+    if (!selectedChipType) {
+      setSelectedChipType(esimSupported ? 'esim' : 'physical');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -59,30 +57,30 @@ export default function OutroAparelhoEscolherTipoPage() {
       </div>
 
       <div className="px-6 flex flex-col gap-4">
-        {/* Card eSIM */}
-        <Card
-          variant={selectedChipType === 'esim' ? 'selected' : 'white'}
-          onClick={() => setSelectedChipType('esim')}
-          padding="md"
-        >
-          <div className="flex gap-3 items-start">
-            <div className="w-11 h-11 rounded-full bg-[var(--color-primary-background-low)] flex items-center justify-center flex-shrink-0">
-              <NioIcon name="chip-sim" size={24} />
-            </div>
-            <div className="flex-1">
-              <p className="text-sm text-[var(--color-neutral-text-medium)]">eSIM</p>
-              <p className="text-base font-bold text-[var(--color-neutral-text)] mt-0.5">Ativar agora</p>
-              <p className="text-sm text-[var(--color-neutral-text-medium)] mt-1">
-                Comece a usar seu plano em poucos minutos.
-              </p>
-              {isEsimSupported && (
+        {/* Card eSIM — só aparece se o aparelho identificado suportar eSIM */}
+        {esimSupported && (
+          <Card
+            variant={selectedChipType === 'esim' ? 'selected' : 'white'}
+            onClick={() => setSelectedChipType('esim')}
+            padding="md"
+          >
+            <div className="flex gap-3 items-start">
+              <div className="w-11 h-11 rounded-full bg-[var(--color-primary-background-low)] flex items-center justify-center flex-shrink-0">
+                <NioIcon name="chip-sim" size={24} />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm text-[var(--color-neutral-text-medium)]">eSIM</p>
+                <p className="text-base font-bold text-[var(--color-neutral-text)] mt-0.5">Ativar agora</p>
+                <p className="text-sm text-[var(--color-neutral-text-medium)] mt-1">
+                  Comece a usar seu plano em poucos minutos.
+                </p>
                 <div className="mt-3 inline-flex px-3 py-1 rounded-full bg-[var(--color-primary-background)] text-white text-[11px] font-semibold">
                   Recomendado para este aparelho
                 </div>
-              )}
+              </div>
             </div>
-          </div>
-        </Card>
+          </Card>
+        )}
 
         {/* Card Chip Físico */}
         <Card

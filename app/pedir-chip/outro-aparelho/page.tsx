@@ -6,46 +6,58 @@ import { Button } from '@/components/ui/Button';
 import { Message } from '@/components/ui/Message';
 import { JourneyLayout } from '@/components/ui/JourneyLayout';
 import { useAppState } from '@/lib/state';
+import { DEVICE_MODELS, type DeviceModel } from '@/lib/mock-data';
 import { cn } from '@/lib/utils';
 
 const NOT_FOUND = 'Não encontrei o modelo na lista';
 
-const DEVICE_SUGGESTIONS = [
-  'iPhone 11',
-  'iPhone 11 Pro',
-  'iPhone 13 Pro',
-  'iPhone 14',
-  'Samsung Galaxy S23',
-  NOT_FOUND,
-];
+type Selection = DeviceModel | typeof NOT_FOUND;
 
 export default function OutroAparelhoPage() {
   const router = useRouter();
   const setIdentifiedDevice = useAppState(s => s.setIdentifiedDevice);
   const setIsOtherDevice = useAppState(s => s.setIsOtherDevice);
+  const setEsimSupported = useAppState(s => s.setEsimSupported);
 
   const [query, setQuery] = useState('');
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = useState<Selection | null>(null);
   const [focused, setFocused] = useState(false);
 
   const suggestions = useMemo(() => {
-    if (!query) return DEVICE_SUGGESTIONS;
-    return DEVICE_SUGGESTIONS.filter(d => d.toLowerCase().includes(query.toLowerCase()));
+    const q = query.toLowerCase();
+    const filtered = !q
+      ? DEVICE_MODELS
+      : DEVICE_MODELS.filter(
+          d => d.model.toLowerCase().includes(q) || d.brand.toLowerCase().includes(q)
+        );
+
+    return [...filtered].sort((a, b) => {
+      const brandCompare = a.brand.localeCompare(b.brand);
+      return brandCompare !== 0 ? brandCompare : a.model.localeCompare(b.model);
+    });
   }, [query]);
 
-  const showDropdown = focused && query.length > 0 && selected !== query && suggestions.length > 0;
+  const selectedLabel = selected
+    ? selected === NOT_FOUND
+      ? NOT_FOUND
+      : `${selected.brand} ${selected.model}`
+    : null;
+
+  const showDropdown = focused && query.length > 0 && selectedLabel !== query;
   const isNotFound = selected === NOT_FOUND;
   const canContinue = selected !== null && !isNotFound;
 
-  function handleSelect(device: string) {
+  function handleSelect(device: Selection) {
     setSelected(device);
-    setQuery(device);
+    setQuery(device === NOT_FOUND ? NOT_FOUND : `${device.brand} ${device.model}`);
     setFocused(false);
   }
 
   function handleContinue() {
     if (!selected || isNotFound) return;
-    setIdentifiedDevice(selected);
+    const device = selected as DeviceModel;
+    setIdentifiedDevice(`${device.brand} ${device.model}`);
+    setEsimSupported(device.esimSupported);
     setIsOtherDevice(true);
     router.push('/pedir-chip/outro-aparelho/identificando');
   }
@@ -67,7 +79,7 @@ export default function OutroAparelhoPage() {
 
         <div className="relative">
           <div className={cn(
-            'relative border-[1.5px] rounded-xl bg-white h-14 flex items-center px-4',
+            'relative border-[1.5px] rounded-md bg-white h-14 flex items-center px-4',
             focused ? 'border-text-primary' : 'border-border'
           )}>
             <input
@@ -84,16 +96,22 @@ export default function OutroAparelhoPage() {
           </div>
 
           {showDropdown && (
-            <div className="absolute left-0 right-0 top-[60px] bg-white rounded-xl border border-[var(--color-neutral-border)] shadow-[0_4px_12px_rgba(0,0,0,0.08)] z-10 max-h-64 overflow-y-auto no-scrollbar">
-              {suggestions.map(s => (
+            <div className="absolute left-0 right-0 top-[60px] bg-white rounded-md border border-[var(--color-neutral-border)] shadow-[0_4px_12px_rgba(0,0,0,0.08)] z-10 max-h-64 overflow-y-auto no-scrollbar">
+              {suggestions.map(d => (
                 <button
-                  key={s}
-                  onClick={() => handleSelect(s)}
+                  key={`${d.brand}-${d.model}`}
+                  onClick={() => handleSelect(d)}
                   className="w-full text-left px-4 py-3 text-sm text-[var(--color-neutral-text)] border-b border-[var(--color-neutral-border)] last:border-b-0"
                 >
-                  {s}
+                  {d.brand} {d.model}
                 </button>
               ))}
+              <button
+                onClick={() => handleSelect(NOT_FOUND)}
+                className="w-full text-left px-4 py-3 text-sm font-semibold text-[var(--color-primary-text)]"
+              >
+                {NOT_FOUND}
+              </button>
             </div>
           )}
         </div>
