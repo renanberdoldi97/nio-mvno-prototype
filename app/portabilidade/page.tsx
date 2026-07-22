@@ -92,7 +92,7 @@ export default function PortabilidadePage() {
             onChange={setNumber}
             inputMode="tel"
           />
-          <p className="text-xs text-[var(--color-neutral-text-medium)] mt-1 px-1">
+          <p className="text-sm text-[var(--color-neutral-text-medium)] mt-1 px-1">
             Exemplo: (11) 9 0000-0000
           </p>
         </div>

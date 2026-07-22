@@ -83,7 +83,7 @@ export default function ChipMovelPage() {
               <div className="flex items-start gap-3">
                 <NioIcon name="smartphone" size={22} className="flex-shrink-0" />
                 <div>
-                  <p className="text-xs text-[var(--color-neutral-text-medium)]">Ligações e SMS ilimitados</p>
+                  <p className="text-sm text-[var(--color-neutral-text-medium)]">Ligações e SMS ilimitados</p>
                   <p className="text-sm font-bold text-[var(--color-neutral-text)] mt-0.5">
                     Pra qualquer operadora, em todo o Brasil
                   </p>
@@ -92,7 +92,7 @@ export default function ChipMovelPage() {
               <div className="flex items-start gap-3">
                 <NioIcon name="whatsapp" size={22} className="flex-shrink-0" />
                 <div>
-                  <p className="text-xs text-[var(--color-neutral-text-medium)]">WhatsApp ilimitado</p>
+                  <p className="text-sm text-[var(--color-neutral-text-medium)]">WhatsApp ilimitado</p>
                   <p className="text-sm font-bold text-[var(--color-neutral-text)] mt-0.5">
                     Pra mensagens de texto e voz
                   </p>
@@ -101,7 +101,7 @@ export default function ChipMovelPage() {
             </div>
           </Card>
 
-          <p className="text-xs text-[var(--color-neutral-text-medium)] my-5">
+          <p className="text-sm text-[var(--color-neutral-text-medium)] my-5">
             Quando os dados da franquia acabarem, a velocidade reduz.
           </p>
 
@@ -127,11 +127,11 @@ export default function ChipMovelPage() {
           <div className="border-t border-[var(--color-neutral-border)] mt-4 pt-4">
             <div className="grid grid-cols-2 gap-4 mb-3">
               <div>
-                <p className="text-xs text-[var(--color-neutral-text-medium)]">Franquia</p>
+                <p className="text-sm text-[var(--color-neutral-text-medium)]">Franquia</p>
                 <p className="font-bold text-base text-[var(--color-neutral-text)]">{DATA_ALLOWANCE_GB} GB</p>
               </div>
               <div>
-                <p className="text-xs text-[var(--color-neutral-text-medium)]">Consumo</p>
+                <p className="text-sm text-[var(--color-neutral-text-medium)]">Consumo</p>
                 <p className="font-bold text-base text-[var(--color-neutral-text)]">
                   {DATA_USAGE_GB.toString().replace('.', ',')} GB
                 </p>

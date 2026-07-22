@@ -152,13 +152,13 @@ export default function AtivarEsimPage() {
         <Card variant="neutral" padding="md" className="mt-5">
           <div className="flex items-start justify-between">
             <div className="flex-1">
-              <p className="text-xs text-[var(--color-neutral-text-medium)]">
+              <p className="text-sm text-[var(--color-neutral-text-medium)]">
                 Número novo
               </p>
               <p className="font-bold text-[var(--color-neutral-text)] mt-1">
                 DDD atual: ({selectedDDD})
               </p>
-              <p className="text-xs text-[var(--color-neutral-text-medium)] mt-2 leading-relaxed">
+              <p className="text-sm text-[var(--color-neutral-text-medium)] mt-2 leading-relaxed">
                 Confira o DDD. Depois da ativação, ele não poderá ser alterado.
                 Para portabilidade, escolha o mesmo DDD do número atual.
               </p>

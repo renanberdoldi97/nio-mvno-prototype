@@ -41,7 +41,7 @@ export default function OutroAparelhoEscolherTipoPage() {
         <Card variant="neutral">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs text-[var(--color-neutral-text-medium)]">Aparelho identificado</p>
+              <p className="text-sm text-[var(--color-neutral-text-medium)]">Aparelho identificado</p>
               <p className="font-bold text-base text-[var(--color-neutral-text)] mt-0.5">
                 {identifiedDevice}
               </p>

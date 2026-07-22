@@ -67,7 +67,7 @@ export default function PedirChipIntroPage() {
 
           <div className="flex flex-col gap-3">
             <Card variant="neutral">
-              <p className="text-xs text-[var(--color-neutral-text-medium)] mb-2">Seu benefício</p>
+              <p className="text-sm text-[var(--color-neutral-text-medium)] mb-2">Seu benefício</p>
               <ul className="flex flex-col gap-2">
                 <li className="text-sm text-[var(--color-primary-text)] flex gap-2">
                   <span>•</span>
@@ -77,7 +77,7 @@ export default function PedirChipIntroPage() {
             </Card>
 
             <Card variant="neutral">
-              <p className="text-xs text-[var(--color-neutral-text-medium)] mb-2">Como funciona</p>
+              <p className="text-sm text-[var(--color-neutral-text-medium)] mb-2">Como funciona</p>
               <ul className="flex flex-col gap-2">
                 <li className="text-sm text-[var(--color-primary-text)] flex gap-2">
                   <span>•</span>
@@ -95,7 +95,7 @@ export default function PedirChipIntroPage() {
             </Card>
 
             <Card variant="neutral">
-              <p className="text-xs text-[var(--color-neutral-text-medium)] mb-2">O que é bom saber</p>
+              <p className="text-sm text-[var(--color-neutral-text-medium)] mb-2">O que é bom saber</p>
               <ul className="flex flex-col gap-2">
                 <li className="text-sm text-[var(--color-primary-text)] flex gap-2">
                   <span>•</span>
@@ -121,7 +121,7 @@ export default function PedirChipIntroPage() {
       cta={
         <div className="w-full flex items-center justify-between">
           <div>
-            <p className="text-xs text-[var(--color-neutral-text-medium)]">Chip móvel</p>
+            <p className="text-sm text-[var(--color-neutral-text-medium)]">Chip móvel</p>
             <p className="font-bold text-base text-[var(--color-neutral-text)]">20 GB</p>
           </div>
           <Button fullWidth={false} onClick={() => router.push('/pedir-chip/escolher-tipo')}>

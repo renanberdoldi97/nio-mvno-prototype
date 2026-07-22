@@ -79,7 +79,7 @@ export function Input({
       </div>
       {(helper || error) && (
         <p className={cn(
-          'text-xs mt-1.5 px-1',
+          'text-sm mt-1.5 px-1',
           error ? 'text-error' : 'text-text-secondary'
         )}>
           {error || helper}

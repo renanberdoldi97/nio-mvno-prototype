@@ -67,7 +67,7 @@ export default function ConcluidoPage() {
           <div className="px-6 mt-6">
             <Card variant="neutral" className="flex items-center justify-between gap-3">
               <div>
-                <p className="text-xs text-[var(--color-neutral-text-medium)] mb-1">Seu novo número é</p>
+                <p className="text-sm text-[var(--color-neutral-text-medium)] mb-1">Seu novo número é</p>
                 <p className="font-bold text-xl text-[var(--color-neutral-text)]">{MOCK_CHIP.fullNumber}</p>
               </div>
               <button onClick={handleCopy} className="flex-shrink-0">

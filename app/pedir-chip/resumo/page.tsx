@@ -54,7 +54,7 @@ export default function ResumoPage() {
               <div className="flex items-start gap-3">
                 <NioIcon name="smartphone" size={22} className="flex-shrink-0" />
                 <div>
-                  <p className="text-xs text-[var(--color-neutral-text-medium)]">Ligações e SMS ilimitados</p>
+                  <p className="text-sm text-[var(--color-neutral-text-medium)]">Ligações e SMS ilimitados</p>
                   <p className="text-sm font-bold text-[var(--color-neutral-text)] mt-0.5">
                     Pra qualquer operadora, em todo o Brasil
                   </p>
@@ -63,7 +63,7 @@ export default function ResumoPage() {
               <div className="flex items-start gap-3">
                 <NioIcon name="whatsapp" size={22} className="flex-shrink-0" />
                 <div>
-                  <p className="text-xs text-[var(--color-neutral-text-medium)]">WhatsApp ilimitado</p>
+                  <p className="text-sm text-[var(--color-neutral-text-medium)]">WhatsApp ilimitado</p>
                   <p className="text-sm font-bold text-[var(--color-neutral-text)] mt-0.5">
                     Pra mensagens de texto e voz
                   </p>
@@ -72,7 +72,7 @@ export default function ResumoPage() {
               <div className="flex items-start gap-3">
                 <NioIcon name="chip-sim" size={22} className="flex-shrink-0" />
                 <div>
-                  <p className="text-xs text-[var(--color-neutral-text-medium)]">Escolha o DDD antes de ativar</p>
+                  <p className="text-sm text-[var(--color-neutral-text-medium)]">Escolha o DDD antes de ativar</p>
                   <p className="text-sm font-bold text-[var(--color-neutral-text)] mt-0.5">
                     Seu chip vem com DDD do endereço da sua Nio Fibra
                   </p>
@@ -81,7 +81,7 @@ export default function ResumoPage() {
             </div>
           </Card>
 
-          <p className="text-xs text-[var(--color-neutral-text-medium)] my-5">
+          <p className="text-sm text-[var(--color-neutral-text-medium)] my-5">
             Quando os dados da franquia acabarem, a velocidade reduz.
           </p>
 
@@ -119,11 +119,11 @@ export default function ResumoPage() {
 
         {/* Card 2 — Número novo */}
         <Card variant="neutral" padding="md">
-          <p className="text-xs text-[var(--color-neutral-text-medium)]">Número novo</p>
+          <p className="text-sm text-[var(--color-neutral-text-medium)]">Número novo</p>
           <p className="text-base font-bold text-[var(--color-neutral-text)] mt-2 leading-relaxed">
             Seu chip vem com DDD do endereço da sua Nio Fibra
           </p>
-          <p className="text-xs text-[var(--color-neutral-text-medium)] mt-2">
+          <p className="text-sm text-[var(--color-neutral-text-medium)] mt-2">
             Você pode escolher outro DDD antes de ativar.
           </p>
         </Card>

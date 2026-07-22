@@ -88,7 +88,7 @@ export default function AtivarFisicoPage() {
         <Card variant="neutral" padding="md" className="mt-5">
           <div className="flex items-start justify-between">
             <div className="flex-1">
-              <p className="text-xs text-[var(--color-neutral-text-medium)]">
+              <p className="text-sm text-[var(--color-neutral-text-medium)]">
                 Número novo
               </p>
               <p className="text-sm font-bold text-[var(--color-neutral-text)] mt-2">

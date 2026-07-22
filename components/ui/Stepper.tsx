@@ -87,7 +87,7 @@ export function Stepper({ steps, className }: StepperProps) {
             )}
           </div>
           <span className={cn(
-            'text-xs font-medium mt-2 text-center',
+            'text-sm font-medium mt-2 text-center',
             step.status === 'pending' ? 'text-text-disabled' : 'text-text-primary'
           )}>
             {step.label}

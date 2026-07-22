@@ -66,7 +66,7 @@ export default function FallbackPage() {
         </p>
 
         <Card variant="neutral" className="mb-5">
-          <p className="text-xs text-[var(--color-neutral-text-medium)] mb-1">Código de ativação</p>
+          <p className="text-sm text-[var(--color-neutral-text-medium)] mb-1">Código de ativação</p>
           <div className="flex items-center justify-between gap-3">
             <span className="font-mono text-sm text-[var(--color-neutral-text)] break-all">{LPA_DISPLAY}</span>
             <button onClick={handleCopy} className="flex-shrink-0">
@@ -103,7 +103,7 @@ export default function FallbackPage() {
         <div className="flex flex-col gap-3">
           {STEPS[os].map((step, i) => (
             <div key={i} className="flex items-center gap-3">
-              <span className="w-6 h-6 rounded-full bg-[var(--color-neutral-background-low)] text-[var(--color-neutral-text)] text-xs font-bold flex items-center justify-center flex-shrink-0">
+              <span className="w-6 h-6 rounded-full bg-[var(--color-neutral-background-low)] text-[var(--color-neutral-text)] text-sm font-bold flex items-center justify-center flex-shrink-0">
                 {i + 1}
               </span>
               <span className="text-sm text-[var(--color-neutral-text)]">{step}</span>

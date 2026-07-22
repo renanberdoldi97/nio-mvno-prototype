@@ -52,7 +52,7 @@ export default function ConfirmadoPage() {
 
       <div className="px-6 mt-6">
         <Card variant="neutral" padding="md">
-          <p className="text-xs text-[var(--color-neutral-text-medium)]">Tipo de chip</p>
+          <p className="text-sm text-[var(--color-neutral-text-medium)]">Tipo de chip</p>
           <p className="font-bold text-[var(--color-neutral-text)] mt-1">Chip físico</p>
           <p className="text-sm text-[var(--color-neutral-text-medium)] mt-2">
             {MOCK_USER.address.short}

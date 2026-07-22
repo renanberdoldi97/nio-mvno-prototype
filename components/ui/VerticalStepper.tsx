@@ -76,7 +76,7 @@ export function VerticalStepper({ steps, variant = 'progress' }: VerticalStepper
             isTimeline ? 'flex flex-col justify-center items-start self-stretch' : ''
           )}>
             {step.caption && (
-              <p className="text-xs text-[var(--color-neutral-text-medium)] mb-0.5">
+              <p className="text-sm text-[var(--color-neutral-text-medium)] mb-0.5">
                 {step.caption}
               </p>
             )}
