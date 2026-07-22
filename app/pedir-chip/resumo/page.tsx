@@ -61,6 +61,15 @@ export default function ResumoPage() {
                   </p>
                 </div>
               </div>
+              <div className="flex items-start gap-3">
+                <NioIcon name="chip-sim" size={22} className="flex-shrink-0" />
+                <div>
+                  <p className="text-xs text-[var(--color-neutral-text-medium)]">Escolha o DDD antes de ativar</p>
+                  <p className="text-sm font-bold text-[var(--color-neutral-text)] mt-0.5">
+                    Por padrão, o chip vem com DDD do endereço da sua Nio Fibra
+                  </p>
+                </div>
+              </div>
             </div>
           </Card>
 
