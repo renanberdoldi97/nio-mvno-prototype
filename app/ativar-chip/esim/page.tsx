@@ -3,13 +3,12 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
-import { Card } from '@/components/ui/Card';
-import { FeedbackBanner } from '@/components/ui/FeedbackBanner';
 import { Input } from '@/components/ui/Input';
 import { Message } from '@/components/ui/Message';
 import { BottomSheet } from '@/components/ui/BottomSheet';
 import { JourneyLayout } from '@/components/ui/JourneyLayout';
 import { ProgressCircle } from '@/components/ui/ProgressCircle';
+import { DDDCard } from '@/components/ui/DDDCard';
 import { useAppState } from '@/lib/state';
 
 type OtherDeviceStep = 'idle' | 'qr' | 'configuring';
@@ -43,15 +42,10 @@ export default function AtivarEsimPage() {
 
   return (
     <JourneyLayout
-      title="Ativar chip móvel"
+      title={isOtherDevice ? 'Pedir chip móvel' : 'Ativar chip móvel'}
       onBack={() => router.push('/')}
       cta={
         <>
-          <Message
-            kind="info"
-            title="O DDD não poderá ser alterado depois da ativação do chip."
-          />
-
           <Button
             onClick={() => {
               if (isOtherDevice) {
@@ -63,6 +57,11 @@ export default function AtivarEsimPage() {
           >
             Ativar eSIM
           </Button>
+          {!isOtherDevice && (
+            <Button variant="secondary" onClick={() => router.push('/')}>
+              Voltar para o início
+            </Button>
+          )}
         </>
       }
       overlay={
@@ -138,39 +137,26 @@ export default function AtivarEsimPage() {
       }
     >
       <div className="px-6 pt-6">
-        <FeedbackBanner title="Pedido confirmado" className="mb-6" />
-        <h1 className="text-2xl font-bold text-[var(--color-neutral-text)] leading-tight mb-2">
-          {isOtherDevice ? 'Vamos ativar o eSIM no outro aparelho' : 'Tudo pronto!'}
+        <h1 className="text-3xl font-bold text-[var(--color-neutral-text)] leading-tight mb-2">
+          {isOtherDevice ? 'Vamos ativar o eSIM no outro aparelho' : 'Pedido confirmado! Ative agora seu eSIM'}
         </h1>
 
         <p className="text-sm text-[var(--color-neutral-text-medium)] mt-2 leading-relaxed">
           {isOtherDevice
             ? 'Vamos exibir um QR Code pra você escanear com o aparelho de origem do outro chip.'
-            : 'Seu eSIM está pronto pra ser ativado. Garanta que seu aparelho está conectado à internet antes de começar a ativação.'}
+            : 'Garanta que seu aparelho está conectado a internet antes de começar a ativação.'}
         </p>
 
-        <Card variant="neutral" padding="md" className="mt-5">
-          <div className="flex items-start justify-between">
-            <div className="flex-1">
-              <p className="text-sm text-[var(--color-neutral-text-medium)]">
-                Número novo
-              </p>
-              <p className="font-bold text-[var(--color-neutral-text)] mt-1">
-                DDD atual: ({selectedDDD})
-              </p>
-              <p className="text-sm text-[var(--color-neutral-text-medium)] mt-2 leading-relaxed">
-                Confira o DDD. Depois da ativação, ele não poderá ser alterado.
-                Para portabilidade, escolha o mesmo DDD do número atual.
-              </p>
-            </div>
-            <button
-              onClick={() => setDddSheetOpen(true)}
-              className="text-[var(--color-primary-text)] text-sm font-semibold ml-4 flex-shrink-0 mt-0.5"
-            >
-              Alterar
-            </button>
-          </div>
-        </Card>
+        <div className="mt-5">
+          <DDDCard onAlterarClick={() => setDddSheetOpen(true)} />
+        </div>
+
+        <Message
+          kind="warning"
+          title="O DDD não poderá ser alterado depois da ativação do chip"
+          description="Se quiser pedir portabilidade depois, ative seu chip com o mesmo DDD do número que você vai trazer pra Nio."
+          className="mt-4"
+        />
       </div>
     </JourneyLayout>
   );

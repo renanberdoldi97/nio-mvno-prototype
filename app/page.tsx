@@ -1,14 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { AppShell } from '@/components/shell/AppShell';
-import { NioIcon, IconName } from '@/components/icons';
-import { Button } from '@/components/ui/Button';
-import { TrackingCard } from '@/components/home/TrackingCard';
-import { motion } from 'framer-motion';
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { AppShell } from '@/components/shell/AppShell';
+import { NioIcon, type IconName } from '@/components/icons';
+import { ChipTag } from '@/components/ui/ChipTag';
 import { useAppState } from '@/lib/state';
+import { MOCK_USER } from '@/lib/mock-data';
 
 function resetDemoState() {
   useAppState.getState().reset();
@@ -16,24 +15,26 @@ function resetDemoState() {
   window.location.reload();
 }
 
-// ============================================================
-// QUICK ACTIONS — 8 atalhos horizontal scroll
-// ============================================================
-type QuickAction = {
+type QuickLink = {
+  key: string;
   label: string;
   icon: IconName;
   route: string;
-  isNew?: boolean;
 };
+
+const QUICK_LINKS: QuickLink[] = [
+  { key: 'reparo', label: 'Fazer reparo\nda internet', icon: 'tool', route: '/suporte' },
+  { key: 'senha-wifi', label: 'Trocar senha\ndo Wi-Fi', icon: 'password', route: '/suporte' },
+  { key: 'dados-contato', label: 'Atualizar dados\nde contato', icon: 'user', route: '/mais' },
+  { key: 'renomear-wifi', label: 'Renomear rede\nWi-Fi', icon: 'edit', route: '/suporte' },
+];
 
 export default function HomePage() {
   const router = useRouter();
-  const orderStatus = useAppState(s => s.orderStatus);
-  const selectedChipType = useAppState(s => s.selectedChipType);
 
   // Zustand persist hidrata o state do localStorage DEPOIS do primeiro render —
-  // sem essa guarda, a home pisca com o initialState (hero visível) antes de
-  // trocar pro estado real já persistido (hero some), daí o efeito "aparece e some".
+  // sem essa guarda, a home pisca com o initialState antes de trocar pro estado
+  // real já persistido.
   const [hydrated, setHydrated] = useState(false);
   useEffect(() => {
     setHydrated(true);
@@ -49,32 +50,25 @@ export default function HomePage() {
     }
   }, []);
 
-  // Hero de descoberta só aparece pro cliente que nunca pediu chip
-  const showHero = orderStatus === 'not_started';
-  // Card de tracking só aparece pra pedido físico ainda em curso
-  const showTracking = selectedChipType === 'physical' &&
-    ['pending_delivery', 'in_transit', 'delivered'].includes(orderStatus);
+  function handleChipMovelClick() {
+    const { orderStatus, selectedChipType } = useAppState.getState();
 
-  const quickActions: QuickAction[] = [
-    orderStatus === 'active'
-      ? { label: 'Meu chip\nmóvel', icon: 'shortcut-pedir-chip', route: '/chip-movel', isNew: false }
-      : { label: 'Pedir\nmeu chip', icon: 'shortcut-pedir-chip', route: '/pedir-chip', isNew: true },
-    { label: '2ª via\nde conta', icon: 'shortcut-segunda-via', route: '/contas' },
-    { label: 'Consultar\ncontas pagas', icon: 'shortcut-contas-pagas', route: '/contas/pagas' },
-    { label: 'Mudar de\nendereço', icon: 'shortcut-mudar-endereco', route: '/endereco' },
-    { label: 'Alterar meio\nde pagamento', icon: 'shortcut-meio-pagamento', route: '/pagamento' },
-    { label: 'Gerenciar\nprodutos', icon: 'shortcut-gerenciar-produtos', route: '/produtos' },
-    { label: 'Diagnosticar\nrede', icon: 'shortcut-diagnosticar-rede', route: '/suporte' },
-    { label: 'Trocar senha\ndo Wi-Fi', icon: 'shortcut-trocar-senha-wifi', route: '/suporte' },
-  ];
+    if (orderStatus === 'active') {
+      router.push('/chip-movel');
+    } else if (['pending_delivery', 'in_transit', 'delivered', 'ready_to_activate'].includes(orderStatus)) {
+      if (selectedChipType === 'esim') {
+        router.push('/ativar-chip/esim');
+      } else {
+        router.push('/ativar-chip/fisico');
+      }
+    } else {
+      router.push('/pedir-chip');
+    }
+  }
 
-  // Evita renderizar com o initialState antes do Zustand persist hidratar
   if (!hydrated) return (
     <div className="w-full h-full bg-white" />
   );
-
-  // DEBUG — remover após confirmar
-  console.log('orderStatus:', orderStatus, 'selectedChipType:', selectedChipType, 'showTracking:', showTracking);
 
   return (
     <AppShell headerVariant="home">
@@ -82,156 +76,149 @@ export default function HomePage() {
           pra facilitar demos e reavaliação da jornada do zero. */}
       <button
         onClick={resetDemoState}
-        className="fixed top-2 left-2 z-50 bg-black/10 text-[var(--color-neutral-text-medium)] text-[10px] px-2 py-1 rounded-full backdrop-blur-sm"
+        className="fixed bottom-24 right-4 z-50 bg-black/70 text-white text-[11px] font-medium px-3 py-2 rounded-full backdrop-blur-sm shadow-lg"
       >
         Reiniciar demo
       </button>
-      {/* HERO — desabilitado na v1, habilitar na v2
-      {showHero && (
-        <section className="bg-[var(--color-primary-background)] px-6 pt-4 pb-10 rounded-b-2xl relative overflow-hidden">
+
+      <div className="px-6">
+        {/* ============================================================
+            FATURAS EM ABERTO
+        ============================================================ */}
+        <section className="mt-6">
+          <h2 className="text-xl font-bold text-[var(--color-neutral-text)] mb-3">
+            Faturas em aberto
+          </h2>
+
           <div
-            className="absolute -right-12 -top-8 pointer-events-none z-0 opacity-20"
-            style={{ width: 320, height: 320 }}
-            aria-hidden
+            className="bg-white rounded-2xl p-6"
+            style={{ border: '1px solid #D6D8D4' }}
           >
-            <Image
-              src="/images/rastro-tornado-neon.svg"
-              alt=""
-              fill
-              className="object-contain"
-              unoptimized
-            />
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: -10, rotate: -15 }}
-            animate={{ opacity: 1, y: 0, rotate: -12 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="absolute -right-4 top-1 z-10 pointer-events-none"
-            style={{ width: 260, height: 290 }}
-          >
-            <Image
-              src="/images/chip-flutuante.png"
-              alt=""
-              fill
-              className="object-contain"
-              unoptimized
-              priority
-            />
-          </motion.div>
-
-          <div className="relative z-20 max-w-[220px]">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--color-primary-background-high)]/20 mb-4">
-              <NioIcon
-                name="check-circle"
-                size={14}
-                className="brightness-0 invert opacity-90"
-              />
-              <span className="text-[11px] font-semibold text-white">Benefício disponível</span>
+            <div className="flex items-center justify-between">
+              <span className="text-2xl font-bold text-[var(--color-neutral-text)]">R$ 135</span>
+              <button
+                onClick={() => router.push('/contas')}
+                className="text-sm font-semibold text-[#124803]"
+              >
+                Acessar fatura
+              </button>
             </div>
 
-            <h1 className="text-[26px] font-bold text-white leading-[1.15] mb-2">
-              Peça agora<br />seu chip móvel
-            </h1>
-
-            <p className="text-[13px] text-white/80 mb-5 leading-relaxed">
-              Internet que te acompanha, já inclusa no seu plano Nio Fibra.
+            <p className="text-lg font-bold text-[var(--color-neutral-text)] mt-3">
+              {MOCK_USER.plan.name}
             </p>
 
-            <motion.button
-              whileTap={{ scale: 0.96 }}
-              onClick={() => router.push('/pedir-chip')}
-              className="bg-white text-[var(--color-primary-text)] font-bold px-6 py-3 rounded-full text-sm"
+            <div className="mt-2">
+              <ChipTag
+                variant="label"
+                className="bg-[var(--color-neutral-border)] text-[var(--color-neutral-text-medium)]"
+              >
+                Em aberto
+              </ChipTag>
+            </div>
+
+            <div
+              className="mt-4 pt-4 flex flex-col gap-3"
+              style={{ borderTop: '1px solid #E9E5D3' }}
             >
-              Pedir meu chip
-            </motion.button>
+              <div className="flex items-center gap-2">
+                <NioIcon name="calendar" size={20} />
+                <span className="text-sm font-medium text-[#124803]">Vence em: 00/00/0000</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <NioIcon name="location" size={20} />
+                <span className="text-sm text-[var(--color-neutral-text)]">R. São Clemente, 000, ap. 000</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <NioIcon name="barcode" size={20} />
+                <span className="text-sm text-[var(--color-neutral-text)]">Boleto ou Pix</span>
+              </div>
+            </div>
           </div>
         </section>
-      )}
-      */}
 
-      {/* ============================================================
-          TRACKING — card de acompanhamento do chip físico em entrega
-          Aparece só quando há um pedido físico pendente de entrega.
-      ============================================================ */}
-      {showTracking && (
-        <div className="px-6 mt-4">
-          <TrackingCard />
-        </div>
-      )}
+        {/* ============================================================
+            ACESSO RÁPIDO
+        ============================================================ */}
+        <section className="mt-8">
+          <h2 className="text-xl font-bold text-[var(--color-neutral-text)] mb-3">
+            Acesso rápido
+          </h2>
 
-      {/* ============================================================
-          QUICK ACTIONS — 8 atalhos em scroll horizontal
-          Sem borda, sem card ao redor. Ícone é o botão.
-          Tag "Novo" ABAIXO do label, não acima do ícone.
-      ============================================================ */}
-      <section className="pt-10 pb-4">
-        <div className="flex gap-5 overflow-x-auto no-scrollbar px-6 pb-2">
-          {quickActions.map((action, i) => (
-            <motion.button
-              key={i}
-              whileTap={{ scale: 0.92 }}
-              onClick={() => router.push(action.route)}
-              className="flex flex-col items-center flex-shrink-0 gap-2 w-[72px]"
-            >
-              {/* Ícone SEM card/borda — o próprio SVG é o botão */}
-              <div className="w-12 h-12 flex items-center justify-center">
-                <NioIcon name={action.icon} size={44} />
-              </div>
+          <button
+            onClick={handleChipMovelClick}
+            className="w-full bg-[#D6EBEA] rounded-2xl p-5 flex items-center gap-4 mb-3 text-left"
+          >
+            <div className="relative flex-shrink-0" style={{ width: 56, height: 56 }}>
+              <Image
+                src="/images/chip-flutuante.png"
+                alt=""
+                fill
+                className="object-contain"
+                unoptimized
+              />
+            </div>
+            <div className="flex-1 flex items-center gap-2 flex-wrap">
+              <span className="text-lg font-bold text-[#124803]">Chip móvel</span>
+              <ChipTag variant="new">NOVO</ChipTag>
+            </div>
+          </button>
 
-              {/* Label — 2 linhas fixas via whitespace-pre-line */}
-              <span className="text-[11px] font-medium text-[var(--color-neutral-text)] leading-tight text-center whitespace-pre-line">
-                {action.label}
-              </span>
-
-              {/* Tag Novo ABAIXO do label */}
-              {action.isNew && (
-                <span className="mt-0.5 inline-flex items-center px-2 py-0.5 rounded-full bg-[var(--color-primary-background)] text-white text-[9px] font-bold uppercase tracking-wide">
-                  Novo
+          <div className="grid grid-cols-2 gap-3">
+            {QUICK_LINKS.map(link => (
+              <button
+                key={link.key}
+                onClick={() => router.push(link.route)}
+                className="bg-white rounded-2xl p-5 flex flex-col items-start gap-3 text-left"
+                style={{ border: '1px solid #D6D8D4' }}
+              >
+                <NioIcon name={link.icon} size={24} />
+                <span className="text-sm font-semibold text-[var(--color-neutral-text)] leading-tight whitespace-pre-line">
+                  {link.label}
                 </span>
-              )}
-            </motion.button>
-          ))}
-        </div>
-      </section>
-
-      {/* ============================================================
-          OFERTAS E BENEFÍCIOS — card com boneco flutuante
-      ============================================================ */}
-      <section className="px-6 pt-6 pb-4">
-        <h2 className="text-base font-bold text-[var(--color-neutral-text)] mb-3">
-          Ofertas e benefícios para você
-        </h2>
-
-        <div className="bg-[var(--color-primary-background-low)] rounded-2xl px-5 py-5 flex items-center justify-between min-h-[140px] overflow-hidden relative">
-          {/* Conteúdo à esquerda */}
-          <div className="relative z-10 max-w-[180px]">
-            <p className="font-bold text-[17px] text-[var(--color-neutral-text)] leading-tight mb-3">
-              Tem uma oferta<br />esperando você
-            </p>
-            <Button
-              kind="conversion"
-              size="sm"
-              fullWidth={false}
-              onClick={() => router.push('/ofertas')}
-              className="px-4"
-            >
-              Quero Conhecer
-            </Button>
+              </button>
+            ))}
           </div>
+        </section>
 
-          {/* Boneco flutuante à direita */}
-          <div className="absolute right-0 bottom-0 pointer-events-none" style={{ width: 140, height: 140 }}>
-            <Image
-              src="/images/boneco-oferta.png"
-              alt=""
-              fill
-              className="object-contain object-bottom"
-              unoptimized
-            />
+        {/* ============================================================
+            OFERTAS NIO FIBRA
+        ============================================================ */}
+        <section className="mt-8">
+          <h2 className="text-xl font-bold text-[var(--color-neutral-text)] mb-3">
+            Ofertas Nio Fibra
+          </h2>
+          <div
+            className="rounded-2xl flex items-center justify-center"
+            style={{ backgroundColor: '#124803', height: 200 }}
+          >
+            <span className="text-white font-semibold">Banner up</span>
           </div>
-        </div>
-      </section>
+          <div className="flex justify-center gap-1.5 mt-3">
+            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#31E000' }} />
+            <span className="w-2 h-2 rounded-full bg-[var(--color-neutral-border)]" />
+          </div>
+        </section>
+
+        {/* ============================================================
+            OFERTAS PARCEIRAS
+        ============================================================ */}
+        <section className="mt-8 pb-8">
+          <h2 className="text-xl font-bold text-[var(--color-neutral-text)] mb-3">
+            Ofertas parceiras
+          </h2>
+          <div
+            className="rounded-2xl flex items-center justify-center"
+            style={{ backgroundColor: '#124803', height: 200 }}
+          >
+            <span className="text-white font-semibold">Banner oferta 1</span>
+          </div>
+          <div className="flex justify-center gap-1.5 mt-3">
+            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#31E000' }} />
+            <span className="w-2 h-2 rounded-full bg-[var(--color-neutral-border)]" />
+          </div>
+        </section>
+      </div>
     </AppShell>
   );
 }

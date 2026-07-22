@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
-type ButtonVariant = 'primary' | 'outline' | 'ghost' | 'destructive';
+type ButtonVariant = 'primary' | 'outline' | 'secondary' | 'ghost' | 'destructive';
 type ButtonKind = 'conversion';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
@@ -23,6 +23,7 @@ type ButtonProps = {
 const variantStyles: Record<ButtonVariant, string> = {
   primary: 'bg-[var(--color-primary-background)] text-white font-semibold border-0',
   outline: 'bg-transparent text-text-primary font-semibold border-[1.5px] border-text-primary',
+  secondary: 'bg-transparent text-[var(--color-primary-background)] font-semibold border-[1.5px] border-[var(--color-primary-background)]',
   ghost: 'bg-transparent text-[var(--color-primary-text)] font-semibold border-0',
   destructive: 'bg-error text-white font-semibold border-0',
 };

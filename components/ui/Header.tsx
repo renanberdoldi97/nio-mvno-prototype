@@ -10,6 +10,8 @@ type HeaderProps = {
   showBack?: boolean;
   onBack?: () => void;
   title?: string;
+  // Slot customizado do lado direito (ex: botão de suporte) — sobrepõe showUser quando presente
+  rightAction?: React.ReactNode;
 };
 
 export function Header({
@@ -18,6 +20,7 @@ export function Header({
   showBack = false,
   onBack,
   title,
+  rightAction,
 }: HeaderProps) {
   const isPrimary = variant === 'primary';
   const isTransparent = variant === 'transparent';
@@ -69,7 +72,7 @@ export function Header({
 
       {/* Direita: usuário */}
       <div className="flex items-center justify-end flex-1 min-w-0">
-        {showUser && !showBack && (
+        {rightAction ? rightAction : showUser && !showBack && (
           <div className="flex items-center gap-2">
             <NioIcon
               name="user-circle"

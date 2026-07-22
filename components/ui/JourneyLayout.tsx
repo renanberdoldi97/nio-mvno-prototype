@@ -9,6 +9,7 @@ type JourneyLayoutProps = {
   onBack?: () => void;
   showBack?: boolean;
   showUser?: boolean;
+  rightAction?: React.ReactNode;
   children: React.ReactNode;
   cta?: React.ReactNode;
   // BottomSheets/overlays precisam ficar fora do <main> com overflow-y-auto,
@@ -29,6 +30,7 @@ export function JourneyLayout({
   onBack,
   showBack = true,
   showUser = false,
+  rightAction,
   children,
   cta,
   overlay,
@@ -45,6 +47,7 @@ export function JourneyLayout({
           showBack={showBack}
           onBack={onBack}
           title={title}
+          rightAction={rightAction}
         />
         <main className={cn('flex-1 overflow-y-auto no-scrollbar pt-4 pb-40', mainClassName)}>
           {children}

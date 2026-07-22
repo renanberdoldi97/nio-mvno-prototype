@@ -10,7 +10,7 @@ type ChipTagProps = {
 
 export function ChipTag({ variant = 'label', children, className }: ChipTagProps) {
   const styles: Record<ChipTagVariant, string> = {
-    new: 'bg-primary text-black font-bold text-[9px] px-2 py-0.5',
+    new: 'bg-[var(--color-primary-background)] text-white font-bold text-[9px] px-2 py-0.5',
     label: 'bg-[#D6EBEA] text-[#024B41] font-medium text-[11px] px-2.5 py-1',
     status: 'bg-primary/10 text-primary-dark font-medium text-[11px] px-2.5 py-1',
   };
