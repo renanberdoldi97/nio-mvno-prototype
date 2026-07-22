@@ -104,7 +104,7 @@ export default function AcompanharPedidoPage() {
             <p className="text-sm font-bold text-[var(--color-neutral-text)]">Seu pedido:</p>
             <div className="flex items-center gap-2">
               <NioIcon name="chip-sim" size={24} />
-              <span className="text-sm text-[var(--color-neutral-text)]">1 chip móvel de 50 GB</span>
+              <span className="text-sm text-[var(--color-neutral-text)]">1 chip móvel de 20 GB</span>
             </div>
             <div className="flex items-center gap-2">
               <NioIcon name="home" size={24} />

@@ -26,7 +26,7 @@ export function VerticalStepper({ steps, variant = 'progress' }: VerticalStepper
   return (
     <div className="flex flex-col">
       {steps.map((step, i) => (
-        <div key={step.key} className="flex gap-3">
+        <div key={step.key} className="flex gap-4 items-start">
           {/* Coluna do círculo + linha */}
           <div className="flex flex-col items-center">
             {isTimeline ? (
@@ -67,7 +67,7 @@ export function VerticalStepper({ steps, variant = 'progress' }: VerticalStepper
 
           {/* Conteúdo do step */}
           <div className={cn(
-            'flex-1',
+            'flex-1 pt-1',
             i < steps.length - 1 ? 'pb-5' : ''
           )}>
             {step.caption && (

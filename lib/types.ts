@@ -8,7 +8,7 @@ export type UserProfile = {
   address: string;
   planName: string;
   planSpeed: string;
-  dataAllowance: string; // ex: "50 GB"
+  dataAllowance: string; // ex: "20 GB"
 };
 
 export type OrderStatus =
@@ -41,5 +41,5 @@ export const DEFAULT_USER: UserProfile = {
   address: 'R. dos Pinheiros, 1200, São Paulo — SP',
   planName: 'Nio Fibra Super',
   planSpeed: '700 Mega',
-  dataAllowance: '50 GB',
+  dataAllowance: '20 GB',
 };

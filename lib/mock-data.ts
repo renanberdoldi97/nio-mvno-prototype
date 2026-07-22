@@ -14,7 +14,7 @@ export const MOCK_USER = {
   plan: {
     name: 'Nio Fibra Super',
     speed: '700 Mega',
-    dataAllowance: '50 GB',
+    dataAllowance: '20 GB',
   },
   esimSupported: true, // dispositivo suporta eSIM
 };

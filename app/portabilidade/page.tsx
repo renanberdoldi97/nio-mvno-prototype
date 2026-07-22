@@ -85,14 +85,17 @@ export default function PortabilidadePage() {
           linha em nenhum momento.
         </p>
 
-        <Input
-          label="Digite o número da outra operadora"
-          value={number}
-          onChange={setNumber}
-          placeholder="Exemplo: (11) 9 0000-0000"
-          inputMode="tel"
-          className="mb-4"
-        />
+        <div className="mb-4">
+          <Input
+            label="Digite o número da outra operadora"
+            value={number}
+            onChange={setNumber}
+            inputMode="tel"
+          />
+          <p className="text-xs text-[var(--color-neutral-text-medium)] mt-1 px-1">
+            Exemplo: (11) 9 0000-0000
+          </p>
+        </div>
 
         {operadoraManual ? (
           <Input

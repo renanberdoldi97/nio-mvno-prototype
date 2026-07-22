@@ -9,9 +9,10 @@ import { Input } from '@/components/ui/Input';
 import { Message } from '@/components/ui/Message';
 import { BottomSheet } from '@/components/ui/BottomSheet';
 import { JourneyLayout } from '@/components/ui/JourneyLayout';
+import { ProgressCircle } from '@/components/ui/ProgressCircle';
 import { useAppState } from '@/lib/state';
 
-type Step = 'idle' | 'activated';
+type OtherDeviceStep = 'idle' | 'qr' | 'configuring';
 
 // Padrão fixo (não randômico — evita mismatch de hidratação) representando
 // um QR Code fake pro fluxo de "outro aparelho".
@@ -33,7 +34,7 @@ export default function AtivarEsimPage() {
   const setEsimNumberAvailable = useAppState(s => s.setEsimNumberAvailable);
   const isOtherDevice = useAppState(s => s.isOtherDevice);
   const [dddSheetOpen, setDddSheetOpen] = useState(false);
-  const [step, setStep] = useState<Step>('idle');
+  const [otherDeviceStep, setOtherDeviceStep] = useState<OtherDeviceStep>('idle');
 
   function handleAlreadyConfigured() {
     setEsimNumberAvailable(true);
@@ -54,7 +55,7 @@ export default function AtivarEsimPage() {
           <Button
             onClick={() => {
               if (isOtherDevice) {
-                setStep('activated');
+                setOtherDeviceStep('qr');
               } else {
                 router.push('/ativar-chip/esim/ativando');
               }
@@ -97,23 +98,41 @@ export default function AtivarEsimPage() {
           </BottomSheet>
 
           {isOtherDevice && (
-            <BottomSheet
-              isOpen={step === 'activated'}
-              onClose={() => setStep('idle')}
-              title="Escaneie pra ativar seu eSIM"
-            >
-              <div className="mx-auto grid grid-cols-8 gap-0 border-[6px] border-white rounded-lg overflow-hidden" style={{ width: 240, height: 240 }}>
-                {QR_PATTERN.map((cell, i) => (
-                  <div key={i} className={cell ? 'bg-black' : 'bg-white'} />
-                ))}
-              </div>
-              <p className="text-sm text-[var(--color-neutral-text-medium)] mt-4 text-center">
-                Aponte a câmera do dispositivo que o eSIM será ativado.
-              </p>
-              <Button className="mt-4" onClick={handleAlreadyConfigured}>
-                Já foi escaneado
-              </Button>
-            </BottomSheet>
+            <>
+              <BottomSheet
+                isOpen={otherDeviceStep === 'qr'}
+                onClose={() => setOtherDeviceStep('idle')}
+                title="Escaneie pra ativar seu eSIM"
+              >
+                <div className="mx-auto grid grid-cols-8 gap-0 border-[6px] border-white rounded-lg overflow-hidden" style={{ width: 240, height: 240 }}>
+                  {QR_PATTERN.map((cell, i) => (
+                    <div key={i} className={cell ? 'bg-black' : 'bg-white'} />
+                  ))}
+                </div>
+                <p className="text-sm text-[var(--color-neutral-text-medium)] mt-4 text-center">
+                  Aponte a câmera do dispositivo que o eSIM será ativado.
+                </p>
+                <Button className="mt-4" onClick={() => setOtherDeviceStep('configuring')}>
+                  Já foi escaneado
+                </Button>
+              </BottomSheet>
+
+              <BottomSheet
+                isOpen={otherDeviceStep === 'configuring'}
+                onClose={() => setOtherDeviceStep('idle')}
+                title="Configurando o eSIM"
+              >
+                <div className="flex justify-center py-4">
+                  <ProgressCircle size={64} />
+                </div>
+                <p className="text-sm text-[var(--color-neutral-text-medium)] mt-2 text-center leading-relaxed">
+                  No outro aparelho serão exibidas instruções pra ativar o eSIM, é só seguir até o fim. Quando terminar, volte aqui pra finalizar a configuração.
+                </p>
+                <Button className="mt-4" onClick={handleAlreadyConfigured}>
+                  Já foi configurado
+                </Button>
+              </BottomSheet>
+            </>
           )}
         </>
       }

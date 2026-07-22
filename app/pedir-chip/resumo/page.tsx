@@ -33,13 +33,13 @@ export default function ResumoPage() {
         >
           <div className="flex items-center gap-2 mb-4">
             <NioIcon name="info" size={28} />
-            <h3 className="text-lg font-bold text-[var(--color-neutral-text)]">Plano 50 GB</h3>
+            <h3 className="text-lg font-bold text-[var(--color-neutral-text)]">Plano 20 GB</h3>
           </div>
 
           <Card variant="neutral" padding="md">
             <span className="text-sm text-[var(--color-neutral-text-medium)]">Seu plano</span>
             <p className="text-sm mt-2 text-[var(--color-neutral-text)]">
-              Seu chip móvel inclui <strong>50 GB por mês</strong>. A franquia é separada da sua internet Nio Fibra.
+              Seu chip móvel inclui <strong>20 GB por mês</strong>. A franquia é separada da sua internet Nio Fibra.
             </p>
 
             <div className="flex flex-col gap-4 mt-5">
@@ -103,7 +103,7 @@ export default function ResumoPage() {
         {/* Card 2 — Número novo */}
         <Card variant="neutral" padding="md">
           <p className="text-xs text-[var(--color-neutral-text-medium)]">Número novo</p>
-          <p className="text-sm font-semibold text-[var(--color-neutral-text)] mt-2 leading-relaxed">
+          <p className="text-base font-bold text-[var(--color-neutral-text)] mt-2 leading-relaxed">
             Seu chip vem com o DDD do endereço da sua instalação Nio Fibra.
           </p>
           <p className="text-xs text-[var(--color-neutral-text-medium)] mt-2">
@@ -116,7 +116,7 @@ export default function ResumoPage() {
           <div className="flex items-start justify-between">
             <div className="flex-1">
               <span className="text-sm text-[var(--color-neutral-text-medium)]">Plano</span>
-              <p className="font-bold text-[var(--color-neutral-text)] mt-2">50 GB + Ligações ilimitadas</p>
+              <p className="font-bold text-[var(--color-neutral-text)] mt-2">20 GB + Ligações ilimitadas</p>
             </div>
             <button onClick={() => setPlanSheetOpen(true)} className="flex-shrink-0 ml-3">
               <NioIcon name="info" size={24} />

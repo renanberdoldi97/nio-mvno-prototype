@@ -12,10 +12,10 @@ import { VerticalStepper, type VerticalStep } from '@/components/ui/VerticalStep
 import { useAppState } from '@/lib/state';
 
 const STEPS: VerticalStep[] = [
-  { key: 'wifi', icon: 'wifi-on', title: 'Garanta que seu Wi-Fi está conectado', status: 'completed' },
-  { key: 'desligar', icon: 'smartphone', title: 'Desligue o celular', status: 'completed' },
-  { key: 'inserir', icon: 'chip-sim', title: 'Insira o chip recebido', status: 'completed' },
-  { key: 'ligar', icon: 'smartphone', title: 'Ligue o celular novamente', status: 'completed' },
+  { key: 'wifi', caption: 'Passo 1', icon: 'wifi-on', title: 'Garanta que seu Wi-Fi está conectado', status: 'completed' },
+  { key: 'desligar', caption: 'Passo 2', icon: 'smartphone', title: 'Desligue o celular', status: 'completed' },
+  { key: 'inserir', caption: 'Passo 3', icon: 'chip-sim', title: 'Insira o chip recebido', status: 'completed' },
+  { key: 'ligar', caption: 'Passo 4', icon: 'smartphone', title: 'Ligue o celular novamente', status: 'completed' },
 ];
 
 export default function AtivarFisicoPage() {

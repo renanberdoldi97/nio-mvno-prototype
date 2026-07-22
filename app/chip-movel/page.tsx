@@ -10,7 +10,7 @@ import { JourneyLayout } from '@/components/ui/JourneyLayout';
 import { NioIcon } from '@/components/icons';
 import { MOCK_USER, MOCK_CHIP } from '@/lib/mock-data';
 
-const DATA_ALLOWANCE_GB = 50;
+const DATA_ALLOWANCE_GB = 20;
 const DATA_USAGE_GB = 12.4;
 
 type ActionItem = {
@@ -70,13 +70,13 @@ export default function ChipMovelPage() {
         <BottomSheet isOpen={planSheetOpen} onClose={() => setPlanSheetOpen(false)}>
           <div className="flex items-center gap-2 mb-4">
             <NioIcon name="info" size={28} />
-            <h3 className="text-lg font-bold text-[var(--color-neutral-text)]">Plano 50 GB</h3>
+            <h3 className="text-lg font-bold text-[var(--color-neutral-text)]">Plano 20 GB</h3>
           </div>
 
           <Card variant="neutral" padding="md">
             <span className="text-sm text-[var(--color-neutral-text-medium)]">Seu plano</span>
             <p className="text-sm mt-2 text-[var(--color-neutral-text)]">
-              Seu chip móvel inclui <strong>50 GB por mês</strong>. A franquia é separada da sua internet Nio Fibra.
+              Seu chip móvel inclui <strong>20 GB por mês</strong>. A franquia é separada da sua internet Nio Fibra.
             </p>
 
             <div className="flex flex-col gap-4 mt-5">
