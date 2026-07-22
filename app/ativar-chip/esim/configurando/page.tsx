@@ -13,7 +13,7 @@ import { useAppState } from '@/lib/state';
 export default function ConfigurandoESIMPage() {
   const router = useRouter();
   const setEsimNumberAvailable = useAppState(s => s.setEsimNumberAvailable);
-  const [step, setStep] = useState<'instructions' | 'configuring'>('instructions');
+  const [step, setStep] = useState<'idle' | 'configuring'>('idle');
 
   useEffect(() => {
     if (step !== 'configuring') return;
@@ -30,13 +30,13 @@ export default function ConfigurandoESIMPage() {
       showBack={false}
       transition="fade"
       cta={
-        step === 'instructions' ? (
+        step === 'idle' ? (
           <Button onClick={() => setStep('configuring')}>Iniciar configuração</Button>
         ) : undefined
       }
     >
       <div className="px-6">
-        {step === 'instructions' && (
+        {step === 'idle' && (
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -72,7 +72,7 @@ export default function ConfigurandoESIMPage() {
             <ProgressCircle size={64} />
             <p className="text-sm text-[var(--color-neutral-text-medium)]
               mt-5 text-center leading-relaxed">
-              Quando terminar, é só voltar pra cá e ver seu novo número.
+              Configurando eSIM...
             </p>
           </motion.div>
         )}

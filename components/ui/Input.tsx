@@ -39,7 +39,7 @@ export function Input({
   return (
     <div className={cn('relative', className)}>
       <div className={cn(
-        'relative border-[1.5px] rounded-xl bg-white transition-colors h-14',
+        'relative border-[1.5px] rounded-md bg-white transition-colors h-14',
         error
           ? 'border-error'
           : focused

@@ -1,12 +1,14 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Message } from '@/components/ui/Message';
+import { BottomSheet } from '@/components/ui/BottomSheet';
 import { JourneyLayout } from '@/components/ui/JourneyLayout';
 import { VerticalStepper, type VerticalStep } from '@/components/ui/VerticalStepper';
+import { NioIcon } from '@/components/icons';
 import { useAppState } from '@/lib/state';
 import { MOCK_CHIP, MOCK_PORTABILITY } from '@/lib/mock-data';
 import { cn } from '@/lib/utils';
@@ -38,6 +40,7 @@ export default function AcompanharPortabilidadePage() {
   const setOrderStatus = useAppState(s => s.setOrderStatus);
   // Fora do caminho feliz, trata como "aguardando liberação" nesta tela
   const status: PortabilityStatus = rawStatus === 'idle' ? 'awaiting_release' : rawStatus;
+  const [showCancelSheet, setShowCancelSheet] = useState(false);
 
   // Progressão automática — só o caminho feliz: aguardando → liberado → concluído
   useEffect(() => {
@@ -51,9 +54,9 @@ export default function AcompanharPortabilidadePage() {
     }
   }, [status, setPortabilityStatus]);
 
-  function handleCancelRequest() {
-    setPortabilityStatus('idle');
-    router.push('/');
+  function handleConfirmCancel() {
+    setPortabilityStatus('cancelled');
+    router.push('/portabilidade/cancelada');
   }
 
   function handlePrimaryCta() {
@@ -101,7 +104,7 @@ export default function AcompanharPortabilidadePage() {
       onBack={() => router.push('/')}
       cta={
         status === 'awaiting_release' ? (
-          <Button variant="outline" onClick={handleCancelRequest}>
+          <Button variant="outline" onClick={() => setShowCancelSheet(true)}>
             Solicitar cancelamento
           </Button>
         ) : (
@@ -112,6 +115,41 @@ export default function AcompanharPortabilidadePage() {
             </Button>
           </>
         )
+      }
+      overlay={
+        <BottomSheet
+          isOpen={showCancelSheet}
+          onClose={() => setShowCancelSheet(false)}
+          blocking={false}
+        >
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-lg font-bold text-[var(--color-neutral-text)]">
+              Quer mesmo cancelar a portabilidade?
+            </h3>
+            <button
+              onClick={() => setShowCancelSheet(false)}
+              className="flex-shrink-0 -mr-1"
+            >
+              <NioIcon name="x" size={24} />
+            </button>
+          </div>
+          <p className="text-sm text-[var(--color-neutral-text-medium)] mb-6 leading-relaxed">
+            Seu número atual continua funcionando normalmente. Você também pode pedir a
+            portabilidade mais tarde.
+          </p>
+          <div className="flex flex-col gap-3">
+            <Button onClick={() => setShowCancelSheet(false)}>
+              Manter portabilidade
+            </Button>
+            <Button
+              variant="outline"
+              className="border-[#124803] text-[#124803]"
+              onClick={handleConfirmCancel}
+            >
+              Cancelar mesmo assim
+            </Button>
+          </div>
+        </BottomSheet>
       }
     >
       <div className="px-6">

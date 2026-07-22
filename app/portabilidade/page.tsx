@@ -108,7 +108,7 @@ export default function PortabilidadePage() {
         ) : (
           <button
             onClick={() => setCarrierSheetOpen(true)}
-            className="w-full h-14 rounded-xl border-[1.5px] border-[var(--color-neutral-border)] bg-white flex items-center justify-between px-4 mb-4"
+            className="w-full h-14 rounded-md border-[1.5px] border-[var(--color-neutral-border)] bg-white flex items-center justify-between px-4 mb-4"
           >
             <span className={carrier ? 'text-base text-[var(--color-neutral-text)]' : 'text-base text-[var(--color-neutral-text-medium)]'}>
               {carrier ?? 'Operadora atual'}

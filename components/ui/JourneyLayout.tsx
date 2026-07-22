@@ -2,6 +2,7 @@
 
 import { Header } from '@/components/ui/Header';
 import { PageTransition } from '@/components/ui/PageTransition';
+import { cn } from '@/lib/utils';
 
 type JourneyLayoutProps = {
   title?: string;
@@ -15,6 +16,9 @@ type JourneyLayoutProps = {
   overlay?: React.ReactNode;
   transition?: 'slide' | 'fade';
   headerVariant?: 'white' | 'transparent';
+  // Extra classes pro <main> scrollável — útil quando o rodapé fixo (cta) é
+  // mais alto que o normal e o pb-40 padrão não é suficiente.
+  mainClassName?: string;
 };
 
 // AppShell só aceita headerVariant fixo (home/journey/transparent) e não repassa
@@ -30,6 +34,7 @@ export function JourneyLayout({
   overlay,
   transition = 'slide',
   headerVariant = 'white',
+  mainClassName,
 }: JourneyLayoutProps) {
   return (
     <PageTransition variant={transition}>
@@ -41,7 +46,7 @@ export function JourneyLayout({
           onBack={onBack}
           title={title}
         />
-        <main className="flex-1 overflow-y-auto no-scrollbar pt-4 pb-40">
+        <main className={cn('flex-1 overflow-y-auto no-scrollbar pt-4 pb-40', mainClassName)}>
           {children}
         </main>
         {cta && (

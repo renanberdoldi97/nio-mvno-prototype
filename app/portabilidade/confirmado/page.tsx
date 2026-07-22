@@ -37,8 +37,7 @@ export default function PortabilidadeConfirmadoPage() {
         <div className="mt-6">
           <Message
             kind="info"
-            title="Um SMS de confirmação será enviado no número da operadora atual"
-            description="É só responder SIM pra concluir o processo."
+            title="Antes de continuar, mantenha seu número atual ativo em outro aparelho. Quando receber o SMS de confirmação, responda SIM (em letras maiúsculas) para finalizar a portabilidade."
           />
         </div>
       </div>

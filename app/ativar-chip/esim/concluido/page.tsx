@@ -44,7 +44,7 @@ export default function ConcluidoPage() {
       cta={
         <>
           <Button onClick={goToChipMovel}>
-            {esimNumberAvailable ? 'Informações do chip móvel' : 'Meu chip móvel'}
+            Informações do chip móvel
           </Button>
           <Button variant="outline" onClick={goToPortabilidade}>
             Pedir portabilidade
