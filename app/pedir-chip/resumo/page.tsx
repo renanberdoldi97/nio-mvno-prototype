@@ -31,9 +31,17 @@ export default function ResumoPage() {
           isOpen={planSheetOpen}
           onClose={() => setPlanSheetOpen(false)}
         >
-          <div className="flex items-center gap-2 mb-4">
-            <NioIcon name="info" size={28} />
-            <h3 className="text-lg font-bold text-[var(--color-neutral-text)]">Plano 20 GB</h3>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <NioIcon name="info" size={28} />
+              <h3 className="text-lg font-bold text-[var(--color-neutral-text)]">Plano 20 GB</h3>
+            </div>
+            <button
+              onClick={() => setPlanSheetOpen(false)}
+              className="flex-shrink-0 -mr-1"
+            >
+              <NioIcon name="x" size={24} />
+            </button>
           </div>
 
           <Card variant="neutral" padding="md">
@@ -66,7 +74,7 @@ export default function ResumoPage() {
                 <div>
                   <p className="text-xs text-[var(--color-neutral-text-medium)]">Escolha o DDD antes de ativar</p>
                   <p className="text-sm font-bold text-[var(--color-neutral-text)] mt-0.5">
-                    Por padrão, o chip vem com DDD do endereço da sua Nio Fibra
+                    Seu chip vem com DDD do endereço da sua Nio Fibra
                   </p>
                 </div>
               </div>
@@ -109,22 +117,11 @@ export default function ResumoPage() {
           )}
         </Card>
 
-        {/* Card 2 — Número novo */}
-        <Card variant="neutral" padding="md">
-          <p className="text-xs text-[var(--color-neutral-text-medium)]">Número novo</p>
-          <p className="text-base font-bold text-[var(--color-neutral-text)] mt-2 leading-relaxed">
-            Seu chip vem com o DDD do endereço da sua instalação Nio Fibra.
-          </p>
-          <p className="text-xs text-[var(--color-neutral-text-medium)] mt-2">
-            Você pode alterar o DDD antes de ativar.
-          </p>
-        </Card>
-
-        {/* Card 3 — Plano */}
+        {/* Card 2 — Informações do plano */}
         <Card variant="neutral">
           <div className="flex items-start justify-between">
             <div className="flex-1">
-              <span className="text-sm text-[var(--color-neutral-text-medium)]">Plano</span>
+              <span className="text-sm text-[var(--color-neutral-text-medium)]">Informações do plano</span>
               <p className="font-bold text-[var(--color-neutral-text)] mt-2">20 GB + Ligações ilimitadas</p>
             </div>
             <button onClick={() => setPlanSheetOpen(true)} className="flex-shrink-0 ml-3">
