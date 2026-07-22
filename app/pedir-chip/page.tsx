@@ -39,6 +39,7 @@ const HOW_IT_WORKS_STEPS: VerticalStep[] = [
     title: 'Troque seu número pelo que você já utiliza em outra operadora',
     icon: 'swap',
     status: 'completed',
+    iconClassName: 'bg-white border border-[#D6D8D4]',
   },
 ];
 

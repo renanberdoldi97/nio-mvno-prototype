@@ -10,6 +10,7 @@ export type VerticalStep = {
   description?: string;
   icon?: IconName;
   status: 'completed' | 'active' | 'pending';
+  iconClassName?: string;
 };
 
 type VerticalStepperProps = {
@@ -32,7 +33,10 @@ export function VerticalStepper({ steps, variant = 'progress' }: VerticalStepper
             {isTimeline ? (
               // Nota: os SVGs do DS usam fill fixo (#292C28), não currentColor —
               // não é possível recolorir o ícone via CSS sem alterar o asset.
-              <div className="w-10 h-10 rounded-[8px] bg-[#DBECEA] flex items-center justify-center flex-shrink-0">
+              <div className={cn(
+                'w-10 h-10 rounded-[8px] flex items-center justify-center flex-shrink-0',
+                step.iconClassName ?? 'bg-[#DBECEA]'
+              )}>
                 {step.icon && <NioIcon name={step.icon} size={24} />}
               </div>
             ) : step.status === 'completed' ? (
