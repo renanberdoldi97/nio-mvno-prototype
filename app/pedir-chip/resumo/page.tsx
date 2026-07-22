@@ -117,7 +117,18 @@ export default function ResumoPage() {
           )}
         </Card>
 
-        {/* Card 2 — Informações do plano */}
+        {/* Card 2 — Número novo */}
+        <Card variant="neutral" padding="md">
+          <p className="text-xs text-[var(--color-neutral-text-medium)]">Número novo</p>
+          <p className="text-base font-bold text-[var(--color-neutral-text)] mt-2 leading-relaxed">
+            Seu chip vem com DDD do endereço da sua Nio Fibra
+          </p>
+          <p className="text-xs text-[var(--color-neutral-text-medium)] mt-2">
+            Você pode escolher outro DDD antes de ativar.
+          </p>
+        </Card>
+
+        {/* Card 3 — Informações do plano */}
         <Card variant="neutral">
           <div className="flex items-start justify-between">
             <div className="flex-1">
