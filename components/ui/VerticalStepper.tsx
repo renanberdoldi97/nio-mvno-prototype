@@ -32,8 +32,8 @@ export function VerticalStepper({ steps, variant = 'progress' }: VerticalStepper
             {isTimeline ? (
               // Nota: os SVGs do DS usam fill fixo (#292C28), não currentColor —
               // não é possível recolorir o ícone via CSS sem alterar o asset.
-              <div className="w-10 h-10 rounded-full bg-[#DBECEA] flex items-center justify-center flex-shrink-0">
-                {step.icon && <NioIcon name={step.icon} size={20} />}
+              <div className="w-10 h-10 rounded-2xl bg-[#DBECEA] flex items-center justify-center flex-shrink-0">
+                {step.icon && <NioIcon name={step.icon} size={24} />}
               </div>
             ) : step.status === 'completed' ? (
               <div className="w-6 h-6 rounded-full bg-[var(--color-primary-background)] flex items-center justify-center flex-shrink-0">
@@ -68,7 +68,8 @@ export function VerticalStepper({ steps, variant = 'progress' }: VerticalStepper
           {/* Conteúdo do step */}
           <div className={cn(
             'flex-1 pt-1',
-            i < steps.length - 1 ? 'pb-5' : ''
+            i < steps.length - 1 ? 'pb-5' : '',
+            isTimeline ? 'flex flex-col justify-center items-start self-stretch' : ''
           )}>
             {step.caption && (
               <p className="text-xs text-[var(--color-neutral-text-medium)] mb-0.5">
