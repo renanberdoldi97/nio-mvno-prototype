@@ -25,7 +25,7 @@ export default function ConfirmadoPage() {
   return (
     <JourneyLayout
       title="Pedir chip móvel"
-      onBack={() => router.push('/')}
+      showBack={false}
       transition="fade"
       cta={
         <Button variant="secondary" onClick={() => router.push('/')}>

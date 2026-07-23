@@ -51,18 +51,12 @@ export default function HomePage() {
   }, []);
 
   function handleChipMovelClick() {
-    const { orderStatus, selectedChipType } = useAppState.getState();
+    const { orderStatus } = useAppState.getState();
 
-    if (orderStatus === 'active') {
-      router.push('/chip-movel');
-    } else if (['pending_delivery', 'in_transit', 'delivered', 'ready_to_activate'].includes(orderStatus)) {
-      if (selectedChipType === 'esim') {
-        router.push('/ativar-chip/esim');
-      } else {
-        router.push('/ativar-chip/fisico');
-      }
-    } else {
+    if (orderStatus === 'not_started') {
       router.push('/pedir-chip');
+    } else {
+      router.push('/chip-movel');
     }
   }
 

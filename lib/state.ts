@@ -22,6 +22,9 @@ type AppState = {
   // Ativação eSIM
   esimActivationStep: 'idle' | 'confirming' | 'configuring' | 'done';
   esimNumberAvailable: boolean; // true = número já disponível na conclusão
+  // 'flow' = emendou a ativação direto após confirmar o pedido (só eSIM).
+  // 'management' = entrou pela tela /chip-movel clicando em "Iniciar ativação".
+  activationEntryPoint: 'flow' | 'management';
 
   // Tracking do chip físico
   trackingStatus: 'confirmed' | 'in_transit' | 'delivered' | 'failed';
@@ -41,6 +44,7 @@ type AppState = {
   setSelectedDDD: (ddd: string) => void;
   setEsimActivationStep: (step: AppState['esimActivationStep']) => void;
   setEsimNumberAvailable: (available: boolean) => void;
+  setActivationEntryPoint: (entryPoint: AppState['activationEntryPoint']) => void;
   setTrackingStatus: (status: AppState['trackingStatus']) => void;
   setIdentifiedDevice: (device: string) => void;
   setIsOtherDevice: (value: boolean) => void;
@@ -59,6 +63,7 @@ const initialState = {
   selectedDDD: '11', // padrão = DDD da instalação
   esimActivationStep: 'idle' as const,
   esimNumberAvailable: false,
+  activationEntryPoint: 'flow' as const,
   trackingStatus: 'confirmed' as const,
   identifiedDevice: null,
   isOtherDevice: false,
@@ -79,6 +84,7 @@ export const useAppState = create<AppState>()(
       setSelectedDDD: (selectedDDD) => set({ selectedDDD }),
       setEsimActivationStep: (esimActivationStep) => set({ esimActivationStep }),
       setEsimNumberAvailable: (esimNumberAvailable) => set({ esimNumberAvailable }),
+      setActivationEntryPoint: (activationEntryPoint) => set({ activationEntryPoint }),
       setTrackingStatus: (trackingStatus) => set({ trackingStatus }),
       setIdentifiedDevice: (identifiedDevice) => set({ identifiedDevice }),
       setIsOtherDevice: (isOtherDevice) => set({ isOtherDevice }),

@@ -148,8 +148,8 @@ export default function PedirChipIntroPage() {
         </p>
         <VerticalStepper variant="timeline" steps={HOW_IT_WORKS_STEPS} />
 
-        <div className="flex justify-center mt-6">
-          <Button variant="secondary" fullWidth={false} onClick={() => setDetailsOpen(true)}>
+        <div className="mt-6">
+          <Button variant="secondary" onClick={() => setDetailsOpen(true)}>
             Mais detalhes
           </Button>
         </div>

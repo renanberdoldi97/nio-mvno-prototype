@@ -10,6 +10,7 @@ import { sleep } from '@/lib/utils';
 export default function ConfirmandoPage() {
   const router = useRouter();
   const selectedChipType = useAppState(s => s.selectedChipType);
+  const setActivationEntryPoint = useAppState(s => s.setActivationEntryPoint);
   const isEsim = selectedChipType !== 'physical';
 
   useEffect(() => {
@@ -20,6 +21,7 @@ export default function ConfirmandoPage() {
         if (selectedChipType === 'physical') {
           router.replace('/pedir-chip/confirmado');
         } else {
+          setActivationEntryPoint('flow');
           router.replace('/ativar-chip/esim');
         }
       }
@@ -27,6 +29,7 @@ export default function ConfirmandoPage() {
     return () => {
       active = false;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router, selectedChipType]);
 
   return (

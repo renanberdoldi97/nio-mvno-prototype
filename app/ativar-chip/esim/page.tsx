@@ -32,18 +32,34 @@ export default function AtivarEsimPage() {
   const setSelectedDDD = useAppState(s => s.setSelectedDDD);
   const setEsimNumberAvailable = useAppState(s => s.setEsimNumberAvailable);
   const isOtherDevice = useAppState(s => s.isOtherDevice);
+  const activationEntryPoint = useAppState(s => s.activationEntryPoint);
   const [dddSheetOpen, setDddSheetOpen] = useState(false);
   const [otherDeviceStep, setOtherDeviceStep] = useState<OtherDeviceStep>('idle');
+
+  const isManagement = activationEntryPoint === 'management';
 
   function handleAlreadyConfigured() {
     setEsimNumberAvailable(true);
     router.push('/ativar-chip/esim/concluido');
   }
 
+  // A jornada "outro aparelho" sempre emenda direto do fluxo de solicitação
+  // (nunca vem da tela de gestão), por isso mantém sua própria copy/CTA.
+  const title = isOtherDevice
+    ? 'Vamos ativar o eSIM no outro aparelho'
+    : isManagement
+    ? 'Ative seu eSIM'
+    : 'Pedido confirmado! Ative agora seu eSIM';
+
+  const subtitle = isOtherDevice
+    ? 'Vamos exibir um QR Code pra você escanear com o aparelho de origem do outro chip.'
+    : 'Garanta que seu aparelho está conectado a internet antes de começar a ativação.';
+
   return (
     <JourneyLayout
       title={isOtherDevice ? 'Pedir chip móvel' : 'Ativar chip móvel'}
-      onBack={() => router.push('/')}
+      showBack={isManagement}
+      onBack={() => router.push('/chip-movel')}
       cta={
         <>
           <Button
@@ -57,7 +73,7 @@ export default function AtivarEsimPage() {
           >
             Ativar eSIM
           </Button>
-          {!isOtherDevice && (
+          {!isManagement && !isOtherDevice && (
             <Button variant="secondary" onClick={() => router.push('/')}>
               Voltar para o início
             </Button>
@@ -138,13 +154,11 @@ export default function AtivarEsimPage() {
     >
       <div className="px-6 pt-6">
         <h1 className="text-3xl font-bold text-[var(--color-neutral-text)] leading-tight mb-2">
-          {isOtherDevice ? 'Vamos ativar o eSIM no outro aparelho' : 'Pedido confirmado! Ative agora seu eSIM'}
+          {title}
         </h1>
 
         <p className="text-sm text-[var(--color-neutral-text-medium)] mt-2 leading-relaxed">
-          {isOtherDevice
-            ? 'Vamos exibir um QR Code pra você escanear com o aparelho de origem do outro chip.'
-            : 'Garanta que seu aparelho está conectado a internet antes de começar a ativação.'}
+          {subtitle}
         </p>
 
         <div className="mt-5">

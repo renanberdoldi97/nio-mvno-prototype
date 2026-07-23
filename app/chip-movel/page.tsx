@@ -13,8 +13,14 @@ import { MOCK_USER } from '@/lib/mock-data';
 export default function ChipMovelPage() {
   const router = useRouter();
   const selectedChipType = useAppState(s => s.selectedChipType);
+  const setActivationEntryPoint = useAppState(s => s.setActivationEntryPoint);
 
   const isEsim = selectedChipType === 'esim';
+
+  function handleIniciarAtivacao() {
+    setActivationEntryPoint('management');
+    router.push(isEsim ? '/ativar-chip/esim' : '/ativar-chip/fisico');
+  }
 
   return (
     <JourneyLayout
@@ -35,7 +41,7 @@ export default function ChipMovelPage() {
             description="Você precisará do código que vem no cartão do chip para fazer a ativação."
             autoHideMs={0}
           />
-          <Button onClick={() => router.push(isEsim ? '/ativar-chip/esim' : '/ativar-chip/fisico')}>
+          <Button onClick={handleIniciarAtivacao}>
             Iniciar ativação
           </Button>
         </>
