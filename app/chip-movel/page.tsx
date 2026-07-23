@@ -58,7 +58,7 @@ export default function ChipMovelPage() {
         icon: 'warning-shield',
         title: 'Bloquear chip',
         subtitle: 'Em caso de perda ou roubo',
-        onClick: () => {},
+        onClick: () => router.push('/chip-movel/bloqueio'),
       },
       {
         key: 'outro-chip',
